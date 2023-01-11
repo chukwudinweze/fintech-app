@@ -6,7 +6,7 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
-import NotificationsIcon from "@mui/icons-material/Notifications";
+import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 import { Avatar, Stack } from "@mui/material";
 import { deepPurple } from "@mui/material/colors";
 
@@ -31,7 +31,11 @@ const TopNavBar: React.FC = () => {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+          <Typography
+            variant="h5"
+            component="h5"
+            sx={{ flexGrow: 1, fontWeight: "900" }}
+          >
             Quipay
           </Typography>
           <Stack
@@ -40,14 +44,14 @@ const TopNavBar: React.FC = () => {
             spacing={{ xs: 4, sm: 2, md: 4 }}
           >
             <Badge color="error" badgeContent={10} max={9}>
-              <NotificationsIcon />
+              <NotificationsNoneIcon sx={{ fontSize: "30px" }} />
             </Badge>
             <Avatar
               sx={{
                 bgcolor: deepPurple[900],
                 height: 20,
                 width: 20,
-                padding: "6px",
+                padding: "18px",
               }}
               alt="Remy Sharp"
               src="/broken-image.jpg"

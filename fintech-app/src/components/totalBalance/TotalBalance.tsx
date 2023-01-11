@@ -15,7 +15,11 @@ const TotalBalance = () => {
     setAnchorEl(null);
   };
   return (
-    <Stack justifyContent="center">
+    <Stack
+      justifyContent="center"
+      alignItems="center"
+      sx={{ paddingBottom: "16px" }}
+    >
       <Button
         variant="text"
         id="basic-button"
@@ -25,7 +29,7 @@ const TotalBalance = () => {
         onClick={handleClick}
       >
         <Stack direction="row" alignItems="center">
-          <Box> Balance(Naira)</Box>
+          <Box>Balance</Box>
           <KeyboardArrowDownIcon />
         </Stack>
       </Button>
@@ -47,12 +51,12 @@ const TotalBalance = () => {
         variant="h1"
         component="h1"
         sx={{
-          fontSize: "32px",
+          fontSize: "25px",
           letterSpacing: "-0.2px",
           fontWeight: "500",
         }}
       >
-        200
+        &#x20A6;200,000
       </Typography>
     </Stack>
   );

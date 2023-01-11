@@ -1,8 +1,8 @@
-import Button from "@mui/material/Button";
 import React from "react";
 import styles from "./TransactionBtn.module.css";
 
 import { Stack } from "@mui/system";
+import { Typography } from "@mui/material";
 
 type buttonProps = {
   background: string;
@@ -16,7 +16,18 @@ const TransactionBtn: React.FC<buttonProps> = ({ background, icon, label }) => {
       <button className={styles.TransactionBtn} style={{ background }}>
         {icon}
       </button>
-      <p>{label}</p>
+      <Typography
+        mt={1.5}
+        variant="body1"
+        fontSize={{ xs: "0.688rem", sm: "0.688rem", md: "0.688rem" }}
+        sx={{
+          color: "#27173e",
+          lineHeight: "1.2em",
+          fontWeight: "500",
+        }}
+      >
+        {label}
+      </Typography>
     </Stack>
   );
 };

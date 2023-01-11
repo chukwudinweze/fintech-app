@@ -1,19 +1,22 @@
 import React from "react";
 import Experiment from "../components/Experiment";
 import TopNavBar from "../components/TopNavBar";
-import TotalBalance from "../components/totalBalance/TotalBalance";
 import TotalBalFundAccBtn from "../components/totalBalance/TotalBalFundAccBtn";
 import TransactionMenu from "../components/TransactionMenu";
+import Box from "@mui/material/Box";
+import styles from "./DashBoard.module.css";
 
-const HomePage = () => {
+const DashBoard = () => {
   return (
-    <div>
+    <Box alignContent="center" justifyContent="center">
       <TopNavBar />
-      <TotalBalFundAccBtn />
-      <TransactionMenu />
+      <Box className={styles.DashBoard}>
+        <TotalBalFundAccBtn />
+        <TransactionMenu />
+      </Box>
       {/* <Experiment /> */}
-    </div>
+    </Box>
   );
 };
 
-export default HomePage;
+export default DashBoard;

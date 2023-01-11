@@ -1,5 +1,5 @@
 import React from "react";
-import HomePage from "./Pages/HomePage";
+import DashBoard from "./Pages/DashBoard";
 
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 function App() {
@@ -17,7 +17,7 @@ function App() {
   return (
     <div className="App">
       <ThemeProvider theme={theme}>
-        <HomePage />
+        <DashBoard />
       </ThemeProvider>
     </div>
   );

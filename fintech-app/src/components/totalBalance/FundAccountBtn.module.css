@@ -1,0 +1,18 @@
+.FundAccountBtn {
+  border: 1px solid transparent !important;
+  color: #6236ff;
+  background: #e1dfea !important;
+  height: 74px;
+  width: 1px !important;
+  line-height: 1em;
+  border-radius: 10px !important;
+}
+
+.FundAccountBtn:hover {
+  background-color: #6236ff !important;
+  color: #6236ff !important;
+}
+
+.FundAccountBtn:hover .AddIcon {
+  color: #fff !important;
+}

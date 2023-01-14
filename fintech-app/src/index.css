@@ -12,6 +12,10 @@ body {
   background: #ededf5;
 }
 
+body {
+  width: 100%;
+}
+
 li {
   list-style-type: none;
 }

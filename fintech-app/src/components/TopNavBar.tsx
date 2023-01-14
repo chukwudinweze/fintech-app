@@ -9,6 +9,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 import { Avatar, Stack } from "@mui/material";
 import { deepPurple } from "@mui/material/colors";
+import { Link } from "react-router-dom";
 
 const TopNavBar: React.FC = () => {
   return (
@@ -43,9 +44,14 @@ const TopNavBar: React.FC = () => {
             alignItems="center"
             spacing={{ xs: 4, sm: 2, md: 4 }}
           >
-            <Badge color="error" badgeContent={10} max={9}>
-              <NotificationsNoneIcon sx={{ fontSize: "30px" }} />
-            </Badge>
+            <Link to="/notification">
+              <Badge color="error" badgeContent={10} max={9}>
+                <NotificationsNoneIcon
+                  style={{ color: "fff" }}
+                  sx={{ fontSize: "30px" }}
+                />
+              </Badge>
+            </Link>
             <Avatar
               sx={{
                 bgcolor: deepPurple[900],

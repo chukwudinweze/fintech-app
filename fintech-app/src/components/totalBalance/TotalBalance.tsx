@@ -56,7 +56,8 @@ const TotalBalance = () => {
           fontWeight: "500",
         }}
       >
-        &#x20A6;200,000
+        $200,000
+        {/* &#x20A6; */}
       </Typography>
     </Stack>
   );

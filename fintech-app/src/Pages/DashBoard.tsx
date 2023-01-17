@@ -8,6 +8,9 @@ import styles from "./DashBoard.module.css";
 import AccountSummary from "../components/accountSummary/AccountSummary";
 import ExperimentTwo from "../components/ExperimentTwo";
 import Bills from "../components/Bills/Bills";
+import SharedPayment from "../components/SharedPayment/SharedPayment";
+import SharedPaymets from "../components/SharedPayment/SharedPaymets";
+import MyCards from "../components/Mycards/MyCards";
 
 const DashBoard = () => {
   return (
@@ -22,6 +25,8 @@ const DashBoard = () => {
         {/* TransactionChannels beggins */}
         <AccountSummary />
         <Bills />
+        <SharedPaymets />
+        <MyCards />
         {/* <Experiment /> */}
         {/* <ExperimentTwo /> */}
       </Box>

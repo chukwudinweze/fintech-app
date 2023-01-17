@@ -31,7 +31,7 @@ const AcctSummaryLayout: React.FC<accountProps> = ({
         // fontSize="1.6875em"
         color={color}
       >
-        &#x20A6;{amount}
+        ${amount}
       </Typography>
     </Box>
   );

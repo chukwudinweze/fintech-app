@@ -1,0 +1,26 @@
+.MycardPurple {
+  height: 220px;
+  background: #6236ff;
+  border-radius: 10px;
+  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 9%);
+  color: #fff;
+  position: relative;
+}
+
+.MycardBlack {
+  height: 220px;
+  background: #222222;
+  border-radius: 10px;
+  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 9%);
+  color: #fff;
+  position: relative;
+}
+
+.MycardAsh {
+  height: 220px;
+  background: #8494a8;
+  border-radius: 10px;
+  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 9%);
+  color: #fff;
+  position: relative;
+}

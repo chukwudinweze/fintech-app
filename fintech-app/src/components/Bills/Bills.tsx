@@ -11,12 +11,13 @@ import iFitnessLogo from "../../assets/iFitness.png";
 import ShuttlerLogo from "../../assets/shuttlers.png";
 import Netflix from "../../assets/netflix.png";
 import DstvLogo from "../../assets/Dstvlogo.jpg";
+import SubHeading from "../../Global/SubHeading";
 
 const Bills = () => {
   return (
     <Box>
       <Box sx={{ marginTop: "20px" }}>
-        <Typography color="#27173e">Monthly Bills</Typography>
+        <SubHeading label="Monthly Bills" />
       </Box>
       <Swiper
         slidesPerView={2.5}

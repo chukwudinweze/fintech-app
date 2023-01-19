@@ -1,0 +1,35 @@
+.GUO,
+.peace,
+.libra,
+.GIG,
+.chisco,
+.abc {
+  /* border: 1px solid red; */
+  width: 100px;
+  height: 70px;
+  /* border-radius: 5px; */
+  background-image: url("../../assets/GUO.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.peace {
+  background-image: url("../../assets/peace.png");
+}
+
+.GIG {
+  background-image: url("../../assets/GIG.png");
+}
+
+.libra {
+  background-image: url("../../assets/libra.png");
+}
+
+.chisco {
+  background-image: url("../../assets/chisco.png");
+}
+
+.abc {
+  background-image: url("../../assets/ABC.png");
+}

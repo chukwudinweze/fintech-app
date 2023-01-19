@@ -11,6 +11,8 @@ import Bills from "../components/Bills/Bills";
 import SharedPayment from "../components/SharedPayment/SharedPayment";
 import SharedPaymets from "../components/SharedPayment/SharedPaymets";
 import MyCards from "../components/Mycards/MyCards";
+import Bookings from "../components/Bookings/Bookings";
+import BottomNav from "../components/BottomNav/BottomNav";
 
 const DashBoard = () => {
   return (
@@ -26,7 +28,9 @@ const DashBoard = () => {
         <AccountSummary />
         <Bills />
         <SharedPaymets />
+        <Bookings />
         <MyCards />
+        <BottomNav />
         {/* <Experiment /> */}
         {/* <ExperimentTwo /> */}
       </Box>

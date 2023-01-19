@@ -6,7 +6,7 @@ import MyCard from "./MyCard";
 
 const MyCards: React.FC = () => {
   return (
-    <Box>
+    <Box marginBottom="100px">
       <Box sx={{ paddingTop: "20px", paddingBottom: "10px" }}>
         <SubHeading label="My Cards" />
       </Box>

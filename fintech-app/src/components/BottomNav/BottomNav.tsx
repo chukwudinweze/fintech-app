@@ -27,6 +27,7 @@ const BottomNav = () => {
         onChange={(event, newValue) => {
           setValue(newValue);
         }}
+        sx={{ justifyContent: "space-between" }}
       >
         <BottomNavigationAction label="Home" icon={<HomeOutlinedIcon />} />
         <BottomNavigationAction label="Menu" icon={<MenuOutlinedIcon />} />

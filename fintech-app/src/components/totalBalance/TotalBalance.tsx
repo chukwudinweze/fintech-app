@@ -4,8 +4,12 @@ import Typography from "@mui/material/Typography";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import React from "react";
 import Box from "@mui/material/Box";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
 
 const TotalBalance = () => {
+  const totalAccountBalance = useAppSelector(
+    (state) => state.accountBalance.totalBalance
+  );
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -56,7 +60,7 @@ const TotalBalance = () => {
           fontWeight: "500",
         }}
       >
-        $200,000
+        ${totalAccountBalance.toLocaleString()}
         {/* &#x20A6; */}
       </Typography>
     </Stack>

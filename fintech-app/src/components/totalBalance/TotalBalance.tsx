@@ -2,23 +2,28 @@ import { Button, Menu, MenuItem } from "@mui/material";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import React from "react";
+import React, { useState } from "react";
 import Box from "@mui/material/Box";
-import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import { useAppSelector } from "../../store/hooks";
 
 const TotalBalance = () => {
-  const totalAccountBalance = useAppSelector(
-    (state) => state.accountBalance.totalBalance
-  );
+  const [currencySymbol, setCurrencySymbol] = useState<string>("₦");
+  const nairaBalance = useAppSelector((state) => state.nairaAccount.balance);
+  const dollarBalance = useAppSelector((state) => state.dollarAccount.balance);
+  const euroBalance = useAppSelector((state) => state.euroAccount.balance);
+
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
+
   const handleClose = () => {
     setAnchorEl(null);
   };
   return (
+    // The JSX of the component renders a button that, when clicked, opens a menu with the different account
+    // types and their corresponding balance.
     <Stack
       justifyContent="center"
       alignItems="center"
@@ -60,8 +65,8 @@ const TotalBalance = () => {
           fontWeight: "500",
         }}
       >
-        ${totalAccountBalance.toLocaleString()}
-        {/* &#x20A6; */}
+        {currencySymbol}
+        {nairaBalance.toLocaleString()}
       </Typography>
     </Stack>
   );

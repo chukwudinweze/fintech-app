@@ -8,7 +8,6 @@ import styles from "./DashBoard.module.css";
 import AccountSummary from "../components/accountSummary/AccountSummary";
 import ExperimentTwo from "../components/ExperimentTwo";
 import Bills from "../components/Bills/Bills";
-import SharedPayment from "../components/SharedPayment/SharedPayment";
 import SharedPaymets from "../components/SharedPayment/SharedPaymets";
 import MyCards from "../components/Mycards/MyCards";
 import Bookings from "../components/Bookings/Bookings";
@@ -29,9 +28,10 @@ const DashBoard = () => {
         <Bills />
         <SharedPaymets />
         <Bookings />
+        <Experiment />
         <MyCards />
         <BottomNav />
-        {/* <Experiment /> */}
+
         {/* <ExperimentTwo /> */}
       </Box>
     </Box>

@@ -12,6 +12,7 @@ import ShuttlerLogo from "../../assets/shuttlers.png";
 import Netflix from "../../assets/netflix.png";
 import DstvLogo from "../../assets/Dstvlogo.jpg";
 import SubHeading from "../../Global/SubHeading";
+import styles from "./Bills.module.css";
 
 const Bills = () => {
   return (
@@ -20,6 +21,7 @@ const Bills = () => {
         <SubHeading label="Monthly Bills" />
       </Box>
       <Swiper
+        className={styles.swipper}
         slidesPerView={2.5}
         spaceBetween={65}
         loop={true}

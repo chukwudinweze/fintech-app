@@ -6,18 +6,23 @@ import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
 import SupportAgentOutlinedIcon from "@mui/icons-material/SupportAgentOutlined";
 import { Paper } from "@mui/material";
+import { useAppSelector } from "../../store/hooks";
+import styles from "./BottomNav.module.css";
 
 const BottomNav = () => {
+  const drawerActive = useAppSelector((state) => state.userInterface.drawer);
   const [value, setValue] = React.useState(0);
+
+  console.log(drawerActive);
 
   return (
     <Paper
+      className={drawerActive ? styles.hideBottomNav : styles.showBottomNav}
       sx={{
         position: "fixed",
         bottom: 0,
         left: 0,
         right: 0,
-        zIndex: 10000,
       }}
       elevation={3}
     >

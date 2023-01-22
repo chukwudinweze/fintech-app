@@ -1,9 +1,8 @@
-// import { useSelector, TypedUseSelectorHook } from "react-redux";
-// import { useDispatch } from "react-redux/es/exports";
 import { configureStore } from "@reduxjs/toolkit";
 import currencySymbolSlice from "./currencyModelSlice";
 import dollarAccount from "./dollarAccountSlice";
 import euroAccount from "./euroAccount";
+import uiStateSlice from "./InterfaceSlice";
 import nairaAccount from "./nairaAccountSlice";
 
 const store = configureStore({
@@ -12,6 +11,7 @@ const store = configureStore({
     dollarAccount: dollarAccount.reducer,
     euroAccount: euroAccount.reducer,
     currency: currencySymbolSlice.reducer,
+    userInterface: uiStateSlice.reducer,
   },
 });
 

@@ -5,7 +5,7 @@ interface euroBalanceSliceState {
 }
 
 const initialState: euroBalanceSliceState = {
-  balance: 200000,
+  balance: 500,
 };
 
 const euroAccount = createSlice({

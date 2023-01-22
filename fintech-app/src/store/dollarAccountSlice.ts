@@ -1,11 +1,11 @@
-import { createSlice, configureStore, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface dollarBalanceSliceState {
   balance: number;
 }
 
 const initialState: dollarBalanceSliceState = {
-  balance: 200000,
+  balance: 3000,
 };
 
 const dollarAccount = createSlice({

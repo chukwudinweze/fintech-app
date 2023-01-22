@@ -16,3 +16,7 @@
 .FundAccountBtn:hover .AddIcon {
   color: #fff;
 }
+
+.drawar {
+  z-index: 2000000000000 !important;
+}

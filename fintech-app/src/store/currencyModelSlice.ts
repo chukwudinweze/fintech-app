@@ -1,13 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
-
-enum currencySymbol {
-  NAIRA = "₦",
-  DOLLAR = "$",
-  EURO = "€",
-}
+import { currencySymbol } from "./currencySymbolEnum";
 
 const initialState = {
-  currencySymbol: currencySymbol.NAIRA,
+  currencySymbol: currencySymbol.EURO,
 };
 
 const currencySymbolSlice = createSlice({
@@ -23,7 +18,7 @@ const currencySymbolSlice = createSlice({
     },
 
     changeToEuro(state) {
-      state.currencySymbol = currencySymbol.DOLLAR;
+      state.currencySymbol = currencySymbol.EURO;
     },
   },
 });

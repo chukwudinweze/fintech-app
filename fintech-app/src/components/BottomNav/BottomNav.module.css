@@ -1,0 +1,7 @@
+.showBottomNav {
+  z-index: 1000000000000000000 !important;
+}
+
+.hideBottomNav {
+  z-index: -1 !important;
+}

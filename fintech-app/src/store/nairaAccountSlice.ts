@@ -5,7 +5,7 @@ interface balanceSliceState {
 }
 
 const initialState: balanceSliceState = {
-  balance: 300000,
+  balance: 300,
 };
 
 const nairaAccount = createSlice({

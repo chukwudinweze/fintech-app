@@ -47,7 +47,7 @@ const FundAccountBtn = () => {
 
     dispatch(fundNaira(amount));
     dispatch(deActivateDrawer());
-    navigate("/notification");
+    navigate("/confirmtxn");
   };
   console.log(ddd);
   return (

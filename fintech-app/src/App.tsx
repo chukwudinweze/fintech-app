@@ -3,6 +3,7 @@ import { Route, Routes } from "react-router-dom";
 import DashBoard from "./Pages/DashBoard";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import NotificationPage from "./Pages/NotificationPage";
+import ConfirmTxnPage from "./Pages/ConfirmTxnPage";
 function App() {
   const theme = createTheme({
     typography: {
@@ -21,6 +22,7 @@ function App() {
         <Routes>
           <Route path="/" element={<DashBoard />} />
           <Route path="notification" element={<NotificationPage />} />
+          <Route path="confirmtxn" element={<ConfirmTxnPage />} />
         </Routes>
       </ThemeProvider>
     </div>

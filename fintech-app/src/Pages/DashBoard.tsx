@@ -26,13 +26,13 @@ const DashBoard = () => {
         {/* TransactionChannels beggins */}
         <AccountSummary />
         <Bills />
+        {/* <ExperimentTwo /> */}
+
         <SharedPaymets />
         <Bookings />
-        <Experiment />
+        {/* <Experiment /> */}
         <MyCards />
         <BottomNav />
-
-        {/* <ExperimentTwo /> */}
       </Box>
     </Box>
   );

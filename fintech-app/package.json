@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@chakra-ui/react": "^2.4.9",
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
     "@mui/icons-material": "^5.11.0",
@@ -16,6 +17,7 @@
     "@types/react": "^18.0.27",
     "@types/react-dom": "^18.0.0",
     "@types/react-redux": "^7.1.25",
+    "framer-motion": "^8.5.2",
     "react": "^18.2.0",
     "react-circular-progressbar": "^2.1.0",
     "react-dom": "^18.2.0",

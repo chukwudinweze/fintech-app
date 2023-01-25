@@ -7,18 +7,24 @@ import { InputAdornment, TextField } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { deActivateDrawer, toggleNav } from "../../store/InterfaceSlice";
-import { fundNaira } from "../../store/nairaAccountSlice";
 import { currencySymbol } from "../../store/currencySymbolEnum";
 import styles from "./FundAccountBtn.module.css";
+import {
+  getDebitAccount,
+  pendingTxnAmount,
+} from "../../store/pendingTransactionSlice";
+import { bankAccounts } from "../../Global/bankAccounts";
 
 type Anchor = "bottom";
 
 const FundAccountBtn = () => {
+  let defaultAcct = bankAccounts[0].account;
   const [state, setState] = React.useState({
     bottom: false,
   });
 
   const [amount, setAmount] = React.useState<number>(0);
+  const [debitAccount, setDebitAccount] = React.useState<string>(defaultAcct);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const ddd = useAppSelector((state) => state.userInterface.drawer);
@@ -40,12 +46,13 @@ const FundAccountBtn = () => {
     };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    console.log(amount);
+    console.log("testing", amount, debitAccount);
 
     event.preventDefault();
     toggleDrawer("bottom", false);
 
-    dispatch(fundNaira(amount));
+    dispatch(pendingTxnAmount(amount));
+    dispatch(getDebitAccount(debitAccount));
     dispatch(deActivateDrawer());
     navigate("/confirmtxn");
   };
@@ -69,25 +76,29 @@ const FundAccountBtn = () => {
             <Box p={2}>
               <form onSubmit={handleSubmit}>
                 <TextField
+                  value={debitAccount}
+                  onChange={(e) => setDebitAccount(e.target.value)}
                   sx={{ paddingTop: "20px" }}
-                  id="outlined-select-currency-native"
+                  id="select bank accounts"
                   select
                   label="From "
-                  defaultValue="EUR"
                   SelectProps={{
                     native: true,
                   }}
                   variant="standard"
                   fullWidth
                 >
-                  {["Access(***2134)", "UBA(***8957)"].map((option) => (
-                    <option key={option} value={option}>
-                      {option}
-                    </option>
-                  ))}
+                  {bankAccounts.map((option) => {
+                    return (
+                      <option key={option.name} value={option.account}>
+                        {option.account}
+                      </option>
+                    );
+                  })}
                 </TextField>
                 <TextField
                   InputProps={{
+                    autoComplete: "off",
                     startAdornment: (
                       <InputAdornment position="start">
                         {currencySymbol.NAIRA}
@@ -115,7 +126,6 @@ const FundAccountBtn = () => {
                       ? "daily limit exceeded"
                       : ""
                   }
-                  // helperText={amount <= 0 ? "Enter a valid amount" : ""}
                 />
                 <Box mt={4} mb={4} paddingTop="5px" paddingBottom="5px">
                   <Button

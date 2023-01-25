@@ -9,6 +9,16 @@ import Slide from "@mui/material/Slide";
 import { TransitionProps } from "@mui/material/transitions";
 import { useNavigate } from "react-router-dom";
 import { PinInput, PinInputField, Stack } from "@chakra-ui/react";
+import { Typography } from "@mui/material";
+import { fundNaira } from "../../store/nairaAccountSlice";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import { months } from "../../Global/months";
+import {
+  getTxnDay,
+  getTxnHour,
+  getTxnMinutes,
+  getTxnMonth,
+} from "../../store/pendingTransactionSlice";
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -19,7 +29,7 @@ const Transition = React.forwardRef(function Transition(
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const CancelTransaction: React.FC = () => {
+const ConfirmTransaction: React.FC = () => {
   const [open, setOpen] = React.useState<boolean>(false);
   const [pin1, setPin1] = React.useState("");
   const [pin2, setPin2] = React.useState("");
@@ -27,6 +37,8 @@ const CancelTransaction: React.FC = () => {
   const [pin4, setPin4] = React.useState("");
 
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const amount = useAppSelector((state) => state.pendindTransaction.amount);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -37,10 +49,26 @@ const CancelTransaction: React.FC = () => {
     let formatedUserPin = +userPin;
 
     if (formatedUserPin === 2023) {
+      // get time transaction was perfomed
+      const date = new Date();
+      const txnMonth = date.getMonth();
+      let month = months[txnMonth];
+      const day = date.getDate();
+      const hour = date.getHours();
+      const minutes = date.getMinutes();
+
+      // dispatch transaction detail(date, time,amount etc)
+      dispatch(getTxnMinutes(minutes));
+      dispatch(getTxnHour(hour));
+      dispatch(getTxnDay(day));
+      dispatch(getTxnMonth(month));
+      dispatch(fundNaira(amount));
+
+      // alert payment successful and navigate to transaction reciept page
       alert("payment successful");
       navigate("/notification");
     } else {
-      console.log(formatedUserPin);
+      // alert invalid pin and close diologue box
       alert("invalid pin");
       setOpen(false);
     }
@@ -58,11 +86,13 @@ const CancelTransaction: React.FC = () => {
         fullWidth
         size="large"
         sx={{
-          color: "#958d9e",
-          border: "1.5px solid #8494a8",
+          color: "#ffffff",
+          background: "#6236ff",
+          border: "1.5px solid #6236ff",
           ":hover": {
-            background: "#dbd2e7",
-            color: "#4e1dff",
+            background: "#4e1dff",
+            border: "1.5px solid #4e1dff",
+            color: "#ffffff",
           },
         }}
       >
@@ -75,7 +105,14 @@ const CancelTransaction: React.FC = () => {
         onClose={handleClose}
         aria-describedby="alert-dialog-slide-description"
       >
-        <DialogTitle>{"Confirm Pin"}</DialogTitle>
+        <DialogTitle>
+          {
+            <Stack>
+              <Typography variant="h6">Confirm Pin</Typography>
+              <Typography>test user Pin: 2023</Typography>
+            </Stack>
+          }
+        </DialogTitle>
         <DialogContent>
           {/* <DialogContentText id="alert-dialog-slide-description">
             Confirm you want to cancel Transaction
@@ -119,4 +156,4 @@ const CancelTransaction: React.FC = () => {
   );
 };
 
-export default CancelTransaction;
+export default ConfirmTransaction;

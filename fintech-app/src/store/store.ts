@@ -4,6 +4,7 @@ import dollarAccount from "./dollarAccountSlice";
 import euroAccount from "./euroAccount";
 import uiStateSlice from "./InterfaceSlice";
 import nairaAccount from "./nairaAccountSlice";
+import pendingTransaction from "./pendingTransactionSlice";
 
 const store = configureStore({
   reducer: {
@@ -12,6 +13,7 @@ const store = configureStore({
     euroAccount: euroAccount.reducer,
     currency: currencySymbolSlice.reducer,
     userInterface: uiStateSlice.reducer,
+    pendindTransaction: pendingTransaction.reducer,
   },
 });
 

@@ -51,6 +51,7 @@ const ConfirmTransaction: React.FC = () => {
     if (formatedUserPin === 2023) {
       // get time transaction was perfomed
       const date = new Date();
+
       const txnMonth = date.getMonth();
       let month = months[txnMonth];
       const day = date.getDate();

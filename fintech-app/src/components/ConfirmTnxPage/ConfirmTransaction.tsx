@@ -70,7 +70,7 @@ const ConfirmTransaction: React.FC = () => {
       dispatch(getTxnType("Wallet Funding"));
 
       // alert payment successful and navigate to transaction reciept page
-      alert("payment successful");
+      alert(`Payment Successful \n Generating Receipt`);
       navigate("/paymentrecipt");
     } else {
       // alert invalid pin and close diologue box
@@ -119,9 +119,6 @@ const ConfirmTransaction: React.FC = () => {
           }
         </DialogTitle>
         <DialogContent>
-          {/* <DialogContentText id="alert-dialog-slide-description">
-            Confirm you want to cancel Transaction
-          </DialogContentText> */}
           <Stack direction="row">
             <PinInput type="number" mask>
               <PinInputField

@@ -1,45 +1,49 @@
-import { PinInput, PinInputField, Stack } from "@chakra-ui/react";
+import * as React from "react";
+import Box from "@mui/material/Box";
+import Backdrop from "@mui/material/Backdrop";
+import SpeedDial from "@mui/material/SpeedDial";
+import SpeedDialIcon from "@mui/material/SpeedDialIcon";
+import SpeedDialAction from "@mui/material/SpeedDialAction";
+import FileCopyIcon from "@mui/icons-material/FileCopyOutlined";
+import SaveIcon from "@mui/icons-material/Save";
+import PrintIcon from "@mui/icons-material/Print";
+import ShareIcon from "@mui/icons-material/Share";
+import * as htmlToImage from "html-to-image";
+import { toPng, toJpeg, toBlob, toPixelData, toSvg } from "html-to-image";
 
-import React, { useState } from "react";
+const actions = [
+  { icon: <FileCopyIcon />, name: "Copy" },
+  { icon: <SaveIcon />, name: "Save" },
+  { icon: <PrintIcon />, name: "Print" },
+  { icon: <ShareIcon />, name: "Share" },
+];
 
-const Experiment = () => {
-  const [pin1, setPin1] = useState("");
-  const [pin2, setPin2] = useState("");
-  const [pin3, setPin3] = useState("");
-  const [pin4, setPin4] = useState("");
+export default function Experiment() {
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
   return (
-    <>
-      <Stack direction="row">
-        <PinInput mask>
-          <PinInputField
-            h="40px"
-            fontSize="20px"
-            value={pin1}
-            w="100%"
-            onChange={(e) => setPin1(e.target.value)}
+    <Box sx={{ height: 330, transform: "translateZ(0px)", flexGrow: 1 }}>
+      <Backdrop open={open} />
+      <SpeedDial
+        ariaLabel="SpeedDial tooltip example"
+        sx={{ position: "absolute", bottom: 16, right: 16 }}
+        icon={<SpeedDialIcon />}
+        onClose={handleClose}
+        onOpen={handleOpen}
+        open={open}
+      >
+        {actions.map((action) => (
+          <SpeedDialAction
+            key={action.name}
+            icon={action.icon}
+            tooltipTitle={action.name}
+            tooltipOpen
+            onClick={handleClose}
           />
-          <PinInputField
-            fontSize="20px"
-            value={pin2}
-            w="100%"
-            onChange={(e) => setPin2(e.target.value)}
-          />
-          <PinInputField
-            fontSize="20px"
-            value={pin3}
-            w="100%"
-            onChange={(e) => setPin3(e.target.value)}
-          />
-          <PinInputField
-            value={pin4}
-            fontSize="20px"
-            w="100%"
-            onChange={(e) => setPin4(e.target.value)}
-          />
-        </PinInput>
-      </Stack>
-    </>
+        ))}
+      </SpeedDial>
+    </Box>
   );
-};
-
-export default Experiment;
+}

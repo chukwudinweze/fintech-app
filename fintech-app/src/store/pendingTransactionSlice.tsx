@@ -9,6 +9,7 @@ interface pendingTxnType {
   txnMonth: string;
   txnYear: number;
   txnDay: number;
+  txnType: string;
 }
 
 const initialState: pendingTxnType = {
@@ -20,6 +21,7 @@ const initialState: pendingTxnType = {
   txnDay: 0,
   txnMonth: "",
   txnYear: 0,
+  txnType: "",
 };
 
 const pendingTransaction = createSlice({
@@ -47,6 +49,9 @@ const pendingTransaction = createSlice({
     getTxnYear(state, action: PayloadAction<number>) {
       state.txnYear = action.payload;
     },
+    getTxnType(state, action: PayloadAction<string>) {
+      state.txnType = action.payload;
+    },
   },
 });
 
@@ -58,6 +63,7 @@ export const {
   getTxnDay,
   getTxnMonth,
   getTxnYear,
+  getTxnType,
 } = pendingTransaction.actions;
 
 export default pendingTransaction;

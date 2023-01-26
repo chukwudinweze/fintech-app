@@ -18,6 +18,8 @@ import {
   getTxnHour,
   getTxnMinutes,
   getTxnMonth,
+  getTxnType,
+  getTxnYear,
 } from "../../store/pendingTransactionSlice";
 
 const Transition = React.forwardRef(function Transition(
@@ -51,7 +53,7 @@ const ConfirmTransaction: React.FC = () => {
     if (formatedUserPin === 2023) {
       // get time transaction was perfomed
       const date = new Date();
-
+      const txnYear = date.getFullYear();
       const txnMonth = date.getMonth();
       let month = months[txnMonth];
       const day = date.getDate();
@@ -64,10 +66,12 @@ const ConfirmTransaction: React.FC = () => {
       dispatch(getTxnDay(day));
       dispatch(getTxnMonth(month));
       dispatch(fundNaira(amount));
+      dispatch(getTxnYear(txnYear));
+      dispatch(getTxnType("Wallet Funding"));
 
       // alert payment successful and navigate to transaction reciept page
       alert("payment successful");
-      navigate("/notification");
+      navigate("/paymentrecipt");
     } else {
       // alert invalid pin and close diologue box
       alert("invalid pin");

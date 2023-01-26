@@ -4,6 +4,7 @@ import DashBoard from "./Pages/DashBoard";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import NotificationPage from "./Pages/NotificationPage";
 import ConfirmTxnPage from "./Pages/ConfirmTxnPage";
+import PaymentReciptPage from "./Pages/PaymentReciptPage";
 function App() {
   const theme = createTheme({
     typography: {
@@ -23,6 +24,7 @@ function App() {
           <Route path="/" element={<DashBoard />} />
           <Route path="notification" element={<NotificationPage />} />
           <Route path="confirmtxn" element={<ConfirmTxnPage />} />
+          <Route path="paymentrecipt" element={<PaymentReciptPage />} />
         </Routes>
       </ThemeProvider>
     </div>

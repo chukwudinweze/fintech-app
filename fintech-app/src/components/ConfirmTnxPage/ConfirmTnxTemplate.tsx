@@ -1,22 +1,30 @@
 import { Box, Stack } from "@mui/system";
-import Avatar from "@mui/material/Avatar";
 import { Typography } from "@mui/material";
 import { currencySymbol } from "../../store/currencySymbolEnum";
 import accessBankLogo from "../../assets/accessBankLogo.png";
+import UBALogo from "../../assets/UBALogo.png";
 import styles from "./ConfirmTnxTemplate.module.css";
 import { useNavigate } from "react-router-dom";
 import CancelTransaction from "./CancelTransaction";
 import ConfirmTransactionBtn from "./ConfirmTransaction";
 import { useAppSelector } from "../../store/hooks";
-import { BankLogo } from "./AccountLogo";
+import { BankLogo, QuiPayLogo } from "./AccountLogo";
+import { bankAccounts } from "../../Global/bankAccounts";
+import { typeOfTxn } from "../../Global/TypeOfTransaction";
 
 const ConfirmTnxTemplate = () => {
-  const amount = useAppSelector((state) => state.pendindTransaction.amount);
-  const debit = useAppSelector(
-    (state) => state.pendindTransaction.debitAccount
-  );
+  const pendingTxn = useAppSelector((state) => state.pendindTransaction);
 
-  console.log("debit", amount, debit);
+  console.log(pendingTxn.txnType);
+  console.log(pendingTxn.amount);
+
+  let acctLogo =
+    pendingTxn.txnType === typeOfTxn.WALLET_FUNDING &&
+    pendingTxn.debitAccount === bankAccounts[0].account ? (
+      <BankLogo src={accessBankLogo} label="acess Bank logo" />
+    ) : (
+      <BankLogo src={UBALogo} label="UBA logo" />
+    );
 
   return (
     <Box sx={{ width: "100%", position: "relative", paddingTop: "50px" }}>
@@ -35,7 +43,7 @@ const ConfirmTnxTemplate = () => {
         spacing={2}
       >
         {/* originating account logo or debit account logo */}
-        <BankLogo src={accessBankLogo} label="" />
+        {acctLogo}
         <div className={styles.lineContainer}>
           <div className={styles.line}></div>
           <div className={styles.arrow}></div>
@@ -46,24 +54,12 @@ const ConfirmTnxTemplate = () => {
           >
             <Typography fontSize="11px"> Amount</Typography>
             <Typography fontWeight="600" sx={{ fontSize: "20px" }}>
-              {currencySymbol.NAIRA} {amount}.00
+              {currencySymbol.NAIRA} {pendingTxn.amount}.00
             </Typography>
           </Stack>
         </div>
-        <Avatar
-          sx={{
-            width: 60,
-            height: 60,
-            borderRadius: "10px",
-            background: "#4e1dff",
-          }}
-          variant="square"
-        >
-          <Stack alignItems="center" justifyContent="center">
-            <Typography fontSize="14px"> Quipay</Typography>
-            <Typography fontSize="12px"> Wallet</Typography>
-          </Stack>
-        </Avatar>
+        {/* Quipay logo */}
+        <QuiPayLogo />
       </Stack>
       <Stack alignItems="center" justifyContent="center">
         <Typography variant="h6" fontWeight="700" gutterBottom>
@@ -72,7 +68,7 @@ const ConfirmTnxTemplate = () => {
         <Typography variant="body1" component="p" color="#958d9e">
           You are sending{" "}
           <Box component="span" color="#4e1dff">
-            {currencySymbol.NAIRA} {amount}.00
+            {currencySymbol.NAIRA} {pendingTxn.amount}.00
           </Box>{" "}
           to Your Quipay wallet.
         </Typography>

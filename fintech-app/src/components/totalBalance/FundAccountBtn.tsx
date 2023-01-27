@@ -11,9 +11,11 @@ import { currencySymbol } from "../../store/currencySymbolEnum";
 import styles from "./FundAccountBtn.module.css";
 import {
   getDebitAccount,
+  getTxnType,
   pendingTxnAmount,
 } from "../../store/pendingTransactionSlice";
 import { bankAccounts } from "../../Global/bankAccounts";
+import { typeOfTxn } from "../../Global/TypeOfTransaction";
 
 type Anchor = "bottom";
 
@@ -53,6 +55,7 @@ const FundAccountBtn = () => {
 
     dispatch(pendingTxnAmount(amount));
     dispatch(getDebitAccount(debitAccount));
+    dispatch(getTxnType(typeOfTxn.WALLET_FUNDING));
     dispatch(deActivateDrawer());
     navigate("/confirmtxn");
   };

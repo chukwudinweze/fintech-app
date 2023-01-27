@@ -21,6 +21,8 @@ import {
   getTxnType,
   getTxnYear,
 } from "../../store/pendingTransactionSlice";
+import { typeOfTxn } from "../../Global/TypeOfTransaction";
+import { currencySymbol } from "../../store/currencySymbolEnum";
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -67,7 +69,6 @@ const ConfirmTransaction: React.FC = () => {
       dispatch(getTxnMonth(month));
       dispatch(fundNaira(amount));
       dispatch(getTxnYear(txnYear));
-      dispatch(getTxnType("Wallet Funding"));
 
       // alert payment successful and navigate to transaction reciept page
       alert(`Payment Successful \n Generating Receipt`);

@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import CancelTransaction from "./CancelTransaction";
 import ConfirmTransactionBtn from "./ConfirmTransaction";
 import { useAppSelector } from "../../store/hooks";
+import { BankLogo } from "./AccountLogo";
 
 const ConfirmTnxTemplate = () => {
   const amount = useAppSelector((state) => state.pendindTransaction.amount);
@@ -33,17 +34,8 @@ const ConfirmTnxTemplate = () => {
         direction="row"
         spacing={2}
       >
-        <Avatar
-          sx={{
-            width: 60,
-            height: 60,
-            borderRadius: "10px",
-            border: "1px solid #958d9e",
-          }}
-          alt="Travis Howard"
-          src={accessBankLogo}
-          variant="square"
-        />
+        {/* originating account logo or debit account logo */}
+        <BankLogo src={accessBankLogo} label="" />
         <div className={styles.lineContainer}>
           <div className={styles.line}></div>
           <div className={styles.arrow}></div>

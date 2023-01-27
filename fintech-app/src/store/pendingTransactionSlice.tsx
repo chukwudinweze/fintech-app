@@ -10,11 +10,13 @@ interface pendingTxnType {
   txnYear: number;
   txnDay: number;
   txnType: string;
+  destinationAcct: string;
 }
 
 const initialState: pendingTxnType = {
   amount: 0,
   debitAccount: "",
+  destinationAcct: "",
   typeOfTnx: "",
   txnMinutes: 0,
   txnHour: 0,
@@ -52,12 +54,16 @@ const pendingTransaction = createSlice({
     getTxnType(state, action: PayloadAction<string>) {
       state.txnType = action.payload;
     },
+    getDestinationAcct(state, action: PayloadAction<string>) {
+      state.destinationAcct = action.payload;
+    },
   },
 });
 
 export const {
   pendingTxnAmount,
   getDebitAccount,
+  getDestinationAcct,
   getTxnMinutes,
   getTxnHour,
   getTxnDay,

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { MouseEventHandler } from "react";
 import styles from "./TransactionBtn.module.css";
 
 import { Stack } from "@mui/system";
@@ -8,12 +8,22 @@ type buttonProps = {
   background: string;
   icon: JSX.Element;
   label: string;
+  onClick: (event: React.KeyboardEvent | React.MouseEvent) => void;
 };
 
-const TransactionBtn: React.FC<buttonProps> = ({ background, icon, label }) => {
+const TransactionBtn: React.FC<buttonProps> = ({
+  background,
+  icon,
+  label,
+  onClick,
+}) => {
   return (
     <Stack alignItems="center" justifyContent="center">
-      <button className={styles.TransactionBtn} style={{ background }}>
+      <button
+        onClick={onClick}
+        className={styles.TransactionBtn}
+        style={{ background }}
+      >
         {icon}
       </button>
       <Typography

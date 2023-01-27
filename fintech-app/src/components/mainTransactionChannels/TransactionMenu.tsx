@@ -5,6 +5,7 @@ import TransactionBtn from "./TransactionBtn";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import CreditCardIcon from "@mui/icons-material/CreditCard";
 import SyncAltIcon from "@mui/icons-material/SyncAlt";
+import WithdrawMoney from "./WithdrawMoney";
 
 const TransactionMenu: React.FC = () => {
   return (
@@ -15,7 +16,7 @@ const TransactionMenu: React.FC = () => {
       justifyContent="space-around"
       sx={{ borderTop: ".02px solid #d5d0dc", padding: "20px" }}
     >
-      <TransactionBtn
+      {/* <TransactionBtn
         background="#ff396f"
         label="Withdraw"
         icon={<ArrowDownward />}
@@ -34,7 +35,8 @@ const TransactionMenu: React.FC = () => {
         background="#ffb400"
         label="Exchange"
         icon={<SyncAltIcon />}
-      />
+      /> */}
+      <WithdrawMoney />
     </Stack>
   );
 };

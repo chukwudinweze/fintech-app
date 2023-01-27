@@ -61,7 +61,7 @@ const FundAccountBtn = () => {
   };
   console.log(ddd);
   return (
-    <div className={styles.drawar}>
+    <div>
       {(["bottom"] as const).map((anchor) => (
         <React.Fragment key={anchor}>
           <button

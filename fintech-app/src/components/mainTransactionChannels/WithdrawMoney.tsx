@@ -1,34 +1,35 @@
-import AddIcon from "@mui/icons-material/Add";
 import * as React from "react";
 import Box from "@mui/material/Box";
 import SwipeableDrawer from "@mui/material/SwipeableDrawer";
 import Button from "@mui/material/Button";
 import { InputAdornment, TextField } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import { useAppDispatch } from "../../store/hooks";
 import { deActivateDrawer, toggleNav } from "../../store/InterfaceSlice";
 import { currencySymbol } from "../../store/currencySymbolEnum";
-import styles from "./FundAccountBtn.module.css";
 import {
   getDestinationAcct,
+  getTxnType,
   pendingTxnAmount,
 } from "../../store/pendingTransactionSlice";
 import { bankAccounts } from "../../Global/bankAccounts";
+import { typeOfTxn } from "../../Global/TypeOfTransaction";
+import TransactionBtn from "./TransactionBtn";
+import ArrowDownward from "@mui/icons-material/ArrowDownward";
 
 type Anchor = "bottom";
 
-const FundAccountBtn = () => {
+const WithdrawMoney = () => {
   let defaultAcct = bankAccounts[0].account;
   const [state, setState] = React.useState({
     bottom: false,
   });
 
   const [amount, setAmount] = React.useState<number>(0);
-  const [destinatonAcct, setDestinatonAcct] =
+  const [destinationAcct, setDestinationAcct] =
     React.useState<string>(defaultAcct);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const ddd = useAppSelector((state) => state.userInterface.drawer);
 
   const toggleDrawer =
     (anchor: Anchor, open: boolean) =>
@@ -51,21 +52,22 @@ const FundAccountBtn = () => {
     toggleDrawer("bottom", false);
 
     dispatch(pendingTxnAmount(amount));
-    dispatch(getDestinationAcct(destinatonAcct));
+    dispatch(getDestinationAcct(destinationAcct));
+    dispatch(getTxnType(typeOfTxn.WITHDRAWAL));
     dispatch(deActivateDrawer());
     navigate("/confirmtxn");
   };
-  console.log(ddd);
+
   return (
-    <div className={styles.drawar}>
+    <div>
       {(["bottom"] as const).map((anchor) => (
         <React.Fragment key={anchor}>
-          <button
+          <TransactionBtn
+            background="#ff396f"
+            label="Withdraw"
+            icon={<ArrowDownward />}
             onClick={toggleDrawer(anchor, true)}
-            className={styles.FundAccountBtn}
-          >
-            <AddIcon className={styles.AddIcon} />
-          </button>
+          />
           <SwipeableDrawer
             anchor={anchor}
             open={state[anchor]}
@@ -75,12 +77,12 @@ const FundAccountBtn = () => {
             <Box p={2}>
               <form onSubmit={handleSubmit}>
                 <TextField
-                  value={destinatonAcct}
-                  onChange={(e) => setDestinatonAcct(e.target.value)}
+                  value={destinationAcct}
+                  onChange={(e) => setDestinationAcct(e.target.value)}
                   sx={{ paddingTop: "20px" }}
                   id="select bank accounts"
                   select
-                  label="DSestination Account"
+                  label="From "
                   SelectProps={{
                     native: true,
                   }}
@@ -147,4 +149,4 @@ const FundAccountBtn = () => {
   );
 };
 
-export default FundAccountBtn;
+export default WithdrawMoney;

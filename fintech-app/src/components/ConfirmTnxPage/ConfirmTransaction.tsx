@@ -10,7 +10,7 @@ import { TransitionProps } from "@mui/material/transitions";
 import { useNavigate } from "react-router-dom";
 import { PinInput, PinInputField, Stack } from "@chakra-ui/react";
 import { Typography } from "@mui/material";
-import { fundNaira } from "../../store/nairaAccountSlice";
+import { fundNaira, withdrawNaira } from "../../store/nairaAccountSlice";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { months } from "../../Global/months";
 import {
@@ -42,7 +42,7 @@ const ConfirmTransaction: React.FC = () => {
 
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const amount = useAppSelector((state) => state.pendindTransaction.amount);
+  const pendintTxn = useAppSelector((state) => state.pendindTransaction);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -62,13 +62,19 @@ const ConfirmTransaction: React.FC = () => {
       const hour = date.getHours();
       const minutes = date.getMinutes();
 
+      // perfom transaction depending on the type of transaction sent to the pending transaction slice in the redux store
+      if (pendintTxn.typeOfTnx === typeOfTxn.WALLET_FUNDING) {
+        dispatch(fundNaira(pendintTxn.amount));
+      }
+      if (pendintTxn.txnType === typeOfTxn.WITHDRAWAL) {
+        dispatch(withdrawNaira(pendintTxn.amount));
+      }
       // dispatch transaction detail(date, time,amount etc)
+      dispatch(getTxnYear(txnYear));
       dispatch(getTxnMinutes(minutes));
       dispatch(getTxnHour(hour));
       dispatch(getTxnDay(day));
       dispatch(getTxnMonth(month));
-      dispatch(fundNaira(amount));
-      dispatch(getTxnYear(txnYear));
 
       // alert payment successful and navigate to transaction reciept page
       alert(`Payment Successful \n Generating Receipt`);

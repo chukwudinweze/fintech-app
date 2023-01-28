@@ -18,11 +18,9 @@ import {
   getTxnHour,
   getTxnMinutes,
   getTxnMonth,
-  getTxnType,
   getTxnYear,
 } from "../../store/pendingTransactionSlice";
 import { typeOfTxn } from "../../Global/TypeOfTransaction";
-import { currencySymbol } from "../../store/currencySymbolEnum";
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -63,12 +61,18 @@ const ConfirmTransaction: React.FC = () => {
       const minutes = date.getMinutes();
 
       // perfom transaction depending on the type of transaction sent to the pending transaction slice in the redux store
-      if (pendintTxn.typeOfTnx === typeOfTxn.WALLET_FUNDING) {
+      if (pendintTxn.txnType === typeOfTxn.WALLET_FUNDING) {
         dispatch(fundNaira(pendintTxn.amount));
+        console.log("perfom funding");
       }
       if (pendintTxn.txnType === typeOfTxn.WITHDRAWAL) {
         dispatch(withdrawNaira(pendintTxn.amount));
+        console.log("perfom withdrawal");
       }
+
+      console.log(pendintTxn.txnType);
+      console.log("is eqaul", pendintTxn.txnType === typeOfTxn.WALLET_FUNDING);
+
       // dispatch transaction detail(date, time,amount etc)
       dispatch(getTxnYear(txnYear));
       dispatch(getTxnMinutes(minutes));

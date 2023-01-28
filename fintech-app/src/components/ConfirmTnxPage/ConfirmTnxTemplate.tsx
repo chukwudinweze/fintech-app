@@ -17,13 +17,55 @@ import FundWalletNote from "./FundWalletNote";
 const ConfirmTnxTemplate = () => {
   const pendingTxn = useAppSelector((state) => state.pendindTransaction);
 
-  let acctLogo =
-    pendingTxn.txnType === typeOfTxn.WALLET_FUNDING &&
-    pendingTxn.debitAccount === bankAccounts[0].account ? (
-      <BankLogo src={accessBankLogo} label="acess Bank logo" />
-    ) : (
-      <BankLogo src={UBALogo} label="UBA logo" />
-    );
+  // let debitAcctLogo;
+  // let creditAcctLogo;
+
+  // if (
+  //   pendingTxn.txnType === typeOfTxn.WALLET_FUNDING &&
+  //   pendingTxn.debitAccount === bankAccounts[0].account
+  // ) {
+  //   debitAcctLogo = <BankLogo src={accessBankLogo} label="acess Bank logo" />;
+  //   creditAcctLogo = <QuiPayLogo />;
+  // } else if (
+  //   pendingTxn.txnType === typeOfTxn.WALLET_FUNDING &&
+  //   pendingTxn.debitAccount === bankAccounts[1].account
+  // ) {
+  //   debitAcctLogo = <BankLogo src={UBALogo} label="UBA logo" />;
+  // } else if (pendingTxn.txnType === typeOfTxn.WITHDRAWAL) {
+  //   debitAcctLogo = <QuiPayLogo />;
+  // }
+
+  // if (
+  //   pendingTxn.txnType === typeOfTxn.WITHDRAWAL &&
+  //   pendingTxn.destinationAcct === bankAccounts[0].account
+  // ) {
+  //   creditAcctLogo = <BankLogo src={accessBankLogo} label="acess Bank logo" />;
+  // } else {
+  //   creditAcctLogo = <BankLogo src={UBALogo} label="UBA logo" />;
+  // }
+
+  let debitAcctLogo;
+  let creditAcctLogo;
+
+  if (pendingTxn.txnType === typeOfTxn.WALLET_FUNDING) {
+    if (pendingTxn.debitAccount === bankAccounts[0].account) {
+      debitAcctLogo = <BankLogo src={accessBankLogo} label="acess Bank logo" />;
+    } else if (pendingTxn.debitAccount === bankAccounts[1].account) {
+      debitAcctLogo = <BankLogo src={UBALogo} label="UBA logo" />;
+    }
+    creditAcctLogo = <QuiPayLogo />;
+  } else if (pendingTxn.txnType === typeOfTxn.WITHDRAWAL) {
+    debitAcctLogo = <QuiPayLogo />;
+    if (pendingTxn.destinationAcct === bankAccounts[0].account) {
+      creditAcctLogo = (
+        <BankLogo src={accessBankLogo} label="acess Bank logo" />
+      );
+    } else {
+      creditAcctLogo = <BankLogo src={UBALogo} label="UBA logo" />;
+    }
+  } else {
+    // Handle other types of transactions
+  }
 
   return (
     <Box sx={{ width: "100%", position: "relative", paddingTop: "50px" }}>
@@ -42,7 +84,7 @@ const ConfirmTnxTemplate = () => {
         spacing={2}
       >
         {/* originating account logo or debit account logo */}
-        {acctLogo}
+        {debitAcctLogo}
         <div className={styles.lineContainer}>
           <div className={styles.line}></div>
           <div className={styles.arrow}></div>
@@ -57,8 +99,8 @@ const ConfirmTnxTemplate = () => {
             </Typography>
           </Stack>
         </div>
-        {/* Quipay logo */}
-        <QuiPayLogo />
+        {/* credit account logo comes after the arrow head in the confirmation page */}
+        {creditAcctLogo}
       </Stack>
       {pendingTxn.txnType === typeOfTxn.WITHDRAWAL && <WithdrawNote />}
       {pendingTxn.txnType === typeOfTxn.WALLET_FUNDING && <FundWalletNote />}

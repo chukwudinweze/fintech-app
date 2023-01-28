@@ -15,6 +15,7 @@ import { toPng } from "html-to-image";
 import SaveIcon from "@mui/icons-material/Save";
 import PrintIcon from "@mui/icons-material/Print";
 import { useReactToPrint } from "react-to-print";
+import { typeOfTxn } from "../../Global/TypeOfTransaction";
 
 const PaymentRecipt = () => {
   const transaction = useAppSelector((state) => state.pendindTransaction);
@@ -91,7 +92,7 @@ const PaymentRecipt = () => {
             justifyContent="space-between"
             borderBottom="1px solid #ababb5"
           >
-            <Typography>Transfer Type</Typography>{" "}
+            <Typography>Transfer Type </Typography>
             <Typography>{transaction.txnType}</Typography>
           </Stack>
           <Stack
@@ -99,9 +100,20 @@ const PaymentRecipt = () => {
             alignItems="center"
             justifyContent="space-between"
             borderBottom="1px solid #ababb5"
+
+            // code below first checks the transaction type and then uses a ternary operator to either display "Debit Account" and the debit account number or "Destination Account" and the destination account number
           >
-            <Typography>Debit Account</Typography>{" "}
-            <Typography>{transaction.debitAccount}</Typography>
+            {transaction.txnType === typeOfTxn.WALLET_FUNDING ? (
+              <>
+                <Typography>Debit Account </Typography>
+                <Typography>{transaction.debitAccount}</Typography>
+              </>
+            ) : (
+              <>
+                <Typography>Destination Account </Typography>
+                <Typography>{transaction.destinationAcct}</Typography>
+              </>
+            )}
           </Stack>
           <Stack
             direction="row"
@@ -117,7 +129,7 @@ const PaymentRecipt = () => {
             justifyContent="space-between"
             borderBottom="1px solid #ababb5"
           >
-            <Typography>Amount</Typography>{" "}
+            <Typography>Amount </Typography>
             <Typography variant="h6" fontWeight="700">
               {currencySymbol.NAIRA}
               {transaction.amount}.00

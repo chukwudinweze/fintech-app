@@ -137,7 +137,7 @@ const WithdrawMoney = () => {
                     color="primary"
                     type="submit"
                   >
-                    Fund Wallet
+                    Withdraw
                   </Button>
                 </Box>
               </form>

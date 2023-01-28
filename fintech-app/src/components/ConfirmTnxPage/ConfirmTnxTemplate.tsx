@@ -11,12 +11,11 @@ import { useAppSelector } from "../../store/hooks";
 import { BankLogo, QuiPayLogo } from "./AccountLogo";
 import { bankAccounts } from "../../Global/bankAccounts";
 import { typeOfTxn } from "../../Global/TypeOfTransaction";
+import WithdrawNote from "./WithdrawNote";
+import FundWalletNote from "./FundWalletNote";
 
 const ConfirmTnxTemplate = () => {
   const pendingTxn = useAppSelector((state) => state.pendindTransaction);
-
-  console.log(pendingTxn.txnType);
-  console.log(pendingTxn.amount);
 
   let acctLogo =
     pendingTxn.txnType === typeOfTxn.WALLET_FUNDING &&
@@ -61,26 +60,14 @@ const ConfirmTnxTemplate = () => {
         {/* Quipay logo */}
         <QuiPayLogo />
       </Stack>
-      <Stack alignItems="center" justifyContent="center">
-        <Typography variant="h6" fontWeight="700" gutterBottom>
-          Verify this Transaction
-        </Typography>
-        <Typography variant="body1" component="p" color="#958d9e">
-          You are sending{" "}
-          <Box component="span" color="#4e1dff">
-            {currencySymbol.NAIRA} {pendingTxn.amount}.00
-          </Box>{" "}
-          to Your Quipay wallet.
-        </Typography>
-        <Typography variant="body1" component="p" color="#958d9e">
-          Are you sure?
-        </Typography>
-      </Stack>
+      {pendingTxn.txnType === typeOfTxn.WITHDRAWAL && <WithdrawNote />}
+      {pendingTxn.txnType === typeOfTxn.WALLET_FUNDING && <FundWalletNote />}
       <Stack
         spacing={2}
         direction="row"
         sx={{ marginTop: "200px", padding: "0 20px" }}
       >
+        {/* complete/cancel transaction whe this two button components are clicked */}
         <CancelTransaction />
         <ConfirmTransactionBtn />
       </Stack>

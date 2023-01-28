@@ -11,7 +11,12 @@ const WithdrawNote = () => {
       <Typography variant="h6" fontWeight="700" gutterBottom>
         Verify this Transaction
       </Typography>
-      <Typography variant="body1" component="p" color="#958d9e">
+      <Typography
+        textAlign="center"
+        variant="body1"
+        component="p"
+        color="#958d9e"
+      >
         You are withdrawing{" "}
         <Box component="span" color="#4e1dff">
           {currencySymbol.NAIRA} {pendingTxn.amount}.00

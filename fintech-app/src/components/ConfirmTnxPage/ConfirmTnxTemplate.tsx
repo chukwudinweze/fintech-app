@@ -17,33 +17,6 @@ import FundWalletNote from "./FundWalletNote";
 const ConfirmTnxTemplate = () => {
   const pendingTxn = useAppSelector((state) => state.pendindTransaction);
 
-  // let debitAcctLogo;
-  // let creditAcctLogo;
-
-  // if (
-  //   pendingTxn.txnType === typeOfTxn.WALLET_FUNDING &&
-  //   pendingTxn.debitAccount === bankAccounts[0].account
-  // ) {
-  //   debitAcctLogo = <BankLogo src={accessBankLogo} label="acess Bank logo" />;
-  //   creditAcctLogo = <QuiPayLogo />;
-  // } else if (
-  //   pendingTxn.txnType === typeOfTxn.WALLET_FUNDING &&
-  //   pendingTxn.debitAccount === bankAccounts[1].account
-  // ) {
-  //   debitAcctLogo = <BankLogo src={UBALogo} label="UBA logo" />;
-  // } else if (pendingTxn.txnType === typeOfTxn.WITHDRAWAL) {
-  //   debitAcctLogo = <QuiPayLogo />;
-  // }
-
-  // if (
-  //   pendingTxn.txnType === typeOfTxn.WITHDRAWAL &&
-  //   pendingTxn.destinationAcct === bankAccounts[0].account
-  // ) {
-  //   creditAcctLogo = <BankLogo src={accessBankLogo} label="acess Bank logo" />;
-  // } else {
-  //   creditAcctLogo = <BankLogo src={UBALogo} label="UBA logo" />;
-  // }
-
   let debitAcctLogo;
   let creditAcctLogo;
 
@@ -68,7 +41,15 @@ const ConfirmTnxTemplate = () => {
   }
 
   return (
-    <Box sx={{ width: "100%", position: "relative", paddingTop: "50px" }}>
+    <Box
+      sx={{
+        width: "100%",
+        position: "relative",
+        paddingTop: "50px",
+        background: "#fff",
+        minHeight: "100vh",
+      }}
+    >
       <Box
         textAlign="center"
         sx={{ marginBottom: { xs: "70px", sm: "60px", lg: "10px" } }}

@@ -11,6 +11,8 @@ interface pendingTxnType {
   txnDay: number;
   txnType: string;
   destinationAcct: string;
+  ExchangeCurrencyFrom: string;
+  ExchangeCurrencyTo: string;
 }
 
 const initialState: pendingTxnType = {
@@ -24,6 +26,8 @@ const initialState: pendingTxnType = {
   txnMonth: "",
   txnYear: 0,
   txnType: "",
+  ExchangeCurrencyFrom: "",
+  ExchangeCurrencyTo: "",
 };
 
 const pendingTransaction = createSlice({
@@ -57,6 +61,12 @@ const pendingTransaction = createSlice({
     getDestinationAcct(state, action: PayloadAction<string>) {
       state.destinationAcct = action.payload;
     },
+    getExchangeCrrencyFrom(state, action: PayloadAction<string>) {
+      state.ExchangeCurrencyFrom = action.payload;
+    },
+    getExchangeCrrencyTo(state, action: PayloadAction<string>) {
+      state.ExchangeCurrencyTo = action.payload;
+    },
   },
 });
 
@@ -70,6 +80,8 @@ export const {
   getTxnMonth,
   getTxnYear,
   getTxnType,
+  getExchangeCrrencyFrom,
+  getExchangeCrrencyTo,
 } = pendingTransaction.actions;
 
 export default pendingTransaction;

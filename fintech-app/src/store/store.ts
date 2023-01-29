@@ -15,6 +15,7 @@ const store = configureStore({
     userInterface: uiStateSlice.reducer,
     pendindTransaction: pendingTransaction.reducer,
   },
+  devTools: process.env.NODE_ENV !== "production",
 });
 
 export type RootState = ReturnType<typeof store.getState>;

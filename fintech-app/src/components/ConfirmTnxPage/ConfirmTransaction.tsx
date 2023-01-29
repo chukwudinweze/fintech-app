@@ -14,6 +14,8 @@ import { fundNaira, withdrawNaira } from "../../store/nairaAccountSlice";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { months } from "../../Global/months";
 import {
+  getExchangeCrrencyFrom,
+  getExchangeCrrencyTo,
   getTxnDay,
   getTxnHour,
   getTxnMinutes,
@@ -21,6 +23,13 @@ import {
   getTxnYear,
 } from "../../store/pendingTransactionSlice";
 import { typeOfTxn } from "../../Global/TypeOfTransaction";
+import { currencySymbol } from "../../store/currencySymbolEnum";
+import { dollarToNaira } from "../utilities/dollarToNaira";
+import { fundDollar, withdrawDollar } from "../../store/dollarAccountSlice";
+import { fundEuro, withdrawEuro } from "../../store/euroAccount";
+import { nairaToEuro } from "../utilities/nairaToEuro";
+import { euroToNaira } from "../utilities/euroToNaira";
+import { nairaToDollar } from "../utilities/nairaToDollar";
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -40,7 +49,7 @@ const ConfirmTransaction: React.FC = () => {
 
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const pendintTxn = useAppSelector((state) => state.pendindTransaction);
+  const pendingTxn = useAppSelector((state) => state.pendindTransaction);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -55,23 +64,48 @@ const ConfirmTransaction: React.FC = () => {
       const date = new Date();
       const txnYear = date.getFullYear();
       const txnMonth = date.getMonth();
-      let month = months[txnMonth];
+      const month = months[txnMonth];
       const day = date.getDate();
       const hour = date.getHours();
       const minutes = date.getMinutes();
 
       // perfom transaction depending on the type of transaction sent to the pending transaction slice in the redux store
-      if (pendintTxn.txnType === typeOfTxn.WALLET_FUNDING) {
-        dispatch(fundNaira(pendintTxn.amount));
-        console.log("perfom funding");
+      if (pendingTxn.txnType === typeOfTxn.WALLET_FUNDING) {
+        dispatch(fundNaira(pendingTxn.amount));
       }
-      if (pendintTxn.txnType === typeOfTxn.WITHDRAWAL) {
-        dispatch(withdrawNaira(pendintTxn.amount));
-        console.log("perfom withdrawal");
+      if (pendingTxn.txnType === typeOfTxn.WITHDRAWAL) {
+        dispatch(withdrawNaira(pendingTxn.amount));
       }
 
-      console.log(pendintTxn.txnType);
-      console.log("is eqaul", pendintTxn.txnType === typeOfTxn.WALLET_FUNDING);
+      if (pendingTxn.txnType === typeOfTxn.EXCHAGE) {
+        if (
+          pendingTxn.ExchangeCurrencyFrom === currencySymbol.NAIRA &&
+          pendingTxn.ExchangeCurrencyTo === currencySymbol.DOLLAR
+        ) {
+          const nairaInDollar = nairaToDollar(pendingTxn.amount);
+          dispatch(withdrawNaira(pendingTxn.amount));
+          dispatch(fundDollar(nairaInDollar));
+        }
+        if (
+          pendingTxn.ExchangeCurrencyFrom === currencySymbol.NAIRA &&
+          pendingTxn.ExchangeCurrencyTo === currencySymbol.EURO
+        ) {
+          const nairaInEuro = nairaToEuro(pendingTxn.amount);
+          dispatch(withdrawNaira(pendingTxn.amount));
+          dispatch(fundEuro(nairaInEuro));
+        }
+        if (pendingTxn.ExchangeCurrencyFrom === currencySymbol.DOLLAR) {
+          const dollarInNaira = dollarToNaira(pendingTxn.amount);
+          dispatch(withdrawDollar(pendingTxn.amount));
+          dispatch(fundNaira(dollarInNaira));
+        }
+        if (pendingTxn.ExchangeCurrencyFrom === currencySymbol.EURO) {
+          const euroInNaira = euroToNaira(pendingTxn.amount);
+          dispatch(withdrawEuro(pendingTxn.amount));
+          dispatch(fundNaira(euroInNaira));
+          console.log("what do i do");
+        }
+      }
 
       // dispatch transaction detail(date, time,amount etc)
       dispatch(getTxnYear(txnYear));

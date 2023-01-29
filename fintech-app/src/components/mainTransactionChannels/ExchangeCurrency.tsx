@@ -8,11 +8,11 @@ import { useAppDispatch } from "../../store/hooks";
 import { deActivateDrawer, toggleNav } from "../../store/InterfaceSlice";
 import { currencySymbol } from "../../store/currencySymbolEnum";
 import {
-  getDestinationAcct,
   getTxnType,
   pendingTxnAmount,
+  getExchangeCrrencyFrom,
+  getExchangeCrrencyTo,
 } from "../../store/pendingTransactionSlice";
-import { bankAccounts } from "../../Global/bankAccounts";
 import { typeOfTxn } from "../../Global/TypeOfTransaction";
 import TransactionBtn from "./TransactionBtn";
 import SyncAltIcon from "@mui/icons-material/SyncAlt";
@@ -20,7 +20,6 @@ import SyncAltIcon from "@mui/icons-material/SyncAlt";
 type Anchor = "bottom";
 
 const ExchangeCurrency = () => {
-  let defaultAcct = bankAccounts[0].account;
   const [state, setState] = React.useState({
     bottom: false,
   });
@@ -32,18 +31,8 @@ const ExchangeCurrency = () => {
   );
   const [amount, setAmount] = React.useState<number>(0);
 
-  const [destinationAcct, setDestinationAcct] =
-    React.useState<string>(defaultAcct);
-
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-
-  //   currencies
-  const currencies = [
-    { symbol: currencySymbol.NAIRA, label: "Naira" },
-    { symbol: currencySymbol.DOLLAR, label: "Dollar" },
-    { symbol: currencySymbol.EURO, label: "Euro" },
-  ];
 
   const toggleDrawer =
     (anchor: Anchor, open: boolean) =>
@@ -66,8 +55,9 @@ const ExchangeCurrency = () => {
     toggleDrawer("bottom", false);
 
     dispatch(pendingTxnAmount(amount));
-    dispatch(getDestinationAcct(destinationAcct));
-    dispatch(getTxnType(typeOfTxn.WITHDRAWAL));
+    dispatch(getTxnType(typeOfTxn.EXCHAGE));
+    dispatch(getExchangeCrrencyFrom(currencyFrom));
+    dispatch(getExchangeCrrencyTo(currencyTo));
     dispatch(deActivateDrawer());
     navigate("/confirmtxn");
   };
@@ -92,7 +82,7 @@ const ExchangeCurrency = () => {
               <form onSubmit={handleSubmit}>
                 <TextField
                   value={currencyFrom}
-                  onChange={(e) => setDestinationAcct(e.target.value)}
+                  onChange={(e) => setCurrencyFrom(e.target.value)}
                   sx={{ paddingTop: "20px" }}
                   id="select bank accounts"
                   select
@@ -103,15 +93,13 @@ const ExchangeCurrency = () => {
                   variant="standard"
                   fullWidth
                 >
-                  {currencies.map(({ symbol, label }) => (
-                    <option key={symbol} value={symbol}>
-                      {`${symbol} (${label})`}
-                    </option>
-                  ))}
+                  <option value={currencySymbol.NAIRA}>Naira</option>
+                  <option value={currencySymbol.DOLLAR}>Dollar</option>
+                  <option value={currencySymbol.EURO}>Euro</option>
                 </TextField>
                 <TextField
                   value={currencyTo}
-                  onChange={(e) => setDestinationAcct(e.target.value)}
+                  onChange={(e) => setCurrencyTo(e.target.value)}
                   sx={{ paddingTop: "20px" }}
                   id="select bank accounts"
                   select
@@ -122,18 +110,28 @@ const ExchangeCurrency = () => {
                   variant="standard"
                   fullWidth
                 >
-                  {currencies.map(({ symbol, label }) => (
-                    <option key={symbol} value={symbol}>
-                      {`${symbol} (${label})`}
-                    </option>
-                  ))}
+                  {/* This code is checking the current selected currency, currencyFrom, and only rendering options for other currencies in a select dropdown menu. */}
+                  {currencyFrom !== currencySymbol.NAIRA && (
+                    <option value={currencySymbol.NAIRA}>Naira</option>
+                  )}
+                  {currencyFrom === currencySymbol.NAIRA && (
+                    <option value={currencySymbol.DOLLAR}>Dollar</option>
+                  )}
+                  {currencyFrom === currencySymbol.NAIRA && (
+                    <option value={currencySymbol.EURO}>Euro</option>
+                  )}
                 </TextField>
                 <TextField
                   InputProps={{
                     autoComplete: "off",
                     startAdornment: (
                       <InputAdornment position="start">
-                        {currencySymbol.NAIRA}
+                        {currencyFrom === currencySymbol.NAIRA &&
+                          currencySymbol.NAIRA}
+                        {currencyFrom === currencySymbol.DOLLAR &&
+                          currencySymbol.DOLLAR}
+                        {currencyFrom === currencySymbol.EURO &&
+                          currencySymbol.EURO}
                       </InputAdornment>
                     ),
                   }}

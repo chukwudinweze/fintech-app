@@ -8,11 +8,12 @@ import { useNavigate } from "react-router-dom";
 import CancelTransaction from "./CancelTransaction";
 import ConfirmTransactionBtn from "./ConfirmTransaction";
 import { useAppSelector } from "../../store/hooks";
-import { BankLogo, QuiPayLogo } from "./AccountLogo";
+import { BankLogo, QuiPayLogo, QuiPayUserLogo } from "./AccountLogo";
 import { bankAccounts } from "../../Global/bankAccounts";
 import { typeOfTxn } from "../../Global/TypeOfTransaction";
 import WithdrawNote from "./WithdrawNote";
 import FundWalletNote from "./FundWalletNote";
+import TransferNote from "./TransferNote";
 
 const ConfirmTnxTemplate = () => {
   const pendingTxn = useAppSelector((state) => state.pendindTransaction);
@@ -36,8 +37,9 @@ const ConfirmTnxTemplate = () => {
     } else {
       creditAcctLogo = <BankLogo src={UBALogo} label="UBA logo" />;
     }
-  } else {
-    // Handle other types of transactions
+  } else if (pendingTxn.txnType === typeOfTxn.TRANSFER) {
+    debitAcctLogo = <QuiPayLogo />;
+    creditAcctLogo = <QuiPayUserLogo />;
   }
 
   return (
@@ -85,6 +87,7 @@ const ConfirmTnxTemplate = () => {
       </Stack>
       {pendingTxn.txnType === typeOfTxn.WITHDRAWAL && <WithdrawNote />}
       {pendingTxn.txnType === typeOfTxn.WALLET_FUNDING && <FundWalletNote />}
+      {pendingTxn.txnType === typeOfTxn.TRANSFER && <TransferNote />}
       <Stack
         spacing={2}
         direction="row"

@@ -6,6 +6,7 @@ import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import CreditCardIcon from "@mui/icons-material/CreditCard";
 import SyncAltIcon from "@mui/icons-material/SyncAlt";
 import WithdrawMoney from "./WithdrawMoney";
+import TransferMoney from "./TransferMoney";
 
 const TransactionMenu: React.FC = () => {
   return (
@@ -37,6 +38,7 @@ const TransactionMenu: React.FC = () => {
         icon={<SyncAltIcon />}
       /> */}
       <WithdrawMoney />
+      <TransferMoney />
     </Stack>
   );
 };

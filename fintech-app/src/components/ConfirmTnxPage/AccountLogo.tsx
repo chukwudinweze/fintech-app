@@ -40,3 +40,22 @@ export const QuiPayLogo = () => {
     </Avatar>
   );
 };
+
+export const QuiPayUserLogo = () => {
+  return (
+    <Avatar
+      sx={{
+        width: 60,
+        height: 60,
+        borderRadius: "10px",
+        background: "#4e1dff",
+      }}
+      variant="square"
+    >
+      <Stack alignItems="center" justifyContent="center">
+        <Typography fontSize="14px"> Quipay</Typography>
+        <Typography fontSize="12px"> User</Typography>
+      </Stack>
+    </Avatar>
+  );
+};

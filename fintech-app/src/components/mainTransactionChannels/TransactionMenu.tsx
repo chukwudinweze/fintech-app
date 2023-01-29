@@ -3,10 +3,10 @@ import { Stack } from "@mui/system";
 import React from "react";
 import TransactionBtn from "./TransactionBtn";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import CreditCardIcon from "@mui/icons-material/CreditCard";
-import SyncAltIcon from "@mui/icons-material/SyncAlt";
 import WithdrawMoney from "./WithdrawMoney";
 import TransferMoney from "./TransferMoney";
+import CreditCards from "./CreditCards";
+import ExchangeCurrency from "./ExchangeCurrency";
 
 const TransactionMenu: React.FC = () => {
   return (
@@ -39,6 +39,8 @@ const TransactionMenu: React.FC = () => {
       /> */}
       <WithdrawMoney />
       <TransferMoney />
+      <ExchangeCurrency />
+      <CreditCards />
     </Stack>
   );
 };

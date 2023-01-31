@@ -8,19 +8,35 @@ const AccountSummary = () => {
     <Box sx={{ flexGrow: 1, marginTop: "20px" }}>
       <Grid container spacing={2}>
         <Grid item xs={6}>
-          <AcctSummaryLayout label="Income" amount={552.95} color="#1dcc70" />
+          <AcctSummaryLayout
+            label="Income"
+            amount={552.95}
+            color="#1dcc70"
+            pageLink="/savingsChart"
+          />
         </Grid>
         <Grid item xs={6}>
-          <AcctSummaryLayout label="Expenses" amount={86.45} color="#ff396f" />
+          <AcctSummaryLayout
+            label="Expenses"
+            amount={86.45}
+            color="#ff396f"
+            pageLink="/savingsChart"
+          />
         </Grid>
         <Grid item xs={6}>
-          <AcctSummaryLayout label="Savings" amount={120.99} color="#000000" />
+          <AcctSummaryLayout
+            label="Savings"
+            amount={120.99}
+            color="#000000"
+            pageLink="/savingsChart"
+          />
         </Grid>
         <Grid item xs={6}>
           <AcctSummaryLayout
             label="Total Bills"
             amount={53.25}
             color="#000000"
+            pageLink="/savingsChart"
           />
         </Grid>
       </Grid>

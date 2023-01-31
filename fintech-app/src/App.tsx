@@ -5,7 +5,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import NotificationPage from "./Pages/NotificationPage";
 import ConfirmTxnPage from "./Pages/ConfirmTxnPage";
 import PaymentReciptPage from "./Pages/PaymentReciptPage";
-import SavingsChart from "./Pages/SavingsChart";
+import SavingsChart from "./Pages/SavingsChartPage";
 function App() {
   const theme = createTheme({
     typography: {

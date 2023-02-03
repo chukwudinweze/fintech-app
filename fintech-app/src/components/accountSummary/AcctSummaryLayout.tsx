@@ -16,7 +16,6 @@ const AcctSummaryLayout: React.FC<accountProps> = ({
 }) => {
   return (
     <Link to={pageLink}>
-      {" "}
       <Box
         sx={{
           padding: "12px",

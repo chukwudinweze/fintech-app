@@ -16,7 +16,6 @@ const PageHeader: React.FC<{ label: string }> = ({ label }) => {
       sx={{
         width: "100%",
         color: "#fff",
-        marginBottom: "30px",
         marginTop: "10px",
         paddingLeft: "20px",
         position: "fixed",

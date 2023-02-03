@@ -8,6 +8,7 @@ const options = {
     width: 380,
     type: "donut",
   },
+
   plotOptions: {
     donut: {
       donut: {
@@ -24,7 +25,7 @@ const options = {
     enabled: true,
   },
 
-  // colors: ["#1A73E8", "#B32824", "#7024b3"],
+  colors: ["#1dcc70", "#ff396f", "#ffb400"],
 
   responsive: [
     {
@@ -43,10 +44,11 @@ const options = {
     position: "right",
     offsetY: 80,
     height: 230,
+    show: false,
   },
 };
 
-const AreaChart = () => {
+const PieChart = () => {
   return (
     <Box
       sx={{
@@ -54,16 +56,17 @@ const AreaChart = () => {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
+        marginTop: "100px",
       }}
     >
       <ReactApexChart
         options={options as any}
         series={series}
         type="donut"
-        width={380}
+        width={300}
       />
     </Box>
   );
 };
 
-export default AreaChart;
+export default PieChart;

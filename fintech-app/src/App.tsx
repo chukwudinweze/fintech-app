@@ -5,7 +5,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import NotificationPage from "./Pages/NotificationPage";
 import ConfirmTxnPage from "./Pages/ConfirmTxnPage";
 import PaymentReciptPage from "./Pages/PaymentReciptPage";
-import SavingsChart from "./Pages/SavingsChartPage";
+import ExpensesPage from "./Pages/ExpensesPage";
 import TransactionHistoryPage from "./Pages/TransactionHistoryPage";
 function App() {
   const theme = createTheme({
@@ -27,7 +27,7 @@ function App() {
           <Route path="notification" element={<NotificationPage />} />
           <Route path="confirmtxn" element={<ConfirmTxnPage />} />
           <Route path="paymentrecipt" element={<PaymentReciptPage />} />
-          <Route path="savingsChart" element={<SavingsChart />} />
+          <Route path="totalexpenses" element={<ExpensesPage />} />
           <Route
             path="transactionhistory"
             element={<TransactionHistoryPage />}

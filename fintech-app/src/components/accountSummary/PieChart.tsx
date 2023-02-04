@@ -1,54 +1,57 @@
 import { Box } from "@mui/material";
 import ReactApexChart from "react-apexcharts";
-
-const series = [55, 13, 33];
-
-const options = {
-  chart: {
-    width: 380,
-    type: "donut",
-  },
-
-  plotOptions: {
-    donut: {
-      donut: {
-        size: "85%",
-        colors: {
-          borderWidth: 0,
-        },
-      },
-    },
-  },
-
-  labels: ["Naira", "Dollar", "Euro"],
-  dataLabels: {
-    enabled: true,
-  },
-
-  colors: ["#1dcc70", "#ff396f", "#ffb400"],
-
-  responsive: [
-    {
-      breakpoint: 480,
-      options: {
-        chart: {
-          width: 300,
-        },
-        legend: {
-          show: false,
-        },
-      },
-    },
-  ],
-  legend: {
-    position: "right",
-    offsetY: 80,
-    height: 230,
-    show: false,
-  },
-};
+import { useAppSelector } from "../../store/hooks";
 
 const PieChart = () => {
+  const { naira, dollar, euro } = useAppSelector(
+    (state) => state.totalExpenses
+  );
+  const series = [naira, dollar, euro];
+
+  const options = {
+    chart: {
+      width: 380,
+      type: "donut",
+    },
+
+    plotOptions: {
+      donut: {
+        donut: {
+          size: "85%",
+          colors: {
+            borderWidth: 0,
+          },
+        },
+      },
+    },
+
+    labels: ["Naira", "Dollar", "Euro"],
+    dataLabels: {
+      enabled: true,
+    },
+
+    colors: ["#1dcc70", "#ff396f", "#ffb400"],
+
+    responsive: [
+      {
+        breakpoint: 480,
+        options: {
+          chart: {
+            width: 300,
+          },
+          legend: {
+            show: false,
+          },
+        },
+      },
+    ],
+    legend: {
+      position: "right",
+      offsetY: 80,
+      height: 230,
+      show: false,
+    },
+  };
   return (
     <Box
       sx={{

@@ -12,7 +12,7 @@ const AccountSummary = () => {
             label="Income"
             amount={552.95}
             color="#1dcc70"
-            pageLink="/savingsChart"
+            pageLink="/totalexpenses"
           />
         </Grid>
         <Grid item xs={6}>
@@ -20,7 +20,7 @@ const AccountSummary = () => {
             label="Expenses"
             amount={86.45}
             color="#ff396f"
-            pageLink="/savingsChart"
+            pageLink="/totalexpenses"
           />
         </Grid>
         <Grid item xs={6}>
@@ -28,7 +28,7 @@ const AccountSummary = () => {
             label="Savings"
             amount={120.99}
             color="#000000"
-            pageLink="/savingsChart"
+            pageLink="/totalexpenses"
           />
         </Grid>
         <Grid item xs={6}>
@@ -36,7 +36,7 @@ const AccountSummary = () => {
             label="Total Bills"
             amount={53.25}
             color="#000000"
-            pageLink="/savingsChart"
+            pageLink="/totalexpenses"
           />
         </Grid>
       </Grid>

@@ -3,6 +3,7 @@ import completedTxnSlice from "./completedTxnSlice";
 import currencySymbolSlice from "./currencyModelSlice";
 import dollarAccount from "./dollarAccountSlice";
 import euroAccount from "./euroAccount";
+import totalExpensesSlice from "./ExpensesSlice";
 import uiStateSlice from "./InterfaceSlice";
 import nairaAccount from "./nairaAccountSlice";
 import pendingTransaction from "./pendingTransactionSlice";
@@ -16,6 +17,7 @@ const store = configureStore({
     userInterface: uiStateSlice.reducer,
     pendindTransaction: pendingTransaction.reducer,
     completedTransactions: completedTxnSlice.reducer,
+    totalExpenses: totalExpensesSlice.reducer,
   },
   devTools: process.env.NODE_ENV !== "production",
 });

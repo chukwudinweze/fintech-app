@@ -30,6 +30,11 @@ import { euroToNaira } from "../utilities/euroToNaira";
 import { nairaToDollar } from "../utilities/nairaToDollar";
 import { getNewTransaction } from "../../store/completedTxnSlice";
 import { v4 as uuidv4 } from "uuid";
+import {
+  addToDollarTotalExpenses,
+  addToEuroTotalExpenses,
+  addToNairaTotalExpenses,
+} from "../../store/ExpensesSlice";
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -99,6 +104,9 @@ const ConfirmTransaction: React.FC = () => {
             currency: currencySymbol.NAIRA,
           })
         );
+
+        // then add amount to total expense
+        dispatch(addToNairaTotalExpenses(pendingTxn.amount));
       }
 
       if (pendingTxn.txnType === typeOfTxn.EXCHAGE) {
@@ -120,6 +128,9 @@ const ConfirmTransaction: React.FC = () => {
               currency: currencySymbol.NAIRA,
             })
           );
+
+          // then add amount to total expense
+          dispatch(addToNairaTotalExpenses(pendingTxn.amount));
         }
         if (
           pendingTxn.ExchangeCurrencyFrom === currencySymbol.NAIRA &&
@@ -138,6 +149,9 @@ const ConfirmTransaction: React.FC = () => {
               currency: currencySymbol.NAIRA,
             })
           );
+
+          // then add amount to total expense
+          dispatch(addToNairaTotalExpenses(pendingTxn.amount));
         }
         if (pendingTxn.ExchangeCurrencyFrom === currencySymbol.DOLLAR) {
           const dollarInNaira = dollarToNaira(pendingTxn.amount);
@@ -153,6 +167,9 @@ const ConfirmTransaction: React.FC = () => {
               currency: currencySymbol.DOLLAR,
             })
           );
+
+          // then add amount to total expense
+          dispatch(addToDollarTotalExpenses(pendingTxn.amount));
         }
         if (pendingTxn.ExchangeCurrencyFrom === currencySymbol.EURO) {
           const euroInNaira = euroToNaira(pendingTxn.amount);
@@ -168,6 +185,9 @@ const ConfirmTransaction: React.FC = () => {
               currency: currencySymbol.EURO,
             })
           );
+
+          // then add amount to total expense
+          dispatch(addToEuroTotalExpenses(pendingTxn.amount));
         }
       }
 

@@ -81,6 +81,8 @@ const ConfirmTransaction: React.FC = () => {
             date: completedTxnDate,
             label: "Wallet Funding",
             id: uuidv4(),
+            typeOfTxn: typeOfTxn.WALLET_FUNDING,
+            currency: currencySymbol.NAIRA,
           })
         );
       }
@@ -94,6 +96,7 @@ const ConfirmTransaction: React.FC = () => {
             date: completedTxnDate,
             label: "Naira Withdrawal",
             id: uuidv4(),
+            currency: currencySymbol.NAIRA,
           })
         );
       }
@@ -114,6 +117,7 @@ const ConfirmTransaction: React.FC = () => {
               date: completedTxnDate,
               label: "Naira to Dollar Exchange",
               id: uuidv4(),
+              currency: currencySymbol.NAIRA,
             })
           );
         }
@@ -131,6 +135,7 @@ const ConfirmTransaction: React.FC = () => {
               date: completedTxnDate,
               label: "Naira to Euro Exchange",
               id: uuidv4(),
+              currency: currencySymbol.NAIRA,
             })
           );
         }
@@ -145,6 +150,7 @@ const ConfirmTransaction: React.FC = () => {
               date: completedTxnDate,
               label: "Dollar to Naira Exchange",
               id: uuidv4(),
+              currency: currencySymbol.DOLLAR,
             })
           );
         }
@@ -159,6 +165,7 @@ const ConfirmTransaction: React.FC = () => {
               date: completedTxnDate,
               label: "Euro to Naira Exchange",
               id: uuidv4(),
+              currency: currencySymbol.EURO,
             })
           );
         }

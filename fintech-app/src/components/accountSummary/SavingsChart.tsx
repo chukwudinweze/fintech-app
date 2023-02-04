@@ -18,9 +18,9 @@ export default function App() {
           width: "100%",
         }}
       >
-        <PageHeader label="Expenses" />
+        <PageHeader label="Your Expenses" />
         <PieChart />
-        <TransactionList label="nnnn" amount={33} date="ff" />
+        <TransactionList label="nnnn" amount={33} date="ff" currency="n" />
       </Box>
     </>
   );

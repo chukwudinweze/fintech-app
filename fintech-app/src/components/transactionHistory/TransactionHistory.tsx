@@ -1,4 +1,3 @@
-import { Box } from "@mui/material";
 import { Stack } from "@mui/system";
 import TransactionList from "../../Global/TransactionList";
 import { useAppSelector } from "../../store/hooks";

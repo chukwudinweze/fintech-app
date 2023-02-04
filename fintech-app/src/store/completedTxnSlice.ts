@@ -4,6 +4,7 @@ interface completedTxnType {
   amount: number;
   date: string;
   label: string;
+  id: string;
 }
 
 const initialState: completedTxnType[] = [];

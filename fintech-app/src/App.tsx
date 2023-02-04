@@ -6,6 +6,7 @@ import NotificationPage from "./Pages/NotificationPage";
 import ConfirmTxnPage from "./Pages/ConfirmTxnPage";
 import PaymentReciptPage from "./Pages/PaymentReciptPage";
 import SavingsChart from "./Pages/SavingsChartPage";
+import TransactionHistoryPage from "./Pages/TransactionHistoryPage";
 function App() {
   const theme = createTheme({
     typography: {
@@ -27,6 +28,10 @@ function App() {
           <Route path="confirmtxn" element={<ConfirmTxnPage />} />
           <Route path="paymentrecipt" element={<PaymentReciptPage />} />
           <Route path="savingsChart" element={<SavingsChart />} />
+          <Route
+            path="transactionhistory"
+            element={<TransactionHistoryPage />}
+          />
         </Routes>
       </ThemeProvider>
     </div>

@@ -29,6 +29,7 @@ import { nairaToEuro } from "../utilities/nairaToEuro";
 import { euroToNaira } from "../utilities/euroToNaira";
 import { nairaToDollar } from "../utilities/nairaToDollar";
 import { getNewTransaction } from "../../store/completedTxnSlice";
+import { v4 as uuidv4 } from "uuid";
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -68,11 +69,20 @@ const ConfirmTransaction: React.FC = () => {
       const day = date.getDate();
       const hour = date.getHours();
       const minutes = date.getMinutes();
-      const completedTxnDate = `${month}/${day}, ${txnYear}`;
+      const completedTxnDate = `${month} ${day}, ${txnYear}`;
 
       // perfom transaction depending on the type of transaction sent to the pending transaction slice in the redux store
       if (pendingTxn.txnType === typeOfTxn.WALLET_FUNDING) {
         dispatch(fundNaira(pendingTxn.amount));
+        // also dispatch the amount, type of transaction and date of transaction to the completed transaction store
+        dispatch(
+          getNewTransaction({
+            amount: pendingTxn.amount,
+            date: completedTxnDate,
+            label: "Wallet Funding",
+            id: uuidv4(),
+          })
+        );
       }
       if (pendingTxn.txnType === typeOfTxn.WITHDRAWAL) {
         dispatch(withdrawNaira(pendingTxn.amount));
@@ -83,6 +93,7 @@ const ConfirmTransaction: React.FC = () => {
             amount: pendingTxn.amount,
             date: completedTxnDate,
             label: "Naira Withdrawal",
+            id: uuidv4(),
           })
         );
       }
@@ -102,6 +113,7 @@ const ConfirmTransaction: React.FC = () => {
               amount: pendingTxn.amount,
               date: completedTxnDate,
               label: "Naira to Dollar Exchange",
+              id: uuidv4(),
             })
           );
         }
@@ -118,6 +130,7 @@ const ConfirmTransaction: React.FC = () => {
               amount: pendingTxn.amount,
               date: completedTxnDate,
               label: "Naira to Euro Exchange",
+              id: uuidv4(),
             })
           );
         }
@@ -131,6 +144,7 @@ const ConfirmTransaction: React.FC = () => {
               amount: pendingTxn.amount,
               date: completedTxnDate,
               label: "Dollar to Naira Exchange",
+              id: uuidv4(),
             })
           );
         }
@@ -144,6 +158,7 @@ const ConfirmTransaction: React.FC = () => {
               amount: pendingTxn.amount,
               date: completedTxnDate,
               label: "Euro to Naira Exchange",
+              id: uuidv4(),
             })
           );
         }

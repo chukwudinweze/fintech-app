@@ -20,7 +20,7 @@ export default function App() {
       >
         <PageHeader label="Expenses" />
         <PieChart />
-        <TransactionList />
+        <TransactionList label="nnnn" amount={33} date="ff" />
       </Box>
     </>
   );

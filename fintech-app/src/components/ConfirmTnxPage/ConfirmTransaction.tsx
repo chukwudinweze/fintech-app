@@ -14,8 +14,6 @@ import { fundNaira, withdrawNaira } from "../../store/nairaAccountSlice";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { months } from "../../Global/months";
 import {
-  getExchangeCrrencyFrom,
-  getExchangeCrrencyTo,
   getTxnDay,
   getTxnHour,
   getTxnMinutes,
@@ -30,6 +28,7 @@ import { fundEuro, withdrawEuro } from "../../store/euroAccount";
 import { nairaToEuro } from "../utilities/nairaToEuro";
 import { euroToNaira } from "../utilities/euroToNaira";
 import { nairaToDollar } from "../utilities/nairaToDollar";
+import { getNewTransaction } from "../../store/completedTxnSlice";
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -41,6 +40,7 @@ const Transition = React.forwardRef(function Transition(
 });
 
 const ConfirmTransaction: React.FC = () => {
+  // this stores the individual pin entered by the user
   const [open, setOpen] = React.useState<boolean>(false);
   const [pin1, setPin1] = React.useState("");
   const [pin2, setPin2] = React.useState("");
@@ -68,6 +68,7 @@ const ConfirmTransaction: React.FC = () => {
       const day = date.getDate();
       const hour = date.getHours();
       const minutes = date.getMinutes();
+      const completedTxnDate = `${month}/${day}, ${txnYear}`;
 
       // perfom transaction depending on the type of transaction sent to the pending transaction slice in the redux store
       if (pendingTxn.txnType === typeOfTxn.WALLET_FUNDING) {
@@ -75,6 +76,15 @@ const ConfirmTransaction: React.FC = () => {
       }
       if (pendingTxn.txnType === typeOfTxn.WITHDRAWAL) {
         dispatch(withdrawNaira(pendingTxn.amount));
+
+        // also dispatch the amount, type of transaction and date of transaction to the completed transaction store
+        dispatch(
+          getNewTransaction({
+            amount: pendingTxn.amount,
+            date: completedTxnDate,
+            label: "Naira Withdrawal",
+          })
+        );
       }
 
       if (pendingTxn.txnType === typeOfTxn.EXCHAGE) {
@@ -85,6 +95,15 @@ const ConfirmTransaction: React.FC = () => {
           const nairaInDollar = nairaToDollar(pendingTxn.amount);
           dispatch(withdrawNaira(pendingTxn.amount));
           dispatch(fundDollar(nairaInDollar));
+
+          // also dispatch the amount, type of transaction and date of transaction to the completed transaction store
+          dispatch(
+            getNewTransaction({
+              amount: pendingTxn.amount,
+              date: completedTxnDate,
+              label: "Naira to Dollar Exchange",
+            })
+          );
         }
         if (
           pendingTxn.ExchangeCurrencyFrom === currencySymbol.NAIRA &&
@@ -93,17 +112,40 @@ const ConfirmTransaction: React.FC = () => {
           const nairaInEuro = nairaToEuro(pendingTxn.amount);
           dispatch(withdrawNaira(pendingTxn.amount));
           dispatch(fundEuro(nairaInEuro));
+          // also dispatch the amount, type of transaction and date of transaction to the completed transaction store
+          dispatch(
+            getNewTransaction({
+              amount: pendingTxn.amount,
+              date: completedTxnDate,
+              label: "Naira to Euro Exchange",
+            })
+          );
         }
         if (pendingTxn.ExchangeCurrencyFrom === currencySymbol.DOLLAR) {
           const dollarInNaira = dollarToNaira(pendingTxn.amount);
           dispatch(withdrawDollar(pendingTxn.amount));
           dispatch(fundNaira(dollarInNaira));
+          // also dispatch the amount, type of transaction and date of transaction to the completed transaction store
+          dispatch(
+            getNewTransaction({
+              amount: pendingTxn.amount,
+              date: completedTxnDate,
+              label: "Dollar to Naira Exchange",
+            })
+          );
         }
         if (pendingTxn.ExchangeCurrencyFrom === currencySymbol.EURO) {
           const euroInNaira = euroToNaira(pendingTxn.amount);
           dispatch(withdrawEuro(pendingTxn.amount));
           dispatch(fundNaira(euroInNaira));
-          console.log("what do i do");
+          // also dispatch the amount, type of transaction and date of transaction to the completed transaction store
+          dispatch(
+            getNewTransaction({
+              amount: pendingTxn.amount,
+              date: completedTxnDate,
+              label: "Euro to Naira Exchange",
+            })
+          );
         }
       }
 

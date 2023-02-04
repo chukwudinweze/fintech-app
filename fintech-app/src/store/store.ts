@@ -1,4 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
+import completedTxnSlice from "./completedTxnSlice";
 import currencySymbolSlice from "./currencyModelSlice";
 import dollarAccount from "./dollarAccountSlice";
 import euroAccount from "./euroAccount";
@@ -14,6 +15,7 @@ const store = configureStore({
     currency: currencySymbolSlice.reducer,
     userInterface: uiStateSlice.reducer,
     pendindTransaction: pendingTransaction.reducer,
+    completedTransactions: completedTxnSlice.reducer,
   },
   devTools: process.env.NODE_ENV !== "production",
 });

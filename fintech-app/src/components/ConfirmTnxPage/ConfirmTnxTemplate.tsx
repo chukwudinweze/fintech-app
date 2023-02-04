@@ -4,7 +4,6 @@ import { currencySymbol } from "../../store/currencySymbolEnum";
 import accessBankLogo from "../../assets/accessBankLogo.png";
 import UBALogo from "../../assets/UBALogo.png";
 import styles from "./ConfirmTnxTemplate.module.css";
-import { useNavigate } from "react-router-dom";
 import CancelTransaction from "./CancelTransaction";
 import ConfirmTransactionBtn from "./ConfirmTransaction";
 import { useAppSelector } from "../../store/hooks";

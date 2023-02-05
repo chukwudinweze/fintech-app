@@ -1,4 +1,4 @@
-import React, { MouseEventHandler } from "react";
+import React from "react";
 import styles from "./TransactionBtn.module.css";
 
 import { Stack } from "@mui/system";

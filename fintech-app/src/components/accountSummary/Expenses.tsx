@@ -20,7 +20,6 @@ export default function App() {
         <PageHeader label="Your Expenses" />
         <PieChart />
         <Expense />
-        <BottomNav />
       </Box>
     </>
   );

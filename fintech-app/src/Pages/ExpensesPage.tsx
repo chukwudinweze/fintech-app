@@ -1,15 +1,13 @@
 import { Box } from "@chakra-ui/react";
 import React from "react";
-import SavingsChart from "../components/accountSummary/Expenses";
-import BottomNav from "../components/BottomNav/BottomNav";
+import Expenses from "../components/accountSummary/Expenses";
 
-const SavingsChartPage = () => {
+const ExpensesPage = () => {
   return (
     <Box>
-      <SavingsChart />
-      <BottomNav />
+      <Expenses />
     </Box>
   );
 };
 
-export default SavingsChartPage;
+export default ExpensesPage;

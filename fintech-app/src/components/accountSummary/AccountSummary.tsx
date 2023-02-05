@@ -12,7 +12,7 @@ const AccountSummary = () => {
             label="Income"
             amount={552.95}
             color="#1dcc70"
-            pageLink="/totalexpenses"
+            pageLink="/savings"
           />
         </Grid>
         <Grid item xs={6}>

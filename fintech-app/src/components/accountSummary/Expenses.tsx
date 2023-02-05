@@ -17,7 +17,7 @@ export default function App() {
           width: "100%",
         }}
       >
-        <PageHeader label="Your Expenses" />
+        <PageHeader label="Your Expenses" color="#fff" />
         <PieChart />
         <Expense />
       </Box>

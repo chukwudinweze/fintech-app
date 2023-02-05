@@ -1,80 +1,63 @@
 import * as React from "react";
+import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import Dialog from "@mui/material/Dialog";
-import ListItemText from "@mui/material/ListItemText";
-import ListItem from "@mui/material/ListItem";
-import List from "@mui/material/List";
-import Divider from "@mui/material/Divider";
-import AppBar from "@mui/material/AppBar";
-import Toolbar from "@mui/material/Toolbar";
-import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
-import CloseIcon from "@mui/icons-material/Close";
-import Slide from "@mui/material/Slide";
-import { TransitionProps } from "@mui/material/transitions";
+import Modal from "@mui/material/Modal";
+import SentimentDissatisfiedIcon from "@mui/icons-material/SentimentDissatisfied";
+import { Avatar } from "@mui/material";
 
-const Transition = React.forwardRef(function Transition(
-  props: TransitionProps & {
-    children: React.ReactElement;
-  },
-  ref: React.Ref<unknown>
-) {
-  return <Slide direction="up" ref={ref} {...props} />;
-});
+const style = {
+  position: "absolute" as "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  bgcolor: "background.paper",
+  border: "2px solid #000",
+  boxShadow: 24,
+  p: 4,
+};
 
-export default function Experiment() {
+const CreateSavingsBtn = () => {
   const [open, setOpen] = React.useState(false);
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   return (
-    <div>
-      <Button variant="outlined" onClick={handleClickOpen}>
-        Open full-screen dialog
+    <Box display="flex" justifyContent="center" alignItems="center">
+      <Button variant="contained" size="large" fullWidth onClick={handleOpen}>
+        Create a savings plan
       </Button>
-      <Dialog
-        fullScreen
+      <Modal
         open={open}
         onClose={handleClose}
-        TransitionComponent={Transition}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+        sx={{ display: "flex", alignItems: "center" }}
       >
-        <AppBar sx={{ position: "relative" }}>
-          <Toolbar>
-            <IconButton
-              edge="start"
-              color="inherit"
-              onClick={handleClose}
-              aria-label="close"
-            >
-              <CloseIcon />
-            </IconButton>
-            <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
-              Sound
-            </Typography>
-            <Button autoFocus color="inherit" onClick={handleClose}>
-              save
-            </Button>
-          </Toolbar>
-        </AppBar>
-        <List>
-          <ListItem button>
-            <ListItemText primary="Phone ringtone" secondary="Titania" />
-          </ListItem>
-          <Divider />
-          <ListItem button>
-            <ListItemText
-              primary="Default notification ringtone"
-              secondary="Tethys"
-            />
-          </ListItem>
-        </List>
-      </Dialog>
-    </div>
+        <Box sx={style}>
+          <Avatar
+            alt="Remy Sharp"
+            sx={{
+              width: { xs: "30", sm: "30" },
+              height: { xs: "30", sm: "30" },
+              padding: "5px",
+              background: "#6236ff",
+              border: "1px solid #6236ff",
+            }}
+          >
+            <SentimentDissatisfiedIcon />
+          </Avatar>
+          <Typography variant="h5" sx={{ mt: 2 }}>
+            Oops..
+          </Typography>
+          <Typography variant="body1" sx={{ mt: 2 }}>
+            You are still not eligible.
+          </Typography>
+        </Box>
+      </Modal>
+    </Box>
   );
-}
+};
+
+export default CreateSavingsBtn;

@@ -1,11 +1,17 @@
 import { Box } from "@mui/system";
 import React from "react";
-import Experiment from "../components/Experiment";
+import Savings from "../components/Savings/Savings";
+import PageHeader from "../Global/PageHeader";
 
 const SavingsPage = () => {
   return (
     <Box>
-      <Experiment />
+      <PageHeader
+        label="Regular Savings"
+        color="#fff"
+        backgroundColor="#6236ff"
+      />
+      <Savings />
     </Box>
   );
 };

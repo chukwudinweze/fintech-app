@@ -16,7 +16,7 @@ const TransactionHistoryPage = () => {
       }}
     >
       <Stack spacing={10}>
-        <PageHeader label="Transaction History" />
+        <PageHeader label="Transaction History" color="#fff" />
         <TransactionHistory />
         <BottomNav />
       </Stack>

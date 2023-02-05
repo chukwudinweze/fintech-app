@@ -5,9 +5,12 @@ import IconButton from "@mui/material/IconButton";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import { useNavigate } from "react-router-dom";
 import Typography from "@mui/material/Typography";
-import { red } from "@mui/material/colors";
 
-const PageHeader: React.FC<{ label: string }> = ({ label }) => {
+const PageHeader: React.FC<{
+  label: string;
+  color: string;
+  backgroundColor?: string;
+}> = ({ label, color, backgroundColor }) => {
   const navigate = useNavigate();
   const navBack = () => {
     navigate(-1);
@@ -15,13 +18,14 @@ const PageHeader: React.FC<{ label: string }> = ({ label }) => {
   return (
     <Box
       component="nav"
+      bgcolor={backgroundColor}
       sx={{
         width: "100%",
-        color: "#fff",
         paddingLeft: "20px",
         position: "absolute",
         top: "0",
         right: "0",
+        color: color,
       }}
     >
       <Stack
@@ -32,12 +36,12 @@ const PageHeader: React.FC<{ label: string }> = ({ label }) => {
       >
         <Box alignSelf="center">
           <IconButton aria-label="icon-button" onClick={navBack}>
-            <ArrowBackIosNewIcon sx={{ color: "#FFF" }} />
+            <ArrowBackIosNewIcon sx={{ color: color }} />
           </IconButton>
         </Box>
         <Box component="div" alignSelf="center">
           <Typography
-            color="#fff"
+            color={color}
             variant="h5"
             fontWeight={700}
             fontSize={{ xs: "20px", sm: "25px" }}

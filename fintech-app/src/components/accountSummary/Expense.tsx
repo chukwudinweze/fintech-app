@@ -1,7 +1,6 @@
 import { Stack } from "@mui/system";
 import React from "react";
 import TransactionList from "../../Global/TransactionList";
-import { typeOfTxn } from "../../Global/TypeOfTransaction";
 import { useAppSelector } from "../../store/hooks";
 
 const Expense = () => {

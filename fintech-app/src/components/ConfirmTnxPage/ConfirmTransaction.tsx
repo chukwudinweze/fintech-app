@@ -35,6 +35,7 @@ import {
   addToEuroTotalExpenses,
   addToNairaTotalExpenses,
 } from "../../store/ExpensesSlice";
+import { getNewFundAmount } from "../../store/totalFunded";
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -90,6 +91,10 @@ const ConfirmTransaction: React.FC = () => {
             currency: currencySymbol.NAIRA,
           })
         );
+
+        //convert funded amount to dollar and add amount to the total fund in the store
+        let formatedAmt = nairaToDollar(pendingTxn.amount);
+        dispatch(getNewFundAmount(formatedAmt));
       }
       if (pendingTxn.txnType === typeOfTxn.WITHDRAWAL) {
         dispatch(withdrawNaira(pendingTxn.amount));

@@ -7,6 +7,7 @@ import totalExpensesSlice from "./ExpensesSlice";
 import uiStateSlice from "./InterfaceSlice";
 import nairaAccount from "./nairaAccountSlice";
 import pendingTransaction from "./pendingTransactionSlice";
+import totalFundedSlice from "./totalFunded";
 
 const store = configureStore({
   reducer: {
@@ -18,6 +19,7 @@ const store = configureStore({
     pendindTransaction: pendingTransaction.reducer,
     completedTransactions: completedTxnSlice.reducer,
     totalExpenses: totalExpensesSlice.reducer,
+    totalFund: totalFundedSlice.reducer,
   },
   devTools: process.env.NODE_ENV !== "production",
 });

@@ -1,16 +1,23 @@
 import React from "react";
 import { Grid, Box } from "@mui/material";
 import AcctSummaryLayout from "./AcctSummaryLayout";
+import { useAppSelector } from "../../store/hooks";
 
 const AccountSummary = () => {
+  let { naira, dollar, euro } = useAppSelector((state) => state.totalExpenses);
+  const { amount } = useAppSelector((state) => state.totalFund);
+
+  // convert naira to dollar before adding together
+  naira = naira / 300;
+  const totalExpense = (naira + dollar + euro).toPrecision(4);
   // let naira symbol depend on the symbol of the balance
   return (
     <Box sx={{ flexGrow: 1, marginTop: "20px" }}>
       <Grid container spacing={2}>
         <Grid item xs={6}>
           <AcctSummaryLayout
-            label="Income"
-            amount={552.95}
+            label="Total Funded"
+            amount={amount}
             color="#1dcc70"
             pageLink="/savings"
           />
@@ -18,7 +25,7 @@ const AccountSummary = () => {
         <Grid item xs={6}>
           <AcctSummaryLayout
             label="Expenses"
-            amount={86.45}
+            amount={+totalExpense}
             color="#ff396f"
             pageLink="/totalexpenses"
           />
@@ -26,9 +33,9 @@ const AccountSummary = () => {
         <Grid item xs={6}>
           <AcctSummaryLayout
             label="Savings"
-            amount={120.99}
+            amount={0}
             color="#000000"
-            pageLink="/totalexpenses"
+            pageLink="/savings"
           />
         </Grid>
         <Grid item xs={6}>

@@ -1,6 +1,5 @@
 import { Box } from "@mui/material";
 import PageHeader from "../../Global/PageHeader";
-import BottomNav from "../BottomNav/BottomNav";
 import Expense from "./Expense";
 import PieChart from "./PieChart";
 

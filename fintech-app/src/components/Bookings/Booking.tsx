@@ -12,8 +12,8 @@ const Booking: React.FC<{
         justifyContent: "center",
         alignItems: "center",
         width: { xs: "150px", sm: "200px", lg: "300px" },
-        boxShadow:
-          "rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px",
+        // boxShadow:
+        //   "rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px",
         borderRadius: "10px",
         background: "#ffffff",
       }}

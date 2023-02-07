@@ -59,7 +59,7 @@ const BillsLayout: React.FC<propsType> = ({ img, amount, date }) => {
         }}
         className={styles.cancelSubBtn}
       >
-        Early Deposit
+        Cancel Auto-Renewal
       </Button>
     </Box>
   );

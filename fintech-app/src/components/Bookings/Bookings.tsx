@@ -28,9 +28,6 @@ const Bookings = () => {
         }}
       >
         <SwiperSlide>
-          <Booking backgroundImg="GUO" />
-        </SwiperSlide>
-        <SwiperSlide>
           <Booking backgroundImg="peace" />
         </SwiperSlide>
         <SwiperSlide>

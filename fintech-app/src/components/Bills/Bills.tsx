@@ -1,8 +1,6 @@
 import { Swiper, SwiperSlide } from "swiper/react";
-// import { freeMode } from 'swiper';
 
 import { Box, Typography } from "@mui/material";
-import React from "react";
 import BillsLayout from "./BillsLayout";
 import "swiper/css";
 import "swiper/css/free-mode";
@@ -40,19 +38,39 @@ const Bills = () => {
         }}
       >
         <SwiperSlide>
-          <BillsLayout img={EdenLogo} amount={85.5} date="2 Feb" />
+          <BillsLayout
+            img={EdenLogo}
+            amount={85.5}
+            date="2 Feb"
+            label="Eden Life"
+          />
         </SwiperSlide>
         <SwiperSlide>
-          <BillsLayout img={iFitnessLogo} amount={71.3} date="9 Sept" />
+          <BillsLayout
+            img={iFitnessLogo}
+            amount={71.3}
+            date="9 Sept"
+            label="iFitness"
+          />
         </SwiperSlide>
         <SwiperSlide>
-          <BillsLayout img={ShuttlerLogo} amount={50} date="14 April" />
+          <BillsLayout
+            img={ShuttlerLogo}
+            amount={50}
+            date="14 April"
+            label="Shutter"
+          />
         </SwiperSlide>
         <SwiperSlide>
-          <BillsLayout img={Netflix} amount={16} date="5 June" />
+          <BillsLayout
+            img={Netflix}
+            amount={16}
+            date="5 June"
+            label="Netflix"
+          />
         </SwiperSlide>
         <SwiperSlide>
-          <BillsLayout img={DstvLogo} amount={30} date="9 May" />
+          <BillsLayout img={DstvLogo} amount={30} date="9 May" label="DSTV" />
         </SwiperSlide>
       </Swiper>
     </Box>

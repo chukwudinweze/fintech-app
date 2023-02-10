@@ -36,12 +36,12 @@ const BillsLayout: React.FC<propsType> = ({ img, amount, date, label }) => {
   const handleRenewal = () => {
     setrenewalActive(true);
     setOpen(false);
-    toast(`${label} Renewal Successful`);
+    return toast(`${label} Renewal Successful`);
   };
   const cancelRenewal = () => {
     setrenewalActive(false);
-    toast(`${label} Auto Renewal Canceled`);
     setOpen(false);
+    return toast(`${label} Auto Renewal Canceled`);
   };
   return (
     <Box
@@ -148,12 +148,12 @@ const BillsLayout: React.FC<propsType> = ({ img, amount, date, label }) => {
         autoClose={5000}
         hideProgressBar={false}
         newestOnTop={false}
-        closeOnClick
+        // closeOnClick
         rtl={false}
         pauseOnFocusLoss
         draggable
         pauseOnHover
-        theme="light"
+        // theme="light"
       />
     </Box>
   );

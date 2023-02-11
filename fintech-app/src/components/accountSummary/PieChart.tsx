@@ -37,19 +37,19 @@ const PieChart = () => {
         breakpoint: 480,
         options: {
           chart: {
-            width: 300,
+            width: 350,
           },
           legend: {
-            show: false,
+            show: true,
           },
         },
       },
     ],
     legend: {
       position: "right",
-      offsetY: 80,
+      offsetY: 40,
       height: 230,
-      show: false,
+      show: true,
     },
   };
   return (

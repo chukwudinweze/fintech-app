@@ -16,7 +16,7 @@ const completedTxnSlice = createSlice({
   initialState,
   reducers: {
     getNewTransaction(state, action: PayloadAction<completedTxnType>) {
-      state.push(action.payload);
+      state.unshift(action.payload);
     },
   },
 });

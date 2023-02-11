@@ -8,6 +8,7 @@ import PaymentReciptPage from "./Pages/PaymentReciptPage";
 import ExpensesPage from "./Pages/ExpensesPage";
 import TransactionHistoryPage from "./Pages/TransactionHistoryPage";
 import SavingsPage from "./Pages/SavingsPage";
+import LoanPage from "./Pages/LoanPage";
 function App() {
   const theme = createTheme({
     typography: {
@@ -29,7 +30,8 @@ function App() {
           <Route path="confirmtxn" element={<ConfirmTxnPage />} />
           <Route path="paymentrecipt" element={<PaymentReciptPage />} />
           <Route path="totalexpenses" element={<ExpensesPage />} />
-          <Route path="savings" element={<SavingsPage />} />
+          <Route path="quipaysavings" element={<SavingsPage />} />
+          <Route path="quipayloan" element={<LoanPage />} />
           <Route
             path="transactionhistory"
             element={<TransactionHistoryPage />}

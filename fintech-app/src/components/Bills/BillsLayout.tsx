@@ -12,6 +12,14 @@ import {
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import styles from "./BillsLayout.module.css";
+import { useAppDispatch } from "../../store/hooks";
+import { withdrawDollar } from "../../store/dollarAccountSlice";
+import { addToDollarTotalExpenses } from "../../store/ExpensesSlice";
+import { getNewTransaction } from "../../store/completedTxnSlice";
+import { completedTxnDate } from "../utilities/transactionDate";
+import { v4 as uuidv4 } from "uuid";
+import { typeOfTxn } from "../../Global/TypeOfTransaction";
+import { currencySymbol } from "../../store/currencySymbolEnum";
 
 type propsType = {
   img: string;
@@ -22,8 +30,9 @@ type propsType = {
 
 const BillsLayout: React.FC<propsType> = ({ img, amount, date, label }) => {
   const [open, setOpen] = React.useState(false);
+  const [renewalActive, setrenewalActive] = React.useState<boolean>(false);
 
-  const [renewalActive, setrenewalActive] = React.useState<boolean>(true);
+  const dispatch = useAppDispatch();
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -35,13 +44,23 @@ const BillsLayout: React.FC<propsType> = ({ img, amount, date, label }) => {
 
   const handleRenewal = () => {
     setrenewalActive(true);
+    dispatch(withdrawDollar(amount));
+    dispatch(addToDollarTotalExpenses(amount));
+    dispatch(
+      getNewTransaction({
+        // type of transaction is not provided. This is only provided if the type of transaction is funding
+        amount,
+        date: completedTxnDate,
+        label: `${label} Activation Charge`,
+        id: uuidv4(),
+        currency: currencySymbol.DOLLAR,
+      })
+    );
     setOpen(false);
-    return toast(`${label} Renewal Successful`);
   };
   const cancelRenewal = () => {
     setrenewalActive(false);
     setOpen(false);
-    return toast(`${label} Auto Renewal Canceled`);
   };
   return (
     <Box
@@ -55,6 +74,7 @@ const BillsLayout: React.FC<propsType> = ({ img, amount, date, label }) => {
         alignItems: "center",
         borderRadius: "10px",
         margin: "10px",
+        minHeight: "207.594px",
       }}
     >
       <div className={styles.billLogo}>
@@ -124,11 +144,15 @@ const BillsLayout: React.FC<propsType> = ({ img, amount, date, label }) => {
             {!renewalActive && (
               <DialogContentText id="alert-dialog-description">
                 Confirm the activation of{" "}
-                <Typography component="span" color="#6236ff">
+                <Typography component="span" fontWeight="700" color="#6236ff">
                   {label}
                 </Typography>{" "}
-                package and be aware that you will be charged $6. You will
-                receive a reminder one week before the renewal date. Enjoy!
+                package and be aware that you will be charged{" "}
+                <Typography component="span" fontWeight="700" color="#6236ff">
+                  ${amount}
+                </Typography>
+                . You will receive a reminder one week before the renewal date.
+                Enjoy!
               </DialogContentText>
             )}
           </DialogContent>
@@ -143,18 +167,6 @@ const BillsLayout: React.FC<propsType> = ({ img, amount, date, label }) => {
           </DialogActions>
         </Dialog>
       </div>
-      <ToastContainer
-        position="top-left"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        // closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        // theme="light"
-      />
     </Box>
   );
 };

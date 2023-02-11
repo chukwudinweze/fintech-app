@@ -3,4 +3,5 @@ export enum typeOfTxn {
   WITHDRAWAL = "withdrawal",
   TRANSFER = "transfer",
   EXCHAGE = "exchange",
+  BILLS = "Bills payment",
 }

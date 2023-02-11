@@ -77,16 +77,20 @@ const ConfirmTransaction: React.FC = () => {
       const minutes = date.getMinutes();
       const completedTxnDate = `${month} ${day}, ${txnYear}`;
 
-      // perfom transaction depending on the type of transaction sent to the pending transaction slice in the redux store
+      // perfom transaction depending on the type of transaction
+      // sent to the pending transaction slice in the redux store
       if (pendingTxn.txnType === typeOfTxn.WALLET_FUNDING) {
         dispatch(fundNaira(pendingTxn.amount));
-        // also dispatch the amount, type of transaction and date of transaction to the completed transaction store
+        // also dispatch the amount, type of transaction and date
+        // of transaction to the completed transaction store
         dispatch(
           getNewTransaction({
             amount: pendingTxn.amount,
             date: completedTxnDate,
             label: "Wallet Funding",
             id: uuidv4(),
+            // type of transaction is provided here.
+            // This is only provided if the type of transaction is funding
             typeOfTxn: typeOfTxn.WALLET_FUNDING,
             currency: currencySymbol.NAIRA,
           })
@@ -114,6 +118,24 @@ const ConfirmTransaction: React.FC = () => {
         dispatch(addToNairaTotalExpenses(pendingTxn.amount));
       }
 
+      if (pendingTxn.txnType === typeOfTxn.TRANSFER) {
+        dispatch(withdrawNaira(pendingTxn.amount));
+
+        // also dispatch the amount, type of transaction and
+        // date of transaction to the completed transaction store
+        dispatch(
+          getNewTransaction({
+            amount: pendingTxn.amount,
+            date: completedTxnDate,
+            label: "Quipay Transfer",
+            id: uuidv4(),
+            currency: currencySymbol.NAIRA,
+          })
+        );
+
+        // then add amount to total expense
+        dispatch(addToNairaTotalExpenses(pendingTxn.amount));
+      }
       if (pendingTxn.txnType === typeOfTxn.EXCHAGE) {
         if (
           pendingTxn.ExchangeCurrencyFrom === currencySymbol.NAIRA &&

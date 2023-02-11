@@ -40,7 +40,7 @@ const Bills = () => {
         <SwiperSlide>
           <BillsLayout
             img={EdenLogo}
-            amount={85.5}
+            amount={10}
             date="2 Feb"
             label="Eden Life"
           />
@@ -48,7 +48,7 @@ const Bills = () => {
         <SwiperSlide>
           <BillsLayout
             img={iFitnessLogo}
-            amount={71.3}
+            amount={14}
             date="9 Sept"
             label="iFitness"
           />
@@ -56,21 +56,16 @@ const Bills = () => {
         <SwiperSlide>
           <BillsLayout
             img={ShuttlerLogo}
-            amount={50}
+            amount={9}
             date="14 April"
             label="Shutter"
           />
         </SwiperSlide>
         <SwiperSlide>
-          <BillsLayout
-            img={Netflix}
-            amount={16}
-            date="5 June"
-            label="Netflix"
-          />
+          <BillsLayout img={Netflix} amount={7} date="5 June" label="Netflix" />
         </SwiperSlide>
         <SwiperSlide>
-          <BillsLayout img={DstvLogo} amount={30} date="9 May" label="DSTV" />
+          <BillsLayout img={DstvLogo} amount={8} date="9 May" label="DSTV" />
         </SwiperSlide>
       </Swiper>
     </Box>

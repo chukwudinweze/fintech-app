@@ -9,7 +9,7 @@ const AccountSummary = () => {
 
   // convert naira to dollar before adding together
   naira = naira / 300;
-  const totalExpense = (naira + dollar + euro).toPrecision(4);
+  const totalExpense = (naira + dollar + euro).toPrecision(1);
   // let naira symbol depend on the symbol of the balance
   return (
     <Box sx={{ flexGrow: 1, marginTop: "20px" }}>
@@ -35,15 +35,15 @@ const AccountSummary = () => {
             label="Savings"
             amount={0}
             color="#000000"
-            pageLink="/savings"
+            pageLink="/quipaysavings"
           />
         </Grid>
         <Grid item xs={6}>
           <AcctSummaryLayout
-            label="Total Bills"
-            amount={53.25}
+            label="Loan"
+            amount={0}
             color="#000000"
-            pageLink="/totalexpenses"
+            pageLink="/quipayloan"
           />
         </Grid>
       </Grid>

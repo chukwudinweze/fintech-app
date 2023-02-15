@@ -37,6 +37,7 @@ export default function App() {
             minHeight="100vh"
             sx={{ background: "#fff" }}
             paddingTop="150px"
+            width="100%"
           >
             <Stack
               spacing={2}

@@ -8,25 +8,28 @@ const SharedPaymets = () => {
       <Stack spacing={1}>
         <SubHeading label="Shared Pay" />
         <SharedPayment
-          initiator="Nweze"
+          initiator="Adekunle"
           purpose="Mum's Birthday preparation"
           expringDate="Expires 2nd Feb"
-          amount="-$186"
+          amount="$66"
           status="pending"
+          link="/sharedpayment"
         />
         <SharedPayment
-          initiator="Nweze"
+          initiator="Ciroma"
           purpose="Mum's Birthday preparation"
           expringDate="Expires 2nd Feb"
-          amount="-$186"
+          amount="$40"
           status="pending"
+          link="/sharedpayment"
         />
         <SharedPayment
-          initiator="Nweze"
+          initiator="Akpan"
           purpose="Mum's Birthday preparation"
           expringDate="Expires 2nd Feb"
-          amount="-$186"
+          amount="$27"
           status="pending"
+          link="/sharedpayment"
         />
       </Stack>
     </Box>

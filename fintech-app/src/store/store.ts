@@ -7,6 +7,7 @@ import totalExpensesSlice from "./ExpensesSlice";
 import uiStateSlice from "./InterfaceSlice";
 import nairaAccount from "./nairaAccountSlice";
 import pendingTransaction from "./pendingTransactionSlice";
+import sharedtxnSlice from "./sharedPay";
 import totalFundedSlice from "./totalFunded";
 
 const store = configureStore({
@@ -20,6 +21,7 @@ const store = configureStore({
     completedTransactions: completedTxnSlice.reducer,
     totalExpenses: totalExpensesSlice.reducer,
     totalFund: totalFundedSlice.reducer,
+    sharedPays: sharedtxnSlice.reducer,
   },
   devTools: process.env.NODE_ENV !== "production",
 });

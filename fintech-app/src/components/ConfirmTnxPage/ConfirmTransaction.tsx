@@ -36,6 +36,7 @@ import {
   addToNairaTotalExpenses,
 } from "../../store/ExpensesSlice";
 import { getNewFundAmount } from "../../store/totalFunded";
+import { upDateTxnStatus } from "../../store/sharedPay";
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -216,6 +217,25 @@ const ConfirmTransaction: React.FC = () => {
           // then add amount to total expense
           dispatch(addToEuroTotalExpenses(pendingTxn.amount));
         }
+      }
+      if (pendingTxn.txnType === typeOfTxn.SHAREDPAY) {
+        dispatch(withdrawDollar(pendingTxn.amount));
+        // also dispatch the amount, type of transaction and date of transaction to the completed transaction store
+        dispatch(
+          getNewTransaction({
+            amount: pendingTxn.amount,
+            date: completedTxnDate,
+            label: "Shared Pay",
+            id: pendingTxn.id,
+            currency: currencySymbol.DOLLAR,
+          })
+        );
+
+        // then add amount to total expense
+        dispatch(addToDollarTotalExpenses(pendingTxn.amount));
+
+        //update the status of this transaction from pending to completed
+        dispatch(upDateTxnStatus(pendingTxn.id));
       }
 
       // dispatch transaction detail(date, time,amount etc)

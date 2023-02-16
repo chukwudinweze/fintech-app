@@ -9,14 +9,25 @@ import CloseIcon from "@mui/icons-material/Close";
 import Slide from "@mui/material/Slide";
 import { TransitionProps } from "@mui/material/transitions";
 import { useNavigate } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import {
+  getDestinationAcct,
+  getInitiator,
+  getTxnId,
+  getTxnType,
+  pendingTxnAmount,
+} from "../../store/pendingTransactionSlice";
+import { deActivateDrawer } from "../../store/InterfaceSlice";
+import { typeOfTxn } from "../../Global/TypeOfTransaction";
+import { currencySymbol } from "../../store/currencySymbolEnum";
 
 type propsType = {
   initiator: string;
   purpose: string;
   expringDate: string;
   amount: string;
-  status: string;
-  link: string;
+  pending: boolean;
+  id: string;
 };
 
 const Transition = React.forwardRef(function Transition(
@@ -33,11 +44,18 @@ const SharedPayment: React.FC<propsType> = ({
   purpose,
   expringDate,
   amount,
-  status,
+  pending,
+  id,
 }) => {
   const [open, setOpen] = React.useState(false);
 
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const completeTxns = useAppSelector((state) => state.completedTransactions);
+  const completedSharedPay = completeTxns.find(
+    (completedtxn) => completedtxn.id === id
+  );
+
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -45,6 +63,16 @@ const SharedPayment: React.FC<propsType> = ({
   const handleClose = () => {
     setOpen(false);
   };
+  const handlePendingTxn = () => {
+    dispatch(pendingTxnAmount(+amount));
+    dispatch(getDestinationAcct("sharedpay291"));
+    dispatch(getTxnType(typeOfTxn.SHAREDPAY));
+    dispatch(getInitiator(initiator));
+    dispatch(getTxnId(id));
+    // dispatch(deActivateDrawer());
+    navigate("/confirmtxn");
+  };
+
   return (
     <div>
       <Box
@@ -70,25 +98,26 @@ const SharedPayment: React.FC<propsType> = ({
             />
             <Stack>
               <Typography color="#27173e" fontSize="12px" fontWeight="700">
-                {initiator}
-              </Typography>
-              <Typography color="#958d9e" fontSize="12px">
                 {purpose}
               </Typography>
+              <Typography color="#958d9e" fontSize="12px">
+                Initiated by {initiator}
+              </Typography>
               <Typography color="#ff396f" fontSize="12px">
-                {expringDate}
+                {pending && expringDate}
               </Typography>
             </Stack>
           </Stack>
           <Stack direction="column">
             <Typography
-              color={status === "pending" ? "#FFC000" : "#ff396f"}
+              color={pending ? "#FFC000" : "#ff396f"}
               fontWeight="700"
             >
+              {currencySymbol.DOLLAR}
               {amount}
             </Typography>
-            <Typography color="#958d9e" fontSize="12px">
-              {status}
+            <Typography color={pending ? "#958d9e" : "#1dcc70"} fontSize="12px">
+              {pending ? "pending" : "completed"}
             </Typography>
           </Stack>
         </Stack>
@@ -112,62 +141,112 @@ const SharedPayment: React.FC<propsType> = ({
             </IconButton>
           </Toolbar>
         </AppBar>
-        <Stack
-          marginTop="50px"
-          justifyContent="center"
-          alignItems="center"
-          textAlign="center"
-        >
-          <Avatar
-            sx={{
-              border: "3px olid red",
-              width: "100px",
-              height: "100px",
-              background: "#6236ff",
-              marginBottom: "20px",
-            }}
+        {pending && (
+          <Stack
+            marginTop="50px"
+            justifyContent="center"
+            alignItems="center"
+            textAlign="center"
           >
-            {amount}
-          </Avatar>
-          <Box>
-            <Typography
-              textAlign="center"
-              variant="h6"
-              component="h6"
-              fontWeight={700}
+            <Avatar
+              sx={{
+                border: "3px olid red",
+                width: "100px",
+                height: "100px",
+                background: "#6236ff",
+                marginBottom: "20px",
+              }}
             >
-              Mom Birthday
-            </Typography>
-            <Typography>
-              Please confirm
-              <Typography component="span" color="#6236ff" fontWeight={700}>
-                {" "}
-                {amount}{" "}
+              {currencySymbol.DOLLAR}
+              {amount}
+            </Avatar>
+            <Box>
+              <Typography
+                textAlign="center"
+                variant="h6"
+                component="h6"
+                fontWeight={700}
+              >
+                {purpose}
               </Typography>
-              Shared payment request from{" "}
-              <Typography component="span" color="#6236ff" fontWeight={700}>
-                {" "}
-                {initiator}{" "}
+              <Typography>
+                Please confirm
+                <Typography component="span" color="#6236ff" fontWeight={700}>
+                  {" "}
+                  {currencySymbol.DOLLAR}
+                  {amount}{" "}
+                </Typography>
+                Shared payment request from{" "}
+                <Typography component="span" color="#6236ff" fontWeight={700}>
+                  {" "}
+                  {initiator}{" "}
+                </Typography>
               </Typography>
-            </Typography>
-            <Typography>
-              Clicking confirm will deduct the amount from your account and
-              credit it to a virtual account for the course. Use the ID
-              <Typography component="span" color="#6236ff" fontWeight={700}>
-                {" "}
-                jh6837ue983{" "}
-              </Typography>{" "}
-              to track the transaction and view declined payments.
-            </Typography>
-          </Box>
-          <Stack direction="row" spacing={2} marginTop="30px">
-            <Button variant="outlined">Decline</Button>
-            <Button variant="outlined">Report User</Button>
-            <Button variant="outlined" onClick={() => navigate("/confirmtxn")}>
-              Confirm
-            </Button>
+              <Typography>
+                Clicking confirm will deduct the amount from your account and
+                credit it to a virtual account for the course. Use the ID
+                <Typography component="span" color="#6236ff" fontWeight={700}>
+                  {" "}
+                  {id}{" "}
+                </Typography>{" "}
+                to track the transaction and view declined payments.
+              </Typography>
+            </Box>
+            <Stack direction="row" spacing={2} marginTop="30px">
+              <Button variant="outlined" onClick={handleClose}>
+                Cancel
+              </Button>
+              <Button variant="outlined" onClick={handlePendingTxn}>
+                Confirm
+              </Button>
+            </Stack>
           </Stack>
-        </Stack>
+        )}
+        {!pending && (
+          <Stack
+            marginTop="50px"
+            justifyContent="center"
+            alignItems="center"
+            textAlign="center"
+          >
+            <Avatar
+              sx={{
+                border: "3px olid red",
+                width: "100px",
+                height: "100px",
+                background: "#6236ff",
+                marginBottom: "20px",
+              }}
+            >
+              {currencySymbol.DOLLAR}
+              {amount}
+            </Avatar>
+            <Box>
+              <Typography
+                textAlign="center"
+                variant="h6"
+                component="h6"
+                fontWeight={700}
+              >
+                {purpose}
+              </Typography>
+              <Stack>
+                <Typography>You've completed this transaction!</Typography>
+                <Typography>
+                  Date:{" "}
+                  <Typography component="span" color="#6236ff">
+                    {completedSharedPay?.date}
+                  </Typography>
+                </Typography>
+              </Stack>
+            </Box>
+            <Stack direction="row" spacing={2} marginTop="30px">
+              <Button variant="outlined" onClick={handleClose}>
+                Close
+              </Button>
+            </Stack>
+          </Stack>
+        )}
       </Dialog>
     </div>
   );

@@ -15,6 +15,7 @@ interface pendingTxnType {
   ExchangeCurrencyTo: string;
   initiator: string;
   id: string;
+  label: string;
 }
 
 const initialState: pendingTxnType = {
@@ -32,6 +33,7 @@ const initialState: pendingTxnType = {
   ExchangeCurrencyTo: "",
   initiator: "",
   id: "",
+  label: "",
 };
 
 const pendingTransaction = createSlice({
@@ -77,6 +79,9 @@ const pendingTransaction = createSlice({
     getTxnId(state, action: PayloadAction<string>) {
       state.id = action.payload;
     },
+    getTxnLabel(state, action: PayloadAction<string>) {
+      state.label = action.payload;
+    },
   },
 });
 
@@ -94,6 +99,7 @@ export const {
   getExchangeCrrencyTo,
   getInitiator,
   getTxnId,
+  getTxnLabel,
 } = pendingTransaction.actions;
 
 export default pendingTransaction;

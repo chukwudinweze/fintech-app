@@ -33,7 +33,13 @@ const BottomNav = () => {
         }}
         sx={{ justifyContent: "space-between" }}
       >
-        <BottomNavigationAction label="Home" icon={<HomeOutlinedIcon />} />
+        <BottomNavigationAction
+          onClick={() => {
+            navigate("/");
+          }}
+          label="Home"
+          icon={<HomeOutlinedIcon />}
+        />
         <BottomNavigationAction
           label="Support"
           icon={<SupportAgentOutlinedIcon />}

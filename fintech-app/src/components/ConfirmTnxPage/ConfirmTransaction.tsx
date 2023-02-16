@@ -225,7 +225,7 @@ const ConfirmTransaction: React.FC = () => {
           getNewTransaction({
             amount: pendingTxn.amount,
             date: completedTxnDate,
-            label: "Shared Pay",
+            label: pendingTxn.label,
             id: pendingTxn.id,
             currency: currencySymbol.DOLLAR,
           })

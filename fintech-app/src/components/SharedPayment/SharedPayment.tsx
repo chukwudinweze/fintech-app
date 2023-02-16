@@ -14,6 +14,7 @@ import {
   getDestinationAcct,
   getInitiator,
   getTxnId,
+  getTxnLabel,
   getTxnType,
   pendingTxnAmount,
 } from "../../store/pendingTransactionSlice";
@@ -69,6 +70,7 @@ const SharedPayment: React.FC<propsType> = ({
     dispatch(getTxnType(typeOfTxn.SHAREDPAY));
     dispatch(getInitiator(initiator));
     dispatch(getTxnId(id));
+    dispatch(getTxnLabel(purpose));
     // dispatch(deActivateDrawer());
     navigate("/confirmtxn");
   };

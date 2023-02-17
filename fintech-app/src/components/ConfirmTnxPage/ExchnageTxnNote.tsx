@@ -1,10 +1,9 @@
 import { Typography } from "@mui/material";
-import { Box, Stack } from "@mui/system";
+import { Stack } from "@mui/system";
 import React from "react";
-import { currencySymbol } from "../../store/currencySymbolEnum";
 import { useAppSelector } from "../../store/hooks";
 
-const SharedPayNote = () => {
+const ExchnageTxnNote = () => {
   const pendingTxn = useAppSelector((state) => state.pendindTransaction);
   return (
     <Stack alignItems="center" justifyContent="center">
@@ -17,15 +16,9 @@ const SharedPayNote = () => {
         component="p"
         color="#958d9e"
       >
-        Yes debit{" "}
-        <Box component="span" color="#4e1dff">
-          {currencySymbol.NAIRA} {pendingTxn.amount}.00
-        </Box>{" "}
-        for{" "}
-        <Typography component="span" fontWeight={700} color="#000">
-          {pendingTxn.initiator}
-        </Typography>{" "}
-        sharedpay.
+        Convert and fund my {pendingTxn.ExchangeCurrencyTo} acount with{" "}
+        {pendingTxn.ExchangeCurrencyFrom}
+        {pendingTxn.amount}
       </Typography>
       <Typography variant="body1" component="p" color="#958d9e">
         Are you sure?
@@ -34,4 +27,4 @@ const SharedPayNote = () => {
   );
 };
 
-export default SharedPayNote;
+export default ExchnageTxnNote;

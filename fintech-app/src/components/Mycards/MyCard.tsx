@@ -11,12 +11,13 @@ import styles from "./Mycard.module.css";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 
 type cardProps = {
-  balance: string;
+  balance: number;
   expirydate: string;
   ccv: string;
   classname: string;
   lastFourDigit: string;
   fullDigit: string;
+  currency: string;
 };
 
 const MyCard: React.FC<cardProps> = ({
@@ -26,6 +27,7 @@ const MyCard: React.FC<cardProps> = ({
   expirydate,
   ccv,
   classname,
+  currency,
 }) => {
   const [showCardNumber, setShowCardNumber] = useState<boolean>(false);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -64,7 +66,8 @@ const MyCard: React.FC<cardProps> = ({
               BALANCE
             </Typography>
             <Typography sx={{ fontWeight: "600", fontSize: "24px" }}>
-              ${balance}
+              {currency}
+              {balance}
             </Typography>
           </Stack>
           <Stack>

@@ -1,10 +1,14 @@
-import { useState } from "react";
 import { Box } from "@mui/material";
 import { Swiper, SwiperSlide } from "swiper/react";
 import SubHeading from "../../Global/SubHeading";
+import { currencySymbol } from "../../store/currencySymbolEnum";
+import { useAppSelector } from "../../store/hooks";
 import MyCard from "./MyCard";
 
 const MyCards: React.FC = () => {
+  const dollarBalance = useAppSelector((state) => state.dollarAccount.balance);
+  const euroBalance = useAppSelector((state) => state.euroAccount.balance);
+  const nairaBalance = useAppSelector((state) => state.nairaAccount.balance);
   return (
     <Box marginBottom="100px">
       <Box sx={{ paddingTop: "20px", paddingBottom: "10px" }}>
@@ -30,32 +34,35 @@ const MyCards: React.FC = () => {
       >
         <SwiperSlide>
           <MyCard
-            balance="1,256,90"
+            balance={dollarBalance}
             lastFourDigit="9584"
             fullDigit="4123 4567 8910 9584"
             expirydate="12/25"
             ccv="553"
             classname="MycardPurple"
+            currency={currencySymbol.DOLLAR}
           />
         </SwiperSlide>
         <SwiperSlide>
           <MyCard
-            balance="1,256,90"
+            balance={euroBalance}
             lastFourDigit="9584"
             fullDigit="4123 4567 8910 9584"
             expirydate="12/25"
             ccv="553"
             classname="MycardBlack"
+            currency={currencySymbol.EURO}
           />
         </SwiperSlide>
         <SwiperSlide>
           <MyCard
-            balance="1,256,90"
+            balance={nairaBalance}
             lastFourDigit="9584"
             fullDigit="4123 4567 8910 9584"
             expirydate="12/25"
             ccv="553"
             classname="MycardAsh"
+            currency={currencySymbol.NAIRA}
           />
         </SwiperSlide>
       </Swiper>

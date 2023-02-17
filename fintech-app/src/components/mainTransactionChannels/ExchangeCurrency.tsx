@@ -31,6 +31,12 @@ const ExchangeCurrency = () => {
   );
   const [amount, setAmount] = React.useState<number>(0);
 
+  const options = [
+    { value: currencySymbol.NAIRA, label: "Naira" },
+    { value: currencySymbol.DOLLAR, label: "Dollar" },
+    { value: currencySymbol.EURO, label: "Euro" },
+  ];
+
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
@@ -59,6 +65,8 @@ const ExchangeCurrency = () => {
     dispatch(getExchangeCrrencyFrom(currencyFrom));
     dispatch(getExchangeCrrencyTo(currencyTo));
     dispatch(deActivateDrawer());
+    console.log(currencyFrom, currencyTo);
+
     navigate("/confirmtxn");
   };
 
@@ -110,16 +118,19 @@ const ExchangeCurrency = () => {
                   variant="standard"
                   fullWidth
                 >
-                  {/* This code is checking the current selected currency, currencyFrom, and only rendering options for other currencies in a select dropdown menu. */}
-                  {currencyFrom !== currencySymbol.NAIRA && (
-                    <option value={currencySymbol.NAIRA}>Naira</option>
-                  )}
-                  {currencyFrom === currencySymbol.NAIRA && (
-                    <option value={currencySymbol.DOLLAR}>Dollar</option>
-                  )}
-                  {currencyFrom === currencySymbol.NAIRA && (
-                    <option value={currencySymbol.EURO}>Euro</option>
-                  )}
+                  {/* filter opeions that is not equal to currencyFrom  */}
+                  {/* and display the remaining option */}
+                  {options
+                    .filter((option) => option.value !== currencyFrom)
+                    .map((option) => (
+                      <option
+                        key={option.value}
+                        value={option.value}
+                        selected={currencyTo === option.value}
+                      >
+                        {option.label}
+                      </option>
+                    ))}
                 </TextField>
                 <TextField
                   InputProps={{
@@ -166,7 +177,9 @@ const ExchangeCurrency = () => {
                     color="primary"
                     type="submit"
                   >
-                    Withdraw
+                    {currencyTo === currencySymbol.DOLLAR && "Convert to USD"}
+                    {currencyTo === currencySymbol.EURO && "Convert to EURO"}
+                    {currencyTo === currencySymbol.NAIRA && "Convert to Naira"}
                   </Button>
                 </Box>
               </form>

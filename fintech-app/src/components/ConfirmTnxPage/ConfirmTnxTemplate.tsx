@@ -13,6 +13,8 @@ import { typeOfTxn } from "../../Global/TypeOfTransaction";
 import WithdrawNote from "./WithdrawNote";
 import FundWalletNote from "./FundWalletNote";
 import TransferNote from "./TransferNote";
+import SharedPayNote from "./SharedpayNote";
+import ExchnageTxnNote from "./ExchnageTxnNote";
 
 const ConfirmTnxTemplate = () => {
   const pendingTxn = useAppSelector((state) => state.pendindTransaction);
@@ -75,10 +77,19 @@ const ConfirmTnxTemplate = () => {
             justifyContent="center"
             className={styles.text}
           >
-            <Typography fontSize="11px"> Amount</Typography>
-            <Typography fontWeight="600" sx={{ fontSize: "20px" }}>
-              {currencySymbol.NAIRA} {pendingTxn.amount}.00
-            </Typography>
+            {/* only display this when type of transaction is not sharedpay */}
+            {pendingTxn.txnType !== typeOfTxn.SHAREDPAY &&
+              pendingTxn.txnType !== typeOfTxn.EXCHAGE && (
+                <Typography fontSize="11px"> Amount</Typography>
+              )}
+            {pendingTxn.txnType !== typeOfTxn.SHAREDPAY && (
+              <Typography fontWeight="600" sx={{ fontSize: "20px" }}>
+                {pendingTxn.txnType === typeOfTxn.EXCHAGE
+                  ? pendingTxn.ExchangeCurrencyFrom
+                  : currencySymbol.NAIRA}
+                {pendingTxn.amount}.00
+              </Typography>
+            )}
           </Stack>
         </div>
         {/* credit account logo comes after the arrow head in the confirmation page */}
@@ -87,6 +98,8 @@ const ConfirmTnxTemplate = () => {
       {pendingTxn.txnType === typeOfTxn.WITHDRAWAL && <WithdrawNote />}
       {pendingTxn.txnType === typeOfTxn.WALLET_FUNDING && <FundWalletNote />}
       {pendingTxn.txnType === typeOfTxn.TRANSFER && <TransferNote />}
+      {pendingTxn.txnType === typeOfTxn.SHAREDPAY && <SharedPayNote />}
+      {pendingTxn.txnType === typeOfTxn.EXCHAGE && <ExchnageTxnNote />}
       <Stack
         spacing={2}
         direction="row"

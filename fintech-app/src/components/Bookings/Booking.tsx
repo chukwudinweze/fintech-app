@@ -1,34 +1,241 @@
-import { Box } from "@mui/material";
 import React from "react";
+import { Link } from "react-router-dom";
 import styles from "./Booking.module.css";
+import Dialog from "@mui/material/Dialog";
+import AppBar from "@mui/material/AppBar";
+import Toolbar from "@mui/material/Toolbar";
+import IconButton from "@mui/material/IconButton";
+import CloseIcon from "@mui/icons-material/Close";
+import Slide from "@mui/material/Slide";
+import { TransitionProps } from "@mui/material/transitions";
+import { useNavigate } from "react-router-dom";
+import { useAppDispatch } from "../../store/hooks";
+import dayjs, { Dayjs } from "dayjs";
+import Stack from "@mui/material/Stack";
+import TextField from "@mui/material/TextField";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { TimePicker } from "@mui/x-date-pickers/TimePicker";
+import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
+import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
+import { MobileDatePicker } from "@mui/x-date-pickers/MobileDatePicker";
+import { toggleNav } from "../../store/InterfaceSlice";
+import { Box } from "@mui/system";
+import { Button } from "@mui/material";
+import { getBookingInfo } from "../../store/pendingTransactionSlice";
+
+const terminals = [
+  "Lagos",
+  "Abuja",
+  "Port Harcourt",
+  "Kano",
+  "Enugu",
+  "Ibadan",
+  "Maiduguri",
+  "Jos",
+  "Calabar",
+  "Kaduna",
+  "Onitsha",
+  "Abeokuta",
+  "Bauchi",
+  "Lokoja",
+  "Warri",
+  "Sokoto",
+  "Uyo",
+  "Zamfara",
+  "Owerri",
+  "Osogbo",
+  "Adamawa",
+  "Asaba",
+  "Akure",
+  "Gombe",
+  "Awka",
+  "Ondo",
+  "Yobe",
+  "Umuahia",
+  "Oyo",
+];
+
+const Transition = React.forwardRef(function Transition(
+  props: TransitionProps & {
+    children: React.ReactElement;
+  },
+  ref: React.Ref<unknown>
+) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
+
+const dayjsObj = dayjs();
 
 const Booking: React.FC<{
   backgroundImg: string;
 }> = ({ backgroundImg }) => {
+  const [open, setOpen] = React.useState(false);
+  const [value, setValue] = React.useState<Dayjs | null>(
+    dayjs("2022-19-18T21:11:54")
+  );
+
+  const [departFrom, setDepartFrom] = React.useState<string>("Lagos");
+  const [departTo, setDepartTo] = React.useState<string>("Enugu");
+  const [seatNo, setSeatNo] = React.useState<string>("1");
+  const dateHandler = (newValue: Dayjs | null) => {
+    setValue(newValue);
+  };
+
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+
+  const handleClickOpen = () => {
+    setOpen(true);
+    dispatch(toggleNav());
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+    dispatch(toggleNav());
+  };
+  const handlePendingTxn = () => {
+    console.log(value);
+
+    // dispatch(getBookingInfo({ date: value, departFrom, departTo, seatNo }));
+    dispatch(toggleNav());
+    navigate("/confirmtxn");
+  };
+
   return (
-    <Box
-      sx={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        width: { xs: "150px", sm: "200px", lg: "300px" },
-        // boxShadow:
-        //   "rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px",
-        borderRadius: "10px",
-        background: "#ffffff",
-      }}
-    >
-      <Box>
-        <Box
-          className={styles[backgroundImg]}
-          // sx={{
-          //   width: { xs: "100px", sm: "200px", lg: "300px" },
-          //   height: { xs: "30px", sm: "80px", lg: "100px" },
-          //   margin: "5px",
-          // }}
-        />
+    <div>
+      <Box
+        onClick={handleClickOpen}
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          width: { xs: "150px", sm: "200px", lg: "300px" },
+          borderRadius: "10px",
+          background: "#ffffff",
+        }}
+      >
+        <Box>
+          <Box className={styles[backgroundImg]} />
+        </Box>
       </Box>
-    </Box>
+
+      <Dialog
+        fullScreen
+        open={open}
+        onClose={handleClose}
+        TransitionComponent={Transition}
+      >
+        <AppBar sx={{ position: "relative" }}>
+          <Toolbar>
+            <IconButton
+              edge="start"
+              color="inherit"
+              onClick={handleClose}
+              aria-label="close"
+            >
+              <CloseIcon />
+            </IconButton>
+          </Toolbar>
+        </AppBar>
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <Stack spacing={3} marginTop="20px">
+            <Box className={styles[backgroundImg]} sx={{ width: "50%" }} />
+            <TextField
+              id="outlined-select-currency-native"
+              select
+              label="Traveling From"
+              defaultValue="Lagos"
+              onChange={(e) => setDepartFrom(e.target.value)}
+              SelectProps={{
+                native: true,
+              }}
+              // helperText="Please select your currency"
+            >
+              {terminals.map((terminal) => (
+                <option key={terminal} value={terminal}>
+                  {terminal}
+                </option>
+              ))}
+            </TextField>
+            <TextField
+              id="outlined-select-currency-native"
+              select
+              label="Traveling To"
+              value={departTo}
+              onChange={(e) => setDepartTo(e.target.value)}
+              SelectProps={{
+                native: true,
+              }}
+              // helperText="Please select your currency"
+            >
+              {terminals.map((terminal) => (
+                <option key={terminal} value={terminal}>
+                  {terminal}
+                </option>
+              ))}
+            </TextField>
+            <TextField
+              id="outlined-select-currency-native"
+              select
+              label="Seat Quantity"
+              value={seatNo}
+              onChange={(e) => setSeatNo(e.target.value)}
+              SelectProps={{
+                native: true,
+              }}
+              // helperText="Please select your currency"
+            >
+              {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15].map(
+                (item) => (
+                  <option key={item} value={item}>
+                    {item}
+                  </option>
+                )
+              )}
+            </TextField>
+            <Stack sx={{ display: { xs: "none", sm: "none", lg: "flex" } }}>
+              <DesktopDatePicker
+                label="Departure Date"
+                inputFormat="MM/DD/YYYY"
+                value={value}
+                onChange={dateHandler}
+                renderInput={(params) => <TextField {...params} />}
+              />
+            </Stack>
+            <Stack sx={{ display: { xs: "flex", sm: "flex", lg: "none" } }}>
+              <MobileDatePicker
+                label="Departure Date"
+                inputFormat="MM/DD/YYYY"
+                value={value}
+                onChange={dateHandler}
+                renderInput={(params) => <TextField {...params} />}
+              />
+            </Stack>
+            <TimePicker
+              label="Time"
+              value={value}
+              onChange={dateHandler}
+              renderInput={(params) => <TextField {...params} />}
+            />
+            <DateTimePicker
+              label="Date&Time picker"
+              value={value}
+              onChange={dateHandler}
+              renderInput={(params) => <TextField {...params} />}
+            />
+            <Stack direction="row" spacing={2} marginTop="30px">
+              <Button variant="contained" fullWidth onClick={handleClose}>
+                Close
+              </Button>
+              <Button variant="contained" fullWidth onClick={handlePendingTxn}>
+                Process
+              </Button>
+            </Stack>
+          </Stack>
+        </LocalizationProvider>
+      </Dialog>
+    </div>
   );
 };
 

@@ -40,8 +40,7 @@ const terminals = [
   "Umuahia",
   "Oyo",
 ];
-
-export default function MaterialUIPickers() {
+const BookingPage = () => {
   const [value, setValue] = React.useState<Dayjs | null>(
     dayjs("2014-08-18T21:11:54")
   );
@@ -131,7 +130,14 @@ export default function MaterialUIPickers() {
           onChange={handleChange}
           renderInput={(params) => <TextField {...params} />}
         />
+        <Stack direction="row" spacing={2} marginTop="30px">
+          <Button variant="outlined" onClick={handleClose}>
+            Close
+          </Button>
+        </Stack>
       </Stack>
     </LocalizationProvider>
   );
-}
+};
+
+export default BookingPage;

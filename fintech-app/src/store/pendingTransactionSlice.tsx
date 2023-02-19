@@ -1,5 +1,12 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { Dayjs } from "dayjs";
 
+type bookingType = {
+  date: Dayjs | null;
+  departFrom: string;
+  departTo: string;
+  seatNo: string;
+};
 interface pendingTxnType {
   amount: number;
   debitAccount: string;
@@ -16,6 +23,7 @@ interface pendingTxnType {
   initiator: string;
   id: string;
   label: string;
+  booking: bookingType;
 }
 
 const initialState: pendingTxnType = {
@@ -34,6 +42,7 @@ const initialState: pendingTxnType = {
   initiator: "",
   id: "",
   label: "",
+  booking: { date: null, departFrom: "", departTo: "", seatNo: "" },
 };
 
 const pendingTransaction = createSlice({
@@ -82,6 +91,9 @@ const pendingTransaction = createSlice({
     getTxnLabel(state, action: PayloadAction<string>) {
       state.label = action.payload;
     },
+    getBookingInfo(state, action: PayloadAction<bookingType>) {
+      state.booking = action.payload;
+    },
   },
 });
 
@@ -100,6 +112,7 @@ export const {
   getInitiator,
   getTxnId,
   getTxnLabel,
+  getBookingInfo,
 } = pendingTransaction.actions;
 
 export default pendingTransaction;

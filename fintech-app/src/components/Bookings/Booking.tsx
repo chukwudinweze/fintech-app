@@ -21,10 +21,9 @@ import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 import { MobileDatePicker } from "@mui/x-date-pickers/MobileDatePicker";
 import { toggleNav } from "../../store/InterfaceSlice";
 import { Box } from "@mui/system";
-import { Button } from "@mui/material";
-import { getBookingInfo } from "../../store/pendingTransactionSlice";
+import { Button, Paper } from "@mui/material";
 
-const terminals = [
+const terminals: string[] = [
   "Lagos",
   "Abuja",
   "Port Harcourt",
@@ -55,6 +54,11 @@ const terminals = [
   "Umuahia",
   "Oyo",
 ];
+const prices: number[] = [
+  10000, 15000, 12000, 20000, 18000, 9000, 25000, 17000, 13000, 19000, 14000,
+  11000, 21000, 16000, 17000, 22000, 14000, 23000, 20000, 15000, 24000, 19000,
+  18000, 2200, 2000, 2100, 1800, 1900, 1500,
+];
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -81,6 +85,13 @@ const Booking: React.FC<{
   const dateHandler = (newValue: Dayjs | null) => {
     setValue(newValue);
   };
+
+  // generate price from depending on the selected destination terminal
+  let selectedPrice;
+  const priceIndex = terminals.indexOf(departTo);
+  if (priceIndex !== -1) {
+    selectedPrice = prices[priceIndex];
+  }
 
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
@@ -145,7 +156,7 @@ const Booking: React.FC<{
               id="outlined-select-currency-native"
               select
               label="Traveling From"
-              defaultValue="Lagos"
+              value={departFrom}
               onChange={(e) => setDepartFrom(e.target.value)}
               SelectProps={{
                 native: true,
@@ -214,12 +225,6 @@ const Booking: React.FC<{
             </Stack>
             <TimePicker
               label="Time"
-              value={value}
-              onChange={dateHandler}
-              renderInput={(params) => <TextField {...params} />}
-            />
-            <DateTimePicker
-              label="Date&Time picker"
               value={value}
               onChange={dateHandler}
               renderInput={(params) => <TextField {...params} />}

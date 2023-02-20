@@ -78,6 +78,7 @@ const Booking: React.FC<{
   const [value, setValue] = React.useState<Dayjs | null>(
     dayjs("2022-19-18T21:11:54")
   );
+  const [month, setMonth] = React.useState<Dayjs | null>(dayjs(""));
 
   const [departFrom, setDepartFrom] = React.useState<string>("Lagos");
   const [departTo, setDepartTo] = React.useState<string>("Enugu");
@@ -85,6 +86,9 @@ const Booking: React.FC<{
   const dateHandler = (newValue: Dayjs | null) => {
     setValue(newValue);
   };
+  // const monthHandler = (newValue: Dayjs | null) => {
+  //   setValue(monthValue);
+  // };
 
   // generate price from depending on the selected destination terminal
   let selectedPrice;
@@ -106,11 +110,19 @@ const Booking: React.FC<{
     dispatch(toggleNav());
   };
   const handlePendingTxn = () => {
-    console.log(value);
+    const monthValue = dayjs(value).month();
+    const yearValue = dayjs(value).year();
+    const timev = dayjs(value).hour();
 
+    console.log({
+      date: { monthValue, yearValue, timev },
+      departFrom,
+      departTo,
+      seatNo,
+    });
     // dispatch(getBookingInfo({ date: value, departFrom, departTo, seatNo }));
-    dispatch(toggleNav());
-    navigate("/confirmtxn");
+    // dispatch(toggleNav());
+    // navigate("/confirmtxn");
   };
 
   return (

@@ -1,0 +1,29 @@
+.peace,
+.libra,
+.GIG,
+.chisco,
+.abc {
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.peace {
+  background-image: url("../../assets/peacebus.png");
+}
+
+.GIG {
+  background-image: url("../../assets/gigmbus.png");
+}
+
+.libra {
+  background-image: url("../../assets/librabus.png");
+}
+
+.chisco {
+  background-image: url("../../assets/chiscobus.png");
+}
+
+.abc {
+  background-image: url("../../assets/abcbus.png");
+}

@@ -1,11 +1,20 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Dayjs } from "dayjs";
+
+type dateValueType = {
+  monthValue: number;
+  yearValue: number;
+  hourValue: number;
+  minutesValue: number;
+  dayValue: number;
+};
 
 type bookingType = {
-  date: Dayjs | null;
+  date: dateValueType;
   departFrom: string;
   departTo: string;
   seatNo: string;
+  price: number;
+  backgroundImg: string;
 };
 interface pendingTxnType {
   amount: number;
@@ -42,7 +51,20 @@ const initialState: pendingTxnType = {
   initiator: "",
   id: "",
   label: "",
-  booking: { date: null, departFrom: "", departTo: "", seatNo: "" },
+  booking: {
+    date: {
+      monthValue: 0,
+      yearValue: 0,
+      hourValue: 0,
+      minutesValue: 0,
+      dayValue: 0,
+    },
+    departFrom: "",
+    departTo: "",
+    seatNo: "",
+    price: 0,
+    backgroundImg: "",
+  },
 };
 
 const pendingTransaction = createSlice({

@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import styles from "./Booking.module.css";
 import Dialog from "@mui/material/Dialog";
 import AppBar from "@mui/material/AppBar";
@@ -16,12 +15,12 @@ import TextField from "@mui/material/TextField";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { TimePicker } from "@mui/x-date-pickers/TimePicker";
-import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 import { MobileDatePicker } from "@mui/x-date-pickers/MobileDatePicker";
 import { toggleNav } from "../../store/InterfaceSlice";
 import { Box } from "@mui/system";
-import { Button, Paper } from "@mui/material";
+import { Button } from "@mui/material";
+import { getBookingInfo } from "../../store/pendingTransactionSlice";
 
 const terminals: string[] = [
   "Lagos",
@@ -69,16 +68,13 @@ const Transition = React.forwardRef(function Transition(
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const dayjsObj = dayjs();
-
 const Booking: React.FC<{
   backgroundImg: string;
 }> = ({ backgroundImg }) => {
   const [open, setOpen] = React.useState(false);
   const [value, setValue] = React.useState<Dayjs | null>(
-    dayjs("2022-19-18T21:11:54")
+    dayjs("2023-21-18T21:11:54")
   );
-  const [month, setMonth] = React.useState<Dayjs | null>(dayjs(""));
 
   const [departFrom, setDepartFrom] = React.useState<string>("Lagos");
   const [departTo, setDepartTo] = React.useState<string>("Enugu");
@@ -86,19 +82,16 @@ const Booking: React.FC<{
   const dateHandler = (newValue: Dayjs | null) => {
     setValue(newValue);
   };
-  // const monthHandler = (newValue: Dayjs | null) => {
-  //   setValue(monthValue);
-  // };
+
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
   // generate price from depending on the selected destination terminal
-  let selectedPrice;
+  let selectedPrice: number;
   const priceIndex = terminals.indexOf(departTo);
   if (priceIndex !== -1) {
     selectedPrice = prices[priceIndex];
   }
-
-  const navigate = useNavigate();
-  const dispatch = useAppDispatch();
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -112,17 +105,38 @@ const Booking: React.FC<{
   const handlePendingTxn = () => {
     const monthValue = dayjs(value).month();
     const yearValue = dayjs(value).year();
-    const timev = dayjs(value).hour();
+    const dayValue = dayjs(value).date();
+    const hourValue = dayjs(value).hour();
+    const minutesValue = dayjs(value).minute();
 
     console.log({
-      date: { monthValue, yearValue, timev },
+      date: { monthValue, yearValue },
       departFrom,
       departTo,
       seatNo,
+      hourValue,
+      minutesValue,
+      dayValue,
+      backgroundImg,
     });
-    // dispatch(getBookingInfo({ date: value, departFrom, departTo, seatNo }));
-    // dispatch(toggleNav());
-    // navigate("/confirmtxn");
+    dispatch(
+      getBookingInfo({
+        date: {
+          monthValue,
+          dayValue,
+          yearValue,
+          hourValue,
+          minutesValue,
+        },
+        departFrom,
+        departTo,
+        seatNo,
+        price: selectedPrice,
+        backgroundImg,
+      })
+    );
+    dispatch(toggleNav());
+    navigate("/confirmbooking");
   };
 
   return (
@@ -162,7 +176,7 @@ const Booking: React.FC<{
           </Toolbar>
         </AppBar>
         <LocalizationProvider dateAdapter={AdapterDayjs}>
-          <Stack spacing={3} marginTop="20px">
+          <Stack spacing={3} marginTop="20px" margin="0 16px">
             <Box className={styles[backgroundImg]} sx={{ width: "50%" }} />
             <TextField
               id="outlined-select-currency-native"
@@ -241,9 +255,14 @@ const Booking: React.FC<{
               onChange={dateHandler}
               renderInput={(params) => <TextField {...params} />}
             />
-            <Stack direction="row" spacing={2} marginTop="30px">
+            <Stack
+              direction="row"
+              spacing={2}
+              marginTop="30px"
+              marginBottom={{ lg: "50px" }}
+            >
               <Button variant="contained" fullWidth onClick={handleClose}>
-                Close
+                Cancel
               </Button>
               <Button variant="contained" fullWidth onClick={handlePendingTxn}>
                 Process

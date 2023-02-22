@@ -16,9 +16,13 @@ import SaveIcon from "@mui/icons-material/Save";
 import PrintIcon from "@mui/icons-material/Print";
 import { useReactToPrint } from "react-to-print";
 import { typeOfTxn } from "../../Global/TypeOfTransaction";
+import { months } from "../../Global/months";
 
 const PaymentRecipt = () => {
   const transaction = useAppSelector((state) => state.pendindTransaction);
+  const bookingDetail = useAppSelector(
+    (state) => state.pendindTransaction.booking
+  );
 
   // handle dialbox opening and closing
   const [open, setOpen] = React.useState(false);
@@ -92,37 +96,48 @@ const PaymentRecipt = () => {
             justifyContent="space-between"
             borderBottom="1px solid #ababb5"
           >
-            <Typography>Transfer Type </Typography>
-            <Typography>{transaction.txnType}</Typography>
+            <Typography>Transaction Type </Typography>
+            <Typography textTransform="capitalize">
+              {transaction.txnType === typeOfTxn.BOOkING
+                ? bookingDetail.label
+                : transaction.txnType}
+            </Typography>
           </Stack>
-          <Stack
-            direction="row"
-            alignItems="center"
-            justifyContent="space-between"
-            borderBottom="1px solid #ababb5"
+          {transaction.txnType !== typeOfTxn.EXCHAGE &&
+            transaction.txnType !== typeOfTxn.BOOkING && (
+              <Stack
+                direction="row"
+                alignItems="center"
+                justifyContent="space-between"
+                borderBottom="1px solid #ababb5"
 
-            // code below first checks the transaction type and then uses a ternary operator to either display "Debit Account" and the debit account number or "Destination Account" and the destination account number
-          >
-            {transaction.txnType === typeOfTxn.WALLET_FUNDING ? (
-              <>
-                <Typography>Debit Account </Typography>
-                <Typography>{transaction.debitAccount}</Typography>
-              </>
-            ) : (
-              <>
-                <Typography>Destination Account </Typography>
-                <Typography>{transaction.destinationAcct}</Typography>
-              </>
+                // code below first checks the transaction type and then uses a ternary operator to either display "Debit Account" and the debit account number or "Destination Account" and the destination account number
+              >
+                {transaction.txnType === typeOfTxn.WALLET_FUNDING ? (
+                  <>
+                    <Typography>Debit Account </Typography>
+                    <Typography>{transaction.debitAccount}</Typography>
+                  </>
+                ) : (
+                  <>
+                    <Typography>Destination Account </Typography>
+                    <Typography>{transaction.destinationAcct}</Typography>
+                  </>
+                )}
+              </Stack>
             )}
-          </Stack>
-          <Stack
-            direction="row"
-            alignItems="center"
-            justifyContent="space-between"
-            borderBottom="1px solid #ababb5"
-          >
-            <Typography>Status</Typography> <Typography>Success</Typography>
-          </Stack>
+
+          {transaction.txnType === typeOfTxn.BOOkING && (
+            <Stack
+              direction="row"
+              alignItems="center"
+              justifyContent="space-between"
+              borderBottom="1px solid #ababb5"
+            >
+              <Typography>No of seat </Typography>
+              <Typography>{bookingDetail.seatNo}</Typography>
+            </Stack>
+          )}
           <Stack
             direction="row"
             alignItems="center"
@@ -132,8 +147,52 @@ const PaymentRecipt = () => {
             <Typography>Amount </Typography>
             <Typography variant="h6" fontWeight="700">
               {currencySymbol.NAIRA}
-              {transaction.amount}.00
+              {transaction.txnType === typeOfTxn.BOOkING
+                ? bookingDetail.price.toLocaleString()
+                : transaction.amount.toLocaleString()}
             </Typography>
+          </Stack>
+          {transaction.txnType === typeOfTxn.BOOkING && (
+            <Stack
+              direction="row"
+              alignItems="center"
+              justifyContent="space-between"
+              borderBottom="1px solid #ababb5"
+            >
+              <Typography>Boarding date </Typography>
+              <Stack direction="row" spacing={0.3}>
+                <Typography>{bookingDetail.date.dayValue}</Typography>
+                <Typography>{months[bookingDetail.date.monthValue]}</Typography>
+                , <Typography>{bookingDetail.date.yearValue}</Typography>
+              </Stack>
+            </Stack>
+          )}
+          {transaction.txnType === typeOfTxn.BOOkING && (
+            <Stack
+              direction="row"
+              alignItems="center"
+              justifyContent="space-between"
+              borderBottom="1px solid #ababb5"
+            >
+              <Typography>Boarding Time </Typography>
+              <Stack direction="row" spacing={0.3}>
+                <Typography>{bookingDetail.date.hourValue}</Typography>:
+                <Typography>{bookingDetail.date.minutesValue}</Typography>
+              </Stack>
+            </Stack>
+          )}
+          <Stack
+            direction="row"
+            alignItems="center"
+            justifyContent="space-between"
+            borderBottom="1px solid gray"
+          >
+            <Typography>Transaction Date </Typography>
+            <Stack direction="row" spacing={0.3}>
+              <Typography>{transaction.txnDay}</Typography>
+              <Typography>{transaction.txnMonth}</Typography>,{" "}
+              <Typography>{transaction.txnYear}</Typography>
+            </Stack>
           </Stack>
           <Stack
             direction="row"
@@ -141,11 +200,8 @@ const PaymentRecipt = () => {
             justifyContent="space-between"
             borderBottom="1px solid gray"
           >
-            <Typography>Date</Typography>{" "}
-            <Typography>
-              {transaction.txnMonth} {transaction.txnDay}, {transaction.txnHour}
-              :{transaction.txnMinutes}
-            </Typography>
+            <Typography>Reciept ID</Typography>{" "}
+            <Typography>{transaction.id}</Typography>
           </Stack>
         </Stack>
       </Box>

@@ -1,4 +1,3 @@
-import React from "react";
 import { Grid, Box } from "@mui/material";
 import AcctSummaryLayout from "./AcctSummaryLayout";
 import { useAppSelector } from "../../store/hooks";
@@ -17,7 +16,7 @@ const AccountSummary = () => {
         <Grid item xs={6}>
           <AcctSummaryLayout
             label="Total Funded"
-            amount={amount}
+            amount={+amount.toPrecision(1)}
             color="#1dcc70"
             pageLink="/savings"
           />

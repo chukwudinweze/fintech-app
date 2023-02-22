@@ -16,6 +16,7 @@ import { months } from "../../Global/months";
 import {
   getTxnDay,
   getTxnHour,
+  getTxnId,
   getTxnMinutes,
   getTxnMonth,
   getTxnYear,
@@ -77,6 +78,7 @@ const ConfirmTransaction: React.FC = () => {
       const hour = date.getHours();
       const minutes = date.getMinutes();
       const completedTxnDate = `${month} ${day}, ${txnYear}`;
+      const Txnid = uuidv4().slice(0, 15);
 
       // perfom transaction depending on the type of transaction
       // sent to the pending transaction slice in the redux store
@@ -89,7 +91,7 @@ const ConfirmTransaction: React.FC = () => {
             amount: pendingTxn.amount,
             date: completedTxnDate,
             label: "Wallet Funding",
-            id: uuidv4(),
+            id: Txnid,
             // type of transaction is provided here.
             // This is only provided if the type of transaction is funding
             typeOfTxn: typeOfTxn.WALLET_FUNDING,
@@ -110,7 +112,7 @@ const ConfirmTransaction: React.FC = () => {
             amount: pendingTxn.amount,
             date: completedTxnDate,
             label: "Naira Withdrawal",
-            id: uuidv4(),
+            id: Txnid,
             currency: currencySymbol.NAIRA,
           })
         );
@@ -129,7 +131,7 @@ const ConfirmTransaction: React.FC = () => {
             amount: pendingTxn.amount,
             date: completedTxnDate,
             label: "Quipay Transfer",
-            id: uuidv4(),
+            id: Txnid,
             currency: currencySymbol.NAIRA,
           })
         );
@@ -152,7 +154,7 @@ const ConfirmTransaction: React.FC = () => {
               amount: pendingTxn.amount,
               date: completedTxnDate,
               label: "Naira to Dollar Exchange",
-              id: uuidv4(),
+              id: Txnid,
               currency: currencySymbol.NAIRA,
             })
           );
@@ -173,7 +175,7 @@ const ConfirmTransaction: React.FC = () => {
               amount: pendingTxn.amount,
               date: completedTxnDate,
               label: "Naira to Euro Exchange",
-              id: uuidv4(),
+              id: Txnid,
               currency: currencySymbol.NAIRA,
             })
           );
@@ -191,7 +193,7 @@ const ConfirmTransaction: React.FC = () => {
               amount: pendingTxn.amount,
               date: completedTxnDate,
               label: "Dollar to Naira Exchange",
-              id: uuidv4(),
+              id: Txnid,
               currency: currencySymbol.DOLLAR,
             })
           );
@@ -209,7 +211,7 @@ const ConfirmTransaction: React.FC = () => {
               amount: pendingTxn.amount,
               date: completedTxnDate,
               label: "Euro to Naira Exchange",
-              id: uuidv4(),
+              id: Txnid,
               currency: currencySymbol.EURO,
             })
           );
@@ -237,8 +239,27 @@ const ConfirmTransaction: React.FC = () => {
         //update the status of this transaction from pending to completed
         dispatch(upDateTxnStatus(pendingTxn.id));
       }
+      if (pendingTxn.txnType === typeOfTxn.BOOkING) {
+        const seatNo = +pendingTxn.booking.seatNo;
+        const price = pendingTxn.booking.price;
+        const bookingPrice = price * seatNo;
+        dispatch(withdrawNaira(bookingPrice));
+        // also dispatch the amount, type of transaction and date of transaction to the completed transaction store
+        dispatch(
+          getNewTransaction({
+            amount: bookingPrice,
+            date: completedTxnDate,
+            label: pendingTxn.booking.label,
+            id: Txnid,
+            currency: currencySymbol.NAIRA,
+          })
+        );
+        // then add amount to total expense
+        dispatch(addToNairaTotalExpenses(bookingPrice));
+      }
 
       // dispatch transaction detail(date, time,amount etc)
+      dispatch(getTxnId(Txnid));
       dispatch(getTxnYear(txnYear));
       dispatch(getTxnMinutes(minutes));
       dispatch(getTxnHour(hour));

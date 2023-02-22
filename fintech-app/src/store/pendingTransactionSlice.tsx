@@ -15,6 +15,7 @@ type bookingType = {
   seatNo: string;
   price: number;
   backgroundImg: string;
+  label: string;
 };
 interface pendingTxnType {
   amount: number;
@@ -64,6 +65,7 @@ const initialState: pendingTxnType = {
     seatNo: "",
     price: 0,
     backgroundImg: "",
+    label: "",
   },
 };
 

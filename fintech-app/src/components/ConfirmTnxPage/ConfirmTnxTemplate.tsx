@@ -15,6 +15,7 @@ import FundWalletNote from "./FundWalletNote";
 import TransferNote from "./TransferNote";
 import SharedPayNote from "./SharedpayNote";
 import ExchnageTxnNote from "./ExchnageTxnNote";
+import BookingNote from "./BookingNote";
 
 const ConfirmTnxTemplate = () => {
   const pendingTxn = useAppSelector((state) => state.pendindTransaction);
@@ -77,17 +78,31 @@ const ConfirmTnxTemplate = () => {
             justifyContent="center"
             className={styles.text}
           >
-            {/* only display this when type of transaction is not sharedpay */}
+            {/* only display this when type of transaction is not sharedpay, exchange or booking */}
             {pendingTxn.txnType !== typeOfTxn.SHAREDPAY &&
               pendingTxn.txnType !== typeOfTxn.EXCHAGE && (
-                <Typography fontSize="11px"> Amount</Typography>
+                <Typography marginTop={{ sm: "16px" }} fontSize="11px">
+                  {" "}
+                  Amount
+                </Typography>
               )}
-            {pendingTxn.txnType !== typeOfTxn.SHAREDPAY && (
+            {/* only display this when type of transaction is not booking */}
+            {pendingTxn.txnType !== typeOfTxn.SHAREDPAY &&
+              pendingTxn.txnType !== typeOfTxn.BOOkING && (
+                <Typography fontWeight="600" sx={{ fontSize: "20px" }}>
+                  {pendingTxn.txnType === typeOfTxn.EXCHAGE
+                    ? pendingTxn.ExchangeCurrencyFrom
+                    : currencySymbol.NAIRA}
+                  {pendingTxn.amount}.00
+                </Typography>
+              )}
+            {/* display only when the type of transaction is booking */}
+            {pendingTxn.txnType === typeOfTxn.BOOkING && (
               <Typography fontWeight="600" sx={{ fontSize: "20px" }}>
-                {pendingTxn.txnType === typeOfTxn.EXCHAGE
-                  ? pendingTxn.ExchangeCurrencyFrom
-                  : currencySymbol.NAIRA}
-                {pendingTxn.amount}.00
+                {currencySymbol.NAIRA}
+                {(
+                  pendingTxn.booking.price * +pendingTxn.booking.seatNo
+                ).toLocaleString()}
               </Typography>
             )}
           </Stack>
@@ -100,6 +115,7 @@ const ConfirmTnxTemplate = () => {
       {pendingTxn.txnType === typeOfTxn.TRANSFER && <TransferNote />}
       {pendingTxn.txnType === typeOfTxn.SHAREDPAY && <SharedPayNote />}
       {pendingTxn.txnType === typeOfTxn.EXCHAGE && <ExchnageTxnNote />}
+      {pendingTxn.txnType === typeOfTxn.BOOkING && <BookingNote />}
       <Stack
         spacing={2}
         direction="row"

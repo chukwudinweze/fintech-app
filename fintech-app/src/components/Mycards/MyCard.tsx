@@ -67,7 +67,7 @@ const MyCard: React.FC<cardProps> = ({
             </Typography>
             <Typography sx={{ fontWeight: "600", fontSize: "24px" }}>
               {currency}
-              {balance}
+              {+balance.toPrecision(1)}
             </Typography>
           </Stack>
           <Stack>

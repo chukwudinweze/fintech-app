@@ -6,7 +6,8 @@ const PieChart = () => {
   const { naira, dollar, euro } = useAppSelector(
     (state) => state.totalExpenses
   );
-  const series = [naira, dollar, euro];
+  const convertedNaira = naira / 300;
+  const series = [convertedNaira, dollar, euro];
 
   const options = {
     chart: {

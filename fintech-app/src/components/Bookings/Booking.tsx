@@ -20,7 +20,12 @@ import { MobileDatePicker } from "@mui/x-date-pickers/MobileDatePicker";
 import { toggleNav } from "../../store/InterfaceSlice";
 import { Box } from "@mui/system";
 import { Button } from "@mui/material";
-import { getBookingInfo } from "../../store/pendingTransactionSlice";
+import {
+  getBookingInfo,
+  getTxnLabel,
+  getTxnType,
+} from "../../store/pendingTransactionSlice";
+import { typeOfTxn } from "../../Global/TypeOfTransaction";
 
 const terminals: string[] = [
   "Lagos",
@@ -108,17 +113,6 @@ const Booking: React.FC<{
     const dayValue = dayjs(value).date();
     const hourValue = dayjs(value).hour();
     const minutesValue = dayjs(value).minute();
-
-    console.log({
-      date: { monthValue, yearValue },
-      departFrom,
-      departTo,
-      seatNo,
-      hourValue,
-      minutesValue,
-      dayValue,
-      backgroundImg,
-    });
     dispatch(
       getBookingInfo({
         date: {
@@ -133,8 +127,14 @@ const Booking: React.FC<{
         seatNo,
         price: selectedPrice,
         backgroundImg,
+        label: `${backgroundImg} Booking`,
       })
     );
+
+    dispatch(getTxnType(typeOfTxn.BOOkING));
+    dispatch(getTxnLabel("Transport booking"));
+    //  dispatch(deActivateDrawer());
+
     dispatch(toggleNav());
     navigate("/confirmbooking");
   };

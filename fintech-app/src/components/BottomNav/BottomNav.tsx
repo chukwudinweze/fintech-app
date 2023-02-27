@@ -41,6 +41,9 @@ const BottomNav = () => {
           icon={<HomeOutlinedIcon />}
         />
         <BottomNavigationAction
+          onClick={() => {
+            navigate("/support");
+          }}
           label="Support"
           icon={<SupportAgentOutlinedIcon />}
         />

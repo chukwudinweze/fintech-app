@@ -38,6 +38,8 @@ import {
 } from "../../store/ExpensesSlice";
 import { getNewFundAmount } from "../../store/totalFunded";
 import { upDateTxnStatus } from "../../store/sharedPay";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -59,6 +61,9 @@ const ConfirmTransaction: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const pendingTxn = useAppSelector((state) => state.pendindTransaction);
+  const nairaBalance = useAppSelector((state) => state.nairaAccount.balance);
+  const dollarBalance = useAppSelector((state) => state.dollarAccount.balance);
+  const euroBalance = useAppSelector((state) => state.euroAccount.balance);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -104,6 +109,12 @@ const ConfirmTransaction: React.FC = () => {
         dispatch(getNewFundAmount(formatedAmt));
       }
       if (pendingTxn.txnType === typeOfTxn.WITHDRAWAL) {
+        // confirm that user account is sufficient for the transaction
+        if (nairaBalance < pendingTxn.amount) {
+          toast.error("Your account is insuffucuent for this transaction!");
+          setOpen(false);
+          return;
+        }
         dispatch(withdrawNaira(pendingTxn.amount));
 
         // also dispatch the amount, type of transaction and date of transaction to the completed transaction store
@@ -122,6 +133,13 @@ const ConfirmTransaction: React.FC = () => {
       }
 
       if (pendingTxn.txnType === typeOfTxn.TRANSFER) {
+        // confirm that user account is sufficient for the transaction
+        if (nairaBalance < pendingTxn.amount) {
+          toast.error("Your account is insuffucuent for this transaction!");
+          setOpen(false);
+          return;
+        }
+
         dispatch(withdrawNaira(pendingTxn.amount));
 
         // also dispatch the amount, type of transaction and
@@ -144,6 +162,12 @@ const ConfirmTransaction: React.FC = () => {
           pendingTxn.ExchangeCurrencyFrom === currencySymbol.NAIRA &&
           pendingTxn.ExchangeCurrencyTo === currencySymbol.DOLLAR
         ) {
+          // confirm that user account is sufficient for the transaction
+          if (nairaBalance < pendingTxn.amount) {
+            toast.error("Your account is insuffucuent for this transaction!");
+            setOpen(false);
+            return;
+          }
           const nairaInDollar = nairaToDollar(pendingTxn.amount);
           dispatch(withdrawNaira(pendingTxn.amount));
           dispatch(fundDollar(nairaInDollar));
@@ -166,6 +190,12 @@ const ConfirmTransaction: React.FC = () => {
           pendingTxn.ExchangeCurrencyFrom === currencySymbol.NAIRA &&
           pendingTxn.ExchangeCurrencyTo === currencySymbol.EURO
         ) {
+          // confirm that user account is sufficient for the transaction
+          if (nairaBalance < pendingTxn.amount) {
+            toast.error("Your account is insuffucuent for this transaction!");
+            setOpen(false);
+            return;
+          }
           const nairaInEuro = nairaToEuro(pendingTxn.amount);
           dispatch(withdrawNaira(pendingTxn.amount));
           dispatch(fundEuro(nairaInEuro));
@@ -184,6 +214,13 @@ const ConfirmTransaction: React.FC = () => {
           dispatch(addToNairaTotalExpenses(pendingTxn.amount));
         }
         if (pendingTxn.ExchangeCurrencyFrom === currencySymbol.DOLLAR) {
+          // confirm that user account is sufficient for the transaction
+          if (dollarBalance < pendingTxn.amount) {
+            toast.error("Your account is insuffucuent for this transaction!");
+            setOpen(false);
+            return;
+          }
+
           const dollarInNaira = dollarToNaira(pendingTxn.amount);
           dispatch(withdrawDollar(pendingTxn.amount));
           dispatch(fundNaira(dollarInNaira));
@@ -202,6 +239,12 @@ const ConfirmTransaction: React.FC = () => {
           dispatch(addToDollarTotalExpenses(pendingTxn.amount));
         }
         if (pendingTxn.ExchangeCurrencyFrom === currencySymbol.EURO) {
+          // confirm sufficient balance for this transaction
+          if (euroBalance < pendingTxn.amount) {
+            toast.error("Your account is insuffucuent for this transaction!");
+            setOpen(false);
+            return;
+          }
           const euroInNaira = euroToNaira(pendingTxn.amount);
           dispatch(withdrawEuro(pendingTxn.amount));
           dispatch(fundNaira(euroInNaira));
@@ -221,6 +264,13 @@ const ConfirmTransaction: React.FC = () => {
         }
       }
       if (pendingTxn.txnType === typeOfTxn.SHAREDPAY) {
+        // confirm that user account is sufficient for the transaction
+        if (dollarBalance < pendingTxn.amount) {
+          toast.error("Your account is insuffucuent for this transaction!");
+          setOpen(false);
+          return;
+        }
+
         dispatch(withdrawDollar(pendingTxn.amount));
         // also dispatch the amount, type of transaction and date of transaction to the completed transaction store
         dispatch(
@@ -243,6 +293,13 @@ const ConfirmTransaction: React.FC = () => {
         const seatNo = +pendingTxn.booking.seatNo;
         const price = pendingTxn.booking.price;
         const bookingPrice = price * seatNo;
+        // confirm that user account is sufficient for the transaction
+        if (dollarBalance < bookingPrice) {
+          toast.error("Your account is insuffucuent for this transaction!");
+          setOpen(false);
+          return;
+        }
+
         dispatch(withdrawNaira(bookingPrice));
         // also dispatch the amount, type of transaction and date of transaction to the completed transaction store
         dispatch(
@@ -351,6 +408,7 @@ const ConfirmTransaction: React.FC = () => {
           <Button onClick={handleNavigate}>Complete</Button>
         </DialogActions>
       </Dialog>
+      <ToastContainer theme="colored" />
     </Box>
   );
 };

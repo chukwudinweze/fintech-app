@@ -10,13 +10,15 @@ import {
 } from "@mui/material";
 import { currencySymbol } from "../../store/currencySymbolEnum";
 import { useAppSelector } from "../../store/hooks";
-import React, { useCallback, useRef } from "react";
+import React, { useCallback, useEffect, useRef } from "react";
 import { toPng } from "html-to-image";
 import SaveIcon from "@mui/icons-material/Save";
 import PrintIcon from "@mui/icons-material/Print";
 import { useReactToPrint } from "react-to-print";
 import { typeOfTxn } from "../../Global/TypeOfTransaction";
 import { months } from "../../Global/months";
+import { useNavigate } from "react-router-dom";
+import CloseIcon from "@mui/icons-material/Close";
 
 const PaymentRecipt = () => {
   const transaction = useAppSelector((state) => state.pendindTransaction);
@@ -54,6 +56,16 @@ const PaymentRecipt = () => {
   const handlePrint = useReactToPrint({
     content: () => ref.current,
   });
+
+  // prevent user from going back to confirm payment page
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    window.history.pushState(null, "", window.location.href);
+    window.onpopstate = function (event) {
+      navigate("/");
+    };
+  }, [navigate]);
 
   return (
     <Box height="100vh" sx={{ background: { xs: "#fff", sm: "#ededf5" } }}>
@@ -219,6 +231,14 @@ const PaymentRecipt = () => {
           onOpen={handleOpen}
           open={open}
         >
+          {
+            <SpeedDialAction
+              icon={<CloseIcon />}
+              tooltipTitle="Close Page"
+              tooltipOpen
+              onClick={() => navigate("/")}
+            />
+          }
           {
             <SpeedDialAction
               icon={<SaveIcon />}

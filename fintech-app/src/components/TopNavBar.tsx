@@ -10,8 +10,12 @@ import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 import { Avatar, Stack } from "@mui/material";
 import { deepPurple } from "@mui/material/colors";
 import { Link } from "react-router-dom";
+import { useAppSelector } from "../store/hooks";
 
 const TopNavBar: React.FC = () => {
+  const transactionsLength = useAppSelector(
+    (state) => state.completedTransactions.length
+  );
   return (
     <Box
       sx={{
@@ -45,7 +49,7 @@ const TopNavBar: React.FC = () => {
             spacing={{ xs: 4, sm: 2, md: 4 }}
           >
             <Link to="/notification">
-              <Badge color="error" badgeContent={10} max={9}>
+              <Badge color="error" badgeContent={transactionsLength} max={9}>
                 <NotificationsNoneIcon
                   style={{ color: "fff" }}
                   sx={{ fontSize: "30px" }}

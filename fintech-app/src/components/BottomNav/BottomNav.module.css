@@ -5,3 +5,8 @@
 .hideBottomNav {
   z-index: -1 !important;
 }
+
+.Mui-selected {
+  color: #000000; /* set the color to your desired color */
+  background-color: #ffffff; /* set the background color to your desired color */
+}

@@ -11,6 +11,7 @@ import SavingsPage from "./Pages/SavingsPage";
 import LoanPage from "./Pages/LoanPage";
 import SharedPaymentPage from "./Pages/SharedPaymentPage";
 import ConfirmBookingPage from "./Pages/ConfirmBookingPage";
+import SupportPage from "./Pages/SupportPage";
 function App() {
   const theme = createTheme({
     typography: {
@@ -36,6 +37,7 @@ function App() {
           <Route path="quipayloan" element={<LoanPage />} />
           <Route path="sharedpayment" element={<SharedPaymentPage />} />
           <Route path="confirmbooking" element={<ConfirmBookingPage />} />
+          <Route path="support" element={<SupportPage />} />
           <Route
             path="transactionhistory"
             element={<TransactionHistoryPage />}

@@ -89,7 +89,10 @@ const ConfirmTnxTemplate = () => {
             {/* only display this when type of transaction is not booking */}
             {pendingTxn.txnType !== typeOfTxn.SHAREDPAY &&
               pendingTxn.txnType !== typeOfTxn.BOOkING && (
-                <Typography fontWeight="600" sx={{ fontSize: "20px" }}>
+                <Typography
+                  fontWeight="600"
+                  sx={{ fontSize: "20px", padding: { lg: "5px" } }}
+                >
                   {pendingTxn.txnType === typeOfTxn.EXCHAGE
                     ? pendingTxn.ExchangeCurrencyFrom
                     : currencySymbol.NAIRA}

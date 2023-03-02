@@ -2,22 +2,30 @@ import { Stack } from "@mui/material";
 import { Box } from "@mui/system";
 import React from "react";
 import BottomNav from "../components/BottomNav/BottomNav";
+import NoTxnHistory from "../components/transactionHistory/NoTxnHistory";
 import TransactionHistory from "../components/transactionHistory/TransactionHistory";
 import PageHeader from "../Global/PageHeader";
+import { useAppSelector } from "../store/hooks";
 
 const TransactionHistoryPage = () => {
+  const transactions = useAppSelector((state) => state.completedTransactions);
+  const isempty = transactions.length === 0;
+
   return (
     <Box
+      bgcolor={isempty ? "#fff" : "#6236ff"}
       component="section"
       sx={{
         minHeight: "100vh",
-        background: "#6236ff",
         padding: { xs: "0 10px 20px 10px", sm: "0 30px 100px 30px" },
       }}
     >
-      <Stack spacing={10}>
-        <PageHeader label="Transaction History" color="#fff" />
-        <TransactionHistory />
+      <Stack spacing={6}>
+        <PageHeader
+          label="Transaction History"
+          color={isempty ? "#6236ff" : "#fff"}
+        />
+        {isempty ? <NoTxnHistory /> : <TransactionHistory />}
         <BottomNav />
       </Stack>
     </Box>

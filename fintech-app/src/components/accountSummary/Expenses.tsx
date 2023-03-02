@@ -1,11 +1,8 @@
-import { Avatar, Box, Typography } from "@mui/material";
-import { Stack } from "@mui/system";
+import { Box } from "@mui/material";
 import PageHeader from "../../Global/PageHeader";
 import { useAppSelector } from "../../store/hooks";
 import Expense from "./Expense";
 import PieChart from "./PieChart";
-import noTransactionImg from "../../assets/no-credit-card.png";
-import { Link } from "react-router-dom";
 import NoTxnRecord from "../../Global/NoTxnRecord";
 
 export default function App() {

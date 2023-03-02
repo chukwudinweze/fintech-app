@@ -1,30 +1,20 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
-import { IconButton, Typography } from "@mui/material";
+import { Divider, IconButton, Typography } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import Profile from "../../Global/Profile";
 import { Stack } from "@mui/system";
-import { useAppSelector } from "../../store/hooks";
-import { currencySymbol } from "../../store/currencySymbolEnum";
-import WithdrawMoney from "../mainTransactionChannels/WithdrawMoney";
-import TransferMoney from "../mainTransactionChannels/TransferMoney";
-import ExchangeCurrency from "../mainTransactionChannels/ExchangeCurrency";
-import CreditCards from "../mainTransactionChannels/CreditCards";
+import Close from "@mui/icons-material/Close";
+import NotificationsNone from "@mui/icons-material/NotificationsNone";
+import QuestionMarkIcon from "@mui/icons-material/QuestionMark";
+import { Link } from "react-router-dom";
 
 type Anchor = "left";
 const HambuggerMenuBar = () => {
   const [state, setState] = React.useState({
     left: false,
   });
-
-  const [hideBalance] = React.useState<boolean>(false);
-  // get total balance of each currency
-  const nairaBalance = useAppSelector((state) => state.nairaAccount.balance);
-  const dollarBalance = useAppSelector((state) => state.dollarAccount.balance);
-  const euroBalance = useAppSelector((state) => state.euroAccount.balance);
-  // get currency mode
-  const currency = useAppSelector((state) => state.currency.currencySymbol);
 
   const toggleDrawer =
     (anchor: Anchor, open: boolean) =>
@@ -47,16 +37,58 @@ const HambuggerMenuBar = () => {
       onClick={toggleDrawer(anchor, false)}
       onKeyDown={toggleDrawer(anchor, false)}
     >
-      <Stack spacing={3}>
-        <Stack spacing={2} direction="row" padding="20px 5px">
-          <Profile />
-          <Stack>
-            <Typography>Chukwudi Nweze</Typography>
-            <Typography color="#a9abad">0145638596</Typography>
-          </Stack>
+      <Stack spacing={2} direction="row" padding="20px 5px" paddingLeft="20px">
+        <Profile />
+        <Stack>
+          <Typography>Chukwudi Nweze</Typography>
+          <Typography color="#a9abad">0145638596</Typography>
         </Stack>
+        <IconButton
+          onClick={toggleDrawer("left", true)}
+          size="large"
+          edge="start"
+          aria-label="menu"
+          sx={{ color: "#6236ff" }}
+        >
+          <Close />
+        </IconButton>
       </Stack>
-      {/* <Divider /> */}
+
+      <Divider />
+      <Stack spacing={1} paddingLeft="20px" marginTop="40px">
+        <Link to="/notification">
+          <Stack direction="row" alignItems="center">
+            <IconButton
+              onClick={toggleDrawer("left", true)}
+              size="large"
+              edge="start"
+              aria-label="menu"
+              sx={{ color: "#6236ff" }}
+            >
+              <NotificationsNone />
+            </IconButton>
+            <Typography fontWeight={700} fontSize="18px" color="#6236ff">
+              Notification
+            </Typography>
+          </Stack>
+        </Link>
+        <Link to="/support">
+          <Stack direction="row" alignItems="center">
+            <IconButton
+              onClick={toggleDrawer("left", true)}
+              size="large"
+              edge="start"
+              aria-label="menu"
+              sx={{ color: "#6236ff" }}
+            >
+              <QuestionMarkIcon />
+            </IconButton>
+            <Typography fontWeight={700} fontSize="18px" color="#6236ff">
+              Get Help
+            </Typography>
+          </Stack>
+        </Link>
+      </Stack>
     </Box>
   );
 

@@ -37,8 +37,6 @@ const SupportPage = () => {
             >
               Get Our Support
             </Typography>
-            <Experiment />
-
             <Typography>
               You can count on our team of highnly skilled customer experience
               service experts who take personal pride in giving top notch

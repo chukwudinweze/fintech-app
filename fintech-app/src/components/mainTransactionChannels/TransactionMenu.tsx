@@ -17,26 +17,6 @@ const TransactionMenu: React.FC = () => {
       justifyContent="space-around"
       sx={{ borderTop: ".02px solid #d5d0dc", padding: "20px" }}
     >
-      {/* <TransactionBtn
-        background="#ff396f"
-        label="Withdraw"
-        icon={<ArrowDownward />}
-      />
-      <TransactionBtn
-        background="#6236ff"
-        label="Send"
-        icon={<ArrowForwardIcon />}
-      />
-      <TransactionBtn
-        background="#1dcc70"
-        label="Cards"
-        icon={<CreditCardIcon />}
-      />
-      <TransactionBtn
-        background="#ffb400"
-        label="Exchange"
-        icon={<SyncAltIcon />}
-      /> */}
       <WithdrawMoney />
       <TransferMoney />
       <ExchangeCurrency />

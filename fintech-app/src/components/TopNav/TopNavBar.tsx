@@ -4,13 +4,12 @@ import Box from "@mui/material/Box";
 import Badge from "@mui/material/Badge";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import IconButton from "@mui/material/IconButton";
-import MenuIcon from "@mui/icons-material/Menu";
 import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
-import { Avatar, Stack } from "@mui/material";
-import { deepPurple } from "@mui/material/colors";
+import { Stack } from "@mui/material";
 import { Link } from "react-router-dom";
-import { useAppSelector } from "../store/hooks";
+import { useAppSelector } from "../../store/hooks";
+import HambuggerMenuBar from "./HambuggerMenuBar";
+import Profile from "../../Global/Profile";
 
 const TopNavBar: React.FC = () => {
   const transactionsLength = useAppSelector(
@@ -27,15 +26,7 @@ const TopNavBar: React.FC = () => {
     >
       <AppBar position="fixed" elevation={0}>
         <Toolbar>
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="menu"
-            sx={{ mr: 2 }}
-          >
-            <MenuIcon />
-          </IconButton>
+          <HambuggerMenuBar />
           <Typography
             variant="h5"
             component="h5"
@@ -56,21 +47,7 @@ const TopNavBar: React.FC = () => {
                 />
               </Badge>
             </Link>
-            <Avatar
-              sx={{
-                bgcolor: deepPurple[900],
-                height: 20,
-                width: 20,
-                padding: "18px",
-              }}
-              alt="Remy Sharp"
-              src="/broken-image.jpg"
-            >
-              <Typography variant="h6" sx={{ fontSize: "16px" }}>
-                {" "}
-                NC
-              </Typography>
-            </Avatar>
+            <Profile />
           </Stack>
         </Toolbar>
       </AppBar>

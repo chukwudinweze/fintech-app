@@ -10,7 +10,7 @@ const SharedPaymets = () => {
       <Stack spacing={1}>
         <SubHeading label="Shared Pay" />
         {txns.map((txn) => (
-          <SharedPayment {...txn} />
+          <SharedPayment key={txn.id} {...txn} />
         ))}
       </Stack>
     </Box>

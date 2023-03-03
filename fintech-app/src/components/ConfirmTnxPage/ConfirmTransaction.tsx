@@ -9,7 +9,7 @@ import Slide from "@mui/material/Slide";
 import { TransitionProps } from "@mui/material/transitions";
 import { useNavigate } from "react-router-dom";
 import { PinInput, PinInputField, Stack } from "@chakra-ui/react";
-import { Typography } from "@mui/material";
+import { AppBar, Avatar, IconButton, Toolbar, Typography } from "@mui/material";
 import { fundNaira, withdrawNaira } from "../../store/nairaAccountSlice";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { months } from "../../Global/months";
@@ -40,6 +40,7 @@ import { getNewFundAmount } from "../../store/totalFunded";
 import { upDateTxnStatus } from "../../store/sharedPay";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import txnSuccessGif from "../../assets/transactionSuccess.gif";
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -50,9 +51,19 @@ const Transition = React.forwardRef(function Transition(
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
+const Transition2 = React.forwardRef(function Transition(
+  props: TransitionProps & {
+    children: React.ReactElement;
+  },
+  ref: React.Ref<unknown>
+) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
+
 const ConfirmTransaction: React.FC = () => {
   // this stores the individual pin entered by the user
   const [open, setOpen] = React.useState<boolean>(false);
+  const [openTxnStatusDialogu, setOpenTxnStatusDialogu] = React.useState(false);
   const [pin1, setPin1] = React.useState("");
   const [pin2, setPin2] = React.useState("");
   const [pin3, setPin3] = React.useState("");
@@ -67,6 +78,14 @@ const ConfirmTransaction: React.FC = () => {
 
   const handleClickOpen = () => {
     setOpen(true);
+  };
+
+  const handleOpenTxnStatus = () => {
+    setOpenTxnStatusDialogu(true);
+  };
+
+  const handleCloseTxnStatus = () => {
+    setOpenTxnStatusDialogu(false);
   };
 
   const handleNavigate = () => {
@@ -324,8 +343,10 @@ const ConfirmTransaction: React.FC = () => {
       dispatch(getTxnMonth(month));
 
       // alert payment successful and navigate to transaction reciept page
-      alert(`Payment Successful \n Generating Receipt`);
-      navigate("/paymentrecipt");
+      // alert(`Payment Successful \n Generating Receipt`);
+
+      handleOpenTxnStatus();
+      setOpen(false);
     } else {
       // alert invalid pin and close diologue box
       alert("invalid pin");
@@ -409,6 +430,33 @@ const ConfirmTransaction: React.FC = () => {
         </DialogActions>
       </Dialog>
       <ToastContainer theme="colored" />
+      <Stack alignItems="center" justifyContent="center">
+        <Dialog
+          fullScreen
+          open={openTxnStatusDialogu}
+          onClose={handleCloseTxnStatus}
+          TransitionComponent={Transition2}
+        >
+          <Stack
+            sx={{ marginTop: "150px" }}
+            justifyContent="center"
+            alignItems="center"
+            spacing={30}
+          >
+            <Typography fontWeight={700} fontSize="20px">
+              Transaction successful
+            </Typography>
+            <Avatar
+              sx={{ width: "200px", height: "200px", marginTop: "30px" }}
+              alt="Remy Sharp"
+              src={txnSuccessGif}
+            />
+            <Button onClick={() => navigate("/paymentrecipt")}>
+              Generate Receipt
+            </Button>
+          </Stack>
+        </Dialog>
+      </Stack>
     </Box>
   );
 };

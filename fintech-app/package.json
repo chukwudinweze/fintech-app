@@ -24,7 +24,7 @@
     "apexcharts": "^3.36.3",
     "chart.js": "^4.2.0",
     "dayjs": "^1.11.7",
-    "framer-motion": "^8.5.2",
+    "framer-motion": "^10.1.0",
     "html-to-image": "^1.11.4",
     "install": "^0.13.0",
     "moment": "^2.29.4",

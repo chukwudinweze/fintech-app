@@ -6,29 +6,36 @@ import NoTxnHistory from "../components/transactionHistory/NoTxnHistory";
 import TransactionHistory from "../components/transactionHistory/TransactionHistory";
 import PageHeader from "../Global/PageHeader";
 import { useAppSelector } from "../store/hooks";
+import { motion } from "framer-motion";
 
 const TransactionHistoryPage = () => {
   const transactions = useAppSelector((state) => state.completedTransactions);
   const isempty = transactions.length === 0;
 
   return (
-    <Box
-      bgcolor={isempty ? "#fff" : "#6236ff"}
-      component="section"
-      sx={{
-        minHeight: "100vh",
-        padding: { xs: "0 10px 20px 10px", sm: "0 30px 100px 30px" },
-      }}
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
     >
-      <Stack spacing={6}>
-        <PageHeader
-          label="Transaction History"
-          color={isempty ? "#6236ff" : "#fff"}
-        />
-        {isempty ? <NoTxnHistory /> : <TransactionHistory />}
-        <BottomNav />
-      </Stack>
-    </Box>
+      <Box
+        bgcolor={isempty ? "#fff" : "#6236ff"}
+        component="section"
+        sx={{
+          minHeight: "100vh",
+          padding: { xs: "0 10px 20px 10px", sm: "0 30px 100px 30px" },
+        }}
+      >
+        <Stack spacing={6}>
+          <PageHeader
+            label="Transaction History"
+            color={isempty ? "#6236ff" : "#fff"}
+          />
+          {isempty ? <NoTxnHistory /> : <TransactionHistory />}
+          <BottomNav />
+        </Stack>
+      </Box>
+    </motion.div>
   );
 };
 

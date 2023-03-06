@@ -10,29 +10,36 @@ import SharedPaymets from "../components/SharedPayment/SharedPaymets";
 import MyCards from "../components/Mycards/MyCards";
 import Bookings from "../components/Bookings/Bookings";
 import BottomNav from "../components/BottomNav/BottomNav";
+import { motion } from "framer-motion";
 
 const DashBoard = () => {
   return (
-    <Box alignContent="center" justifyContent="center">
-      <TopNavBar />
-      <Box sx={{ paddingLeft: "10px", paddingRight: "15px" }}>
-        {/* TransactionChannels beggins */}
-        <Box className={styles.DashBoard}>
-          <TotalBalFundAccBtn />
-          <TransactionMenu />
-        </Box>
-        {/* TransactionChannels beggins */}
-        <AccountSummary />
-        <Bills />
-        {/* <ExperimentTwo /> */}
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+    >
+      <Box alignContent="center" justifyContent="center">
+        <TopNavBar />
+        <Box sx={{ paddingLeft: "10px", paddingRight: "15px" }}>
+          {/* TransactionChannels beggins */}
+          <Box className={styles.DashBoard}>
+            <TotalBalFundAccBtn />
+            <TransactionMenu />
+          </Box>
+          {/* TransactionChannels beggins */}
+          <AccountSummary />
+          <Bills />
+          {/* <ExperimentTwo /> */}
 
-        <SharedPaymets />
-        <Bookings />
-        {/* <Experiment /> */}
-        <MyCards />
-        <BottomNav />
+          <SharedPaymets />
+          <Bookings />
+          {/* <Experiment /> */}
+          <MyCards />
+          <BottomNav />
+        </Box>
       </Box>
-    </Box>
+    </motion.div>
   );
 };
 

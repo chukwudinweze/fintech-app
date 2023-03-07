@@ -1,4 +1,3 @@
-import React from "react";
 import PaymentRecipt from "../components/PaymentRecipt/PaymentRecipt";
 import { motion } from "framer-motion";
 
